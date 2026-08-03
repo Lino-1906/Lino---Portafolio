@@ -172,7 +172,7 @@
     @keyframes gFloat2 { 0%,100%{transform:translate(0,0) scale(1);} 50%{transform:translate(15px,-20px) scale(1.05);} }
     .hero-eyebrow { font-size: 0.65rem; letter-spacing: 0.22em; text-transform: uppercase; color: rgba(237,224,200,0.38); display: flex; align-items: center; gap: 10px; margin-bottom: 1.5rem; }
     .hero-eyebrow::before { content:''; display:block; width:20px; height:1px; background:rgba(237,224,200,0.3); }
-    .hero-headline { font-family: 'Bebas Neue', sans-serif; font-size: clamp(4rem,22vw,6rem); line-height: 0.9; letter-spacing: 0.02em; margin-bottom: 0.4rem; }
+    .hero-headline { font-family: 'Bebas Neue', sans-serif; font-size: clamp(4rem,22vw,6rem); line-height: 0.9; letter-spacing: 0.02em; margin-bottom: 0.4rem; text-shadow: 0 3px 14px rgba(0, 0, 0, 0.7); }
     .hero-headline-sub { font-family: 'Playfair Display', serif; font-size: clamp(1.5rem,8vw,2.5rem); font-style: italic; font-weight: 700; color: rgba(237,224,200,0.38); margin-bottom: 1.8rem; }
     .hero-desc { font-size: 0.88rem; line-height: 1.8; color: rgba(237,224,200,0.48); max-width: 320px; margin-bottom: 2.5rem; }
     .hero-ctas { display: flex; flex-direction: column; gap: 0.75rem; }
@@ -223,10 +223,18 @@
     .card-img-wrap svg { width: 100%; height: 100%; }
     .card-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(13,8,5,0.95) 0%, rgba(13,8,5,0.25) 55%, transparent 100%); }
     .card-content { position: absolute; bottom: 0; left: 0; right: 0; padding: 1.25rem; }
-    .card-tag { display: inline-block; padding: 3px 10px; border: 1px solid rgba(237,224,200,0.2); border-radius: 100px; font-size: 0.6rem; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(237,224,200,0.55); margin-bottom: 6px; backdrop-filter: blur(6px); background: rgba(237,224,200,0.04); }
-    .card-title { font-family: 'Bebas Neue', sans-serif; font-size: 1.5rem; letter-spacing: 0.04em; line-height: 1.1; }
-    .card-desc { font-size: 0.78rem; color: rgba(237,224,200,0.5); margin-top: 4px; line-height: 1.5; }
-    .card-link { display: inline-flex; align-items: center; gap: 5px; margin-top: 10px; font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(237,224,200,0.55); padding: 6px 14px; border: 1px solid rgba(237,224,200,0.18); border-radius: 100px; background: rgba(237,224,200,0.05); }
+    .card-tag { display: inline-block; padding: 4px 12px; border: 1px solid rgba(237,224,200,0.28); border-radius: 100px; font-size: 0.6rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--cream); margin-bottom: 6px; backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); background: rgba(13,8,5,0.78); }
+    .card-title { font-family: 'Bebas Neue', sans-serif; font-size: 1.5rem; letter-spacing: 0.04em; line-height: 1.1; text-shadow: 0 2px 8px rgba(0, 0, 0, 0.85); }
+    .card-desc { font-size: 0.78rem; color: #ffffff; text-shadow: 0 1px 4px rgba(0,0,0,0.85); font-weight: 500; margin-top: 4px; line-height: 1.5; }
+    .card-link { display: inline-flex; align-items: center; gap: 5px; margin-top: 10px; font-size: 0.68rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--darker); padding: 7px 16px; border: 1px solid var(--cream); border-radius: 100px; background: var(--cream); text-decoration: none; box-shadow: 0 4px 10px rgba(0,0,0,0.3); }
+
+    .card-arrow-controls { position: absolute; top: 12px; right: 12px; display: none; gap: 6px; z-index: 10; opacity: 0; transform: translateY(-4px); transition: opacity 0.35s ease, transform 0.35s ease; }
+    .project-card.has-multi-slides:hover .card-arrow-controls, .project-card.has-multi-slides:active .card-arrow-controls { display: flex; opacity: 1; transform: translateY(0); }
+    .card-arrow-btn { width: 30px; height: 30px; border-radius: 50%; background: rgba(13,8,5,0.65); border: 1px solid rgba(237,224,200,0.25); color: var(--cream); display: flex; align-items: center; justify-content: center; cursor: pointer; backdrop-filter: blur(6px); }
+    .card-arrow-btn:active { background: rgba(237,224,200,0.9); color: var(--darker); }
+
+    .slide-from-right { animation: slideInRight 0.65s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+    @keyframes slideInRight { 0% { opacity: 0; transform: translateX(-45px); filter: blur(4px); } 100% { opacity: 1; transform: translateX(0); filter: blur(0); } }
 
     /* ── METODO ─────────────────────────────────── */
     #metodo { padding: 4rem 1.25rem; position: relative; overflow: hidden; }
@@ -282,7 +290,7 @@
       <a href="#sobre-mi" class="nav-menu-link" id="menu-sobre">Sobre mí <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 13L13 3M13 3H7M13 3V9" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
       <a href="#proyectos" class="nav-menu-link" id="menu-proyectos">Proyectos <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 13L13 3M13 3H7M13 3V9" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
       <a href="#metodo" class="nav-menu-link" id="menu-metodo">Método <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 13L13 3M13 3H7M13 3V9" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
-      <a href="mailto:levanoencinas@gmail.com" class="nav-menu-link" id="menu-contacto">Contacto <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 13L13 3M13 3H7M13 3V9" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <a href="javascript:void(0)" onclick="openContactModal()" class="nav-menu-link" id="menu-contacto">Contacto <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 13L13 3M13 3H7M13 3V9" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
       <div class="nav-menu-tag">Lino · Diseñador UX/UI<br/>Callao, Perú · 2026</div>
     </div>
   </div>
@@ -399,11 +407,6 @@
         <div class="formation-item"><div class="formation-dot"></div><div><span class="formation-name">Mentoring UX/UI — Giantucchi</span><span class="formation-year">2026</span></div></div>
         <div class="formation-item"><div class="formation-dot"></div><div><span class="formation-name">Inglés Intermedio — ICPNA</span><span class="formation-year">2025</span></div></div>
       </div>
-      <div class="glass-card" style="padding:1.75rem 1.5rem;margin-top:2rem;position:relative;overflow:hidden;" data-reveal data-delay="400">
-        <div style="position:absolute;top:-10px;left:12px;font-family:'Playfair Display',serif;font-size:5rem;color:rgba(237,224,200,0.04);line-height:1;pointer-events:none;">"</div>
-        <p style="font-family:'Playfair Display',serif;font-style:italic;font-weight:700;font-size:1.05rem;line-height:1.55;position:relative;z-index:1;">"El diseño es la embajada silenciosa de una marca en el mundo."</p>
-        <div style="display:flex;align-items:center;gap:10px;margin-top:12px;position:relative;z-index:1;"><div style="width:22px;height:1px;background:rgba(237,224,200,0.28);"></div><span style="font-size:0.65rem;letter-spacing:0.12em;text-transform:uppercase;color:rgba(237,224,200,0.32);">Lino · Filosofía de diseño</span></div>
-      </div>
       <div class="glass-card" style="padding:1.5rem 1.25rem;margin-top:2rem;" data-reveal data-delay="500">
         <p style="font-size:0.65rem;letter-spacing:0.18em;text-transform:uppercase;color:rgba(237,224,200,0.45);margin-bottom:0.25rem;">¿Tienes un proyecto en mente?</p>
         <h3 style="font-family:'Bebas Neue',sans-serif;font-size:2.2rem;letter-spacing:0.04em;line-height:1;margin-bottom:1.25rem;">HABLEMOS.</h3>
@@ -476,25 +479,42 @@
       <div class="section-label" data-reveal>Trabajo selecto</div>
       <h2 class="section-title" data-reveal data-delay="100">Proyectos<br/><em>destacados</em></h2>
       <div style="margin-top:1.75rem;">
-        <div class="project-card" data-reveal data-delay="100">
-          <div class="card-img-wrap"><svg width="100%" height="100%" viewBox="0 0 375 220" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice"><rect width="375" height="220" fill="#0C0E18"/><defs><radialGradient id="mrg1" cx="35%" cy="40%"><stop offset="0%" stop-color="#1A2340" stop-opacity="0.85"/><stop offset="100%" stop-color="#0D0805" stop-opacity="0"/></radialGradient><filter id="mf1"><feGaussianBlur stdDeviation="30"/></filter></defs><circle cx="130" cy="100" r="180" fill="url(#mrg1)" filter="url(#mf1)"/><rect x="60" y="60" width="255" height="18" rx="4" fill="rgba(237,224,200,0.04)" stroke="rgba(237,224,200,0.07)" stroke-width="1"/><rect x="60" y="88" width="120" height="90" rx="6" fill="rgba(237,224,200,0.03)" stroke="rgba(237,224,200,0.06)" stroke-width="1"/><rect x="192" y="88" width="123" height="43" rx="6" fill="rgba(237,224,200,0.03)" stroke="rgba(237,224,200,0.06)" stroke-width="1"/><text x="187" y="118" text-anchor="middle" dominant-baseline="middle" font-family="Playfair Display" font-size="52" font-style="italic" font-weight="900" fill="rgba(237,224,200,0.04)">UX</text></svg></div>
-          <div class="card-overlay"></div>
-          <div class="card-content"><div class="card-tag">UX/UI · Proyecto real en producción</div><div class="card-title">Plataforma CIERUM</div><div class="card-desc">Landing page y plataforma web para proptech de inversión inmobiliaria. En uso activo.</div><a href="https://www.behance.net/linole" target="_blank" rel="noopener" class="card-link" id="card-link-cierum">Ver en Behance &rarr;</a></div>
+        <!-- Bloque 1: Identidad & Branding (Luminé) -->
+        <div class="project-card has-multi-slides" data-reveal data-delay="100" id="m-lumine-card">
+          <div class="card-arrow-controls"><button class="card-arrow-btn" id="m-lumine-prev"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg></button><button class="card-arrow-btn" id="m-lumine-next"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></button></div>
+          <div class="card-img-wrap" id="m-lumine-wrap"><img src="Mockup Lumine.png" alt="Manual de Marca Luminé" id="m-lumine-img" style="width:100%;height:100%;object-fit:cover;object-position:center;" /></div>
+          <div class="card-overlay" style="background:linear-gradient(to top, rgba(13,8,5,0.85) 0%, rgba(13,8,5,0.15) 45%, transparent 70%);"></div>
+          <div class="card-content" id="m-lumine-content"><div class="card-tag" id="m-lumine-tag">Identidad & Branding · Manual de Marca</div><div class="card-title" id="m-lumine-title">MANUAL DE MARCA LUMINÉ</div><div class="card-desc" id="m-lumine-desc" style="color:#ffffff;text-shadow:0 1px 4px rgba(0,0,0,0.85);font-weight:500;">Sistema de identidad completo para marca de skincare: logotipo, paleta, tipografía y aplicaciones.</div><a href="javascript:void(0)" onclick="openPdfModal(mCurrentLuminePdf, mCurrentLumineTitle)" class="card-link" id="card-link-lumine">Ver más &rarr;</a></div>
         </div>
-        <div class="project-card" data-reveal data-delay="200">
-          <div class="card-img-wrap"><svg width="100%" height="100%" viewBox="0 0 375 220" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice"><rect width="375" height="220" fill="#0A1008"/><defs><radialGradient id="mrg2" cx="60%" cy="35%"><stop offset="0%" stop-color="#1A3D14" stop-opacity="0.7"/><stop offset="100%" stop-color="#0D0805" stop-opacity="0"/></radialGradient><filter id="mf2"><feGaussianBlur stdDeviation="25"/></filter></defs><circle cx="225" cy="80" r="160" fill="url(#mrg2)" filter="url(#mf2)"/><circle cx="110" cy="110" r="32" stroke="rgba(237,224,200,0.09)" stroke-width="1" fill="none"/><text x="110" y="115" text-anchor="middle" dominant-baseline="middle" font-size="20" fill="rgba(237,224,200,0.09)">&#x2192;</text><circle cx="187" cy="110" r="32" stroke="rgba(237,224,200,0.07)" stroke-width="1" fill="none"/><text x="187" y="115" text-anchor="middle" dominant-baseline="middle" font-size="16" fill="rgba(237,224,200,0.07)">i</text><circle cx="264" cy="110" r="32" stroke="rgba(237,224,200,0.07)" stroke-width="1" fill="none"/></svg></div>
-          <div class="card-overlay"></div>
-          <div class="card-content"><div class="card-tag">Señalética · Wayfinding</div><div class="card-title">Circuito Mágico del Agua</div><a href="https://www.behance.net/linole" target="_blank" rel="noopener" class="card-link" id="card-link-cma">Ver en Behance &rarr;</a></div>
+
+        <!-- Bloque 2: Productos Digitales / UI Prominente (CIERUM / GIANTUCCHI / PCI EXPRESS) -->
+        <div class="project-card has-multi-slides" data-reveal data-delay="200" id="m-cierum-card">
+          <div class="card-arrow-controls"><button class="card-arrow-btn" id="m-cierum-prev"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg></button><button class="card-arrow-btn" id="m-cierum-next"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></button></div>
+          <div class="card-img-wrap" id="m-cierum-wrap"><img src="Mockup Cierum.png" alt="Plataforma CIERUM" id="m-cierum-img" style="width:100%;height:100%;object-fit:cover;object-position:top;" /></div>
+          <div class="card-overlay" style="background:linear-gradient(to top, rgba(13,8,5,0.88) 0%, rgba(13,8,5,0.15) 45%, transparent 70%);"></div>
+          <div class="card-content" id="m-cierum-content"><div class="card-tag" id="m-cierum-tag">Diseño UX / UI</div><div class="card-title" id="m-cierum-title">PLATAFORMA CIERUM</div><div class="card-desc" id="m-cierum-desc" style="color:#ffffff;text-shadow:0 1px 4px rgba(0,0,0,0.85);font-weight:500;">Landing page y plataforma web para proptech de inversión inmobiliaria e IA (Giantucchi). Proyecto en producción activa.</div><a href="https://www.behance.net/linole" target="_blank" rel="noopener" class="card-link" id="card-link-cierum">Ver más &rarr;</a></div>
         </div>
-        <div class="project-card" data-reveal data-delay="300">
-          <div class="card-img-wrap"><svg width="100%" height="100%" viewBox="0 0 375 220" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice"><rect width="375" height="220" fill="#0D1008"/><defs><radialGradient id="mrg3" cx="30%" cy="65%"><stop offset="0%" stop-color="#2D3D14" stop-opacity="0.75"/><stop offset="100%" stop-color="#0D0805" stop-opacity="0"/></radialGradient><filter id="mf3"><feGaussianBlur stdDeviation="28"/></filter></defs><circle cx="80" cy="155" r="160" fill="url(#mrg3)" filter="url(#mf3)"/><polygon points="140,45 235,45 262,78 262,175 113,175 113,78" stroke="rgba(237,224,200,0.08)" stroke-width="1" fill="rgba(237,224,200,0.025)"/><text x="187" y="112" text-anchor="middle" dominant-baseline="middle" font-family="Playfair Display" font-size="22" font-weight="900" fill="rgba(237,224,200,0.08)">HERBI</text></svg></div>
-          <div class="card-overlay"></div>
-          <div class="card-content"><div class="card-tag">Packaging · Rediseño</div><div class="card-title">Caja HERBI Manzanilla</div><a href="https://www.behance.net/linole" target="_blank" rel="noopener" class="card-link" id="card-link-herbi">Ver en Behance &rarr;</a></div>
+
+        <!-- Bloque 3: Edición Editorial (Arte Culinario & Ayacucho Slides) -->
+        <div class="project-card has-multi-slides" data-reveal data-delay="300" id="m-arteculinario-project-card">
+          <div class="card-arrow-controls">
+            <button class="card-arrow-btn prev-card-btn" id="m-arteculinario-prev" title="Anterior"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg></button>
+            <button class="card-arrow-btn next-card-btn" id="m-arteculinario-next" title="Siguiente"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></button>
+          </div>
+          <div class="card-img-wrap" id="m-arteculinario-img-wrap"><img src="Mockup Revista Gastronomica.png" alt="Arte Culinario" id="m-arteculinario-img" style="width:100%;height:100%;object-fit:cover;object-position:center;" /></div>
+          <div class="card-overlay" style="background:linear-gradient(to top, rgba(13,8,5,0.85) 0%, rgba(13,8,5,0.15) 45%, transparent 70%);"></div>
+          <div class="card-content" id="m-arteculinario-content"><div class="card-tag" id="m-arteculinario-tag">EDICIÓN EDITORIAL • GASTRONOMÍA</div><div class="card-title" id="m-arteculinario-title">ARTE CULINARIO</div><div class="card-desc" id="m-arteculinario-desc">Proyecto editorial independiente que fusiona el diseño de alta gama con la cultura gastronómica global, recetas y perfiles de chefs internacionales.</div><a href="javascript:void(0)" onclick="openPdfModal(currentArteculinarioPdf, currentArteculinarioTitle)" class="card-link" id="card-link-cma">Ver más &rarr;</a></div>
         </div>
-        <div class="project-card" data-reveal data-delay="400">
-          <div class="card-img-wrap"><svg width="100%" height="100%" viewBox="0 0 375 220" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice"><rect width="375" height="220" fill="#100A10"/><defs><radialGradient id="mrg4" cx="50%" cy="50%"><stop offset="0%" stop-color="#3D1440" stop-opacity="0.5"/><stop offset="100%" stop-color="#0D0805" stop-opacity="0"/></radialGradient><filter id="mf4"><feGaussianBlur stdDeviation="40"/></filter></defs><circle cx="187" cy="110" r="190" fill="url(#mrg4)" filter="url(#mf4)"/><circle cx="162" cy="110" r="50" stroke="rgba(237,224,200,0.07)" stroke-width="1" fill="none"/><circle cx="213" cy="110" r="50" stroke="rgba(237,224,200,0.05)" stroke-width="1" fill="none"/><text x="187" y="120" text-anchor="middle" dominant-baseline="middle" font-family="Playfair Display" font-size="68" font-weight="900" font-style="italic" fill="rgba(237,224,200,0.04)">Lumin&#233;</text></svg></div>
+
+        <!-- Bloque 4: Packaging & Rediseño (DecoArt & Herbi Slides) -->
+        <div class="project-card has-multi-slides" data-reveal data-delay="400" id="m-decoart-project-card">
+          <div class="card-arrow-controls">
+            <button class="card-arrow-btn prev-card-btn" id="m-decoart-prev-btn" title="Anterior"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg></button>
+            <button class="card-arrow-btn next-card-btn" id="m-decoart-next-btn" title="Siguiente"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></button>
+          </div>
+          <div class="card-img-wrap" id="m-decoart-img-wrap"><img src="Mockup Caja y botella Deco Art.png" alt="Rediseño de envase pintura acrílica DecoArt" id="m-decoart-card-img" style="width:100%;height:100%;object-fit:cover;object-position:center;" /></div>
           <div class="card-overlay"></div>
-          <div class="card-content"><div class="card-tag">Branding · Manual de Marca</div><div class="card-title">Manual de Marca Lumin&#233;</div><div class="card-desc">Sistema de identidad completo para marca de skincare: logo, paleta, tipografía y aplicaciones.</div><a href="https://www.behance.net/linole" target="_blank" rel="noopener" class="card-link" id="card-link-lumine">Ver en Behance &rarr;</a></div>
+          <div class="card-content" id="m-decoart-content"><div class="card-tag" id="m-decoart-tag">PACKAGING & REDISEÑO DE ETIQUETA</div><div class="card-title" id="m-decoart-title">REDISEÑO DE ENVASE PINTURA ACRÍLICA</div><div class="card-desc" id="m-decoart-desc">Rediseño estructural y gráfico de etiqueta para envase de pintura acrílica (DecoArt), optimizando jerarquía informativa, legibilidad y normativas de producto.</div><a href="javascript:void(0)" onclick="openPdfModal(mCurrentDecoartPdf, mCurrentDecoartTitle)" class="card-link" id="card-link-decoart">Ver más &rarr;</a></div>
         </div>
       </div>
       <div style="margin-top:1.5rem;text-align:center;" data-reveal data-delay="400">
@@ -631,6 +651,409 @@
         tag.addEventListener('mouseleave', () => { isHovered = false; });
       });
     })();
+
+    // Luminé 3-second Card Toggle with Right-to-Left Slide
+    var mCurrentLuminePdf = 'Manual Marca - Manual de Marca.pdf';
+    var mCurrentLumineTitle = 'Manual de Marca Luminé';
+
+    (function () {
+      const card = document.getElementById('m-lumine-card');
+      const imgWrap = document.getElementById('m-lumine-wrap');
+      const img = document.getElementById('m-lumine-img');
+      const content = document.getElementById('m-lumine-content');
+      const tag = document.getElementById('m-lumine-tag');
+      const title = document.getElementById('m-lumine-title');
+      const desc = document.getElementById('m-lumine-desc');
+      const prevBtn = document.getElementById('m-lumine-prev');
+      const nextBtn = document.getElementById('m-lumine-next');
+
+      if (!card || !img || !content || !tag || !title || !desc) return;
+
+      const slides = [
+        {
+          tag: 'IDENTIDAD & BRANDING',
+          title: 'IDENTIDAD VISUAL LUMINÉ',
+          desc: 'Branding e identidad conceptual para marca de skincare: logotipo, valores de marca, paleta cromática y aplicaciones.',
+          img: 'Mockup Lumine.png',
+          pdf: 'Manual Marca - Manual de Marca.pdf',
+          pdfTitle: 'Identidad Visual Luminé'
+        },
+        {
+          tag: 'ESPACIOS & SEÑALÉTICA · WAYFINDING',
+          title: 'CIRCUITO MÁGICO DEL AGUA',
+          desc: 'Sistema de señalización, tótems informativos y mapas orientativos para parque temático público en Lima.',
+          img: 'Mockup Circuito Magico Agua.png',
+          pdf: 'Manual de señalización - Circuito mágico.pdf',
+          pdfTitle: 'Circuito Mágico del Agua — Manual de Señalética'
+        }
+      ];
+
+      let currentIndex = 0;
+      let isMouseOver = false;
+      card.addEventListener('touchstart', () => { isMouseOver = true; });
+
+      function goToSlide(index) {
+        currentIndex = (index + slides.length) % slides.length;
+        const slide = slides[currentIndex];
+
+        imgWrap.classList.remove('slide-from-right');
+        content.classList.remove('slide-from-right');
+        void card.offsetWidth;
+
+        tag.textContent = slide.tag;
+        title.textContent = slide.title;
+        desc.textContent = slide.desc;
+        img.src = slide.img;
+        img.alt = slide.title;
+        mCurrentLuminePdf = slide.pdf;
+        mCurrentLumineTitle = slide.pdfTitle;
+
+        imgWrap.classList.add('slide-from-right');
+        content.classList.add('slide-from-right');
+      }
+
+      if (prevBtn) prevBtn.addEventListener('click', (e) => { e.stopPropagation(); goToSlide(currentIndex - 1); });
+      if (nextBtn) nextBtn.addEventListener('click', (e) => { e.stopPropagation(); goToSlide(currentIndex + 1); });
+
+      setInterval(() => {
+        if (isMouseOver) return;
+        goToSlide(currentIndex + 1);
+      }, 3000);
+    })();
+
+    // Arte Culinario & Ayacucho 3-second Card Toggle with Right-to-Left Slide
+    let currentArteculinarioPdf = 'Revista Gastronomica - Grafica III.pdf';
+    let currentArteculinarioTitle = 'Arte Culinario — Edición Editorial';
+
+    (function () {
+      const card = document.getElementById('m-arteculinario-project-card');
+      const imgWrap = document.getElementById('m-arteculinario-img-wrap');
+      const img = document.getElementById('m-arteculinario-img');
+      const content = document.getElementById('m-arteculinario-content');
+      const tag = document.getElementById('m-arteculinario-tag');
+      const title = document.getElementById('m-arteculinario-title');
+      const desc = document.getElementById('m-arteculinario-desc');
+      const prevBtn = document.getElementById('m-arteculinario-prev');
+      const nextBtn = document.getElementById('m-arteculinario-next');
+
+      if (!card || !img || !content || !tag || !title || !desc) return;
+
+      const slides = [
+        {
+          tag: 'EDICIÓN EDITORIAL • GASTRONOMÍA',
+          title: 'ARTE CULINARIO',
+          desc: 'Proyecto editorial independiente que fusiona el diseño de alta gama con la cultura gastronómica global, recetas y perfiles de chefs internacionales.',
+          img: 'Mockup Revista Gastronomica.png',
+          pdf: 'Revista Gastronomica - Grafica III.pdf',
+          pdfTitle: 'Arte Culinario — Edición Editorial'
+        },
+        {
+          tag: 'EDICIÓN ESPECIAL • TURISMO',
+          title: 'AYACUCHO',
+          desc: 'Guía de viajes definitiva que fusiona la historia colonial, la magia de sus paisajes andinos, la tradición artesanal y la auténtica sazón ayacuchana.',
+          img: 'Mockup guia Turistica.png',
+          pdf: 'Guia Turistica - Ayacucho.pdf',
+          pdfTitle: 'Guía Turística — Ayacucho'
+        }
+      ];
+
+      let currentIndex = 0;
+      let isMouseOver = false;
+      card.addEventListener('touchstart', () => { isMouseOver = true; });
+
+      function goToSlide(index) {
+        currentIndex = (index + slides.length) % slides.length;
+        const slide = slides[currentIndex];
+
+        imgWrap.classList.remove('slide-from-right');
+        content.classList.remove('slide-from-right');
+        void card.offsetWidth;
+
+        tag.textContent = slide.tag;
+        title.textContent = slide.title;
+        desc.textContent = slide.desc;
+        img.src = slide.img;
+        img.alt = slide.title;
+        currentArteculinarioPdf = slide.pdf;
+        currentArteculinarioTitle = slide.pdfTitle;
+
+        imgWrap.classList.add('slide-from-right');
+        content.classList.add('slide-from-right');
+      }
+
+      if (prevBtn) prevBtn.addEventListener('click', (e) => { e.stopPropagation(); goToSlide(currentIndex - 1); });
+      if (nextBtn) nextBtn.addEventListener('click', (e) => { e.stopPropagation(); goToSlide(currentIndex + 1); });
+
+      setInterval(() => {
+        if (isMouseOver) return;
+        goToSlide(currentIndex + 1);
+      }, 3000);
+    })();
+
+    // Cierum / Giantucchi 3-second Card Toggle with Right-to-Left Slide
+    (function () {
+      const card = document.getElementById('m-cierum-card');
+      const imgWrap = document.getElementById('m-cierum-wrap');
+      const img = document.getElementById('m-cierum-img');
+      const content = document.getElementById('m-cierum-content');
+      const tag = document.getElementById('m-cierum-tag');
+      const title = document.getElementById('m-cierum-title');
+      const desc = document.getElementById('m-cierum-desc');
+      const prevBtn = document.getElementById('m-cierum-prev');
+      const nextBtn = document.getElementById('m-cierum-next');
+
+      if (!card || !img || !content || !tag || !title || !desc) return;
+
+      const slides = [
+        {
+          tag: 'DISEÑO UX / UI',
+          title: 'PLATAFORMA CIERUM',
+          desc: 'Landing page y plataforma web para proptech de inversión inmobiliaria e IA (Giantucchi). Proyecto en producción activa.',
+          img: 'Mockup Cierum.png'
+        },
+        {
+          tag: 'DISEÑO UX/UI',
+          title: 'PLATAFORMA GIANTUCCHI',
+          desc: 'Diseño de interfaz, flujos de usuario y experiencia digital para soluciones de transformación digital, automatización e inteligencia artificial. Proyecto real en producción activa.',
+          img: 'Mockup Giantucchi.png'
+        },
+        {
+          tag: 'E-COMMERCE & UI/UX',
+          title: 'PCI EXPRESS',
+          desc: 'Diseño de experiencia de usuario y arquitectura de interfaz para tienda especializada en hardware de PC, enfocada en transparencia, compatibilidad y seguridad total para el cliente.',
+          img: 'Mockup PCI Express.png'
+        }
+      ];
+
+      let currentIndex = 0;
+      let isMouseOver = false;
+      card.addEventListener('touchstart', () => { isMouseOver = true; });
+
+      function goToSlide(index) {
+        currentIndex = (index + slides.length) % slides.length;
+        const slide = slides[currentIndex];
+
+        imgWrap.classList.remove('slide-from-right');
+        content.classList.remove('slide-from-right');
+        void card.offsetWidth;
+
+        tag.textContent = slide.tag;
+        title.textContent = slide.title;
+        desc.textContent = slide.desc;
+        img.src = slide.img;
+        img.alt = slide.title;
+
+        imgWrap.classList.add('slide-from-right');
+        content.classList.add('slide-from-right');
+      }
+
+      if (prevBtn) prevBtn.addEventListener('click', (e) => { e.stopPropagation(); goToSlide(currentIndex - 1); });
+      if (nextBtn) nextBtn.addEventListener('click', (e) => { e.stopPropagation(); goToSlide(currentIndex + 1); });
+
+      setInterval(() => {
+        if (isMouseOver) return;
+        goToSlide(currentIndex + 1);
+      }, 3000);
+    })();
+
+    // ── Packaging DecoArt & Herbi 3-second Card Toggle (Mobile) ──
+    let mCurrentDecoartPdf = 'Envases Final - Presentación.pdf';
+    let mCurrentDecoartTitle = 'Rediseño de Envase Pintura Acrílica — DecoArt';
+
+    (function () {
+      const card = document.getElementById('m-decoart-project-card');
+      const imgWrap = document.getElementById('m-decoart-img-wrap');
+      const img = document.getElementById('m-decoart-card-img');
+      const content = document.getElementById('m-decoart-content');
+      const tag = document.getElementById('m-decoart-tag');
+      const title = document.getElementById('m-decoart-title');
+      const desc = document.getElementById('m-decoart-desc');
+      const prevBtn = document.getElementById('m-decoart-prev-btn');
+      const nextBtn = document.getElementById('m-decoart-next-btn');
+
+      if (!card || !img || !content || !tag || !title || !desc) return;
+
+      const slides = [
+        {
+          tag: 'PACKAGING & REDISEÑO DE ETIQUETA',
+          title: 'REDISEÑO DE ENVASE PINTURA ACRÍLICA',
+          desc: 'Rediseño estructural y gráfico de etiqueta para envase de pintura acrílica (DecoArt), optimizando jerarquía informativa, legibilidad y normativas de producto.',
+          img: 'Mockup Caja y botella Deco Art.png',
+          pdf: 'Envases Final - Presentación.pdf',
+          pdfTitle: 'Rediseño de Envase Pintura Acrílica — DecoArt'
+        },
+        {
+          tag: 'PACKAGING & REDISEÑO ESTRUCTURAL',
+          title: 'REDISEÑO DE EMPAQUE HERBI',
+          desc: 'Rediseño de empaque y gráfica para línea de infusiones de manzanilla, optimizando la jerarquía visual, retícula informativa y presencia de marca en anaquel.',
+          img: 'Mockup Herbi.png',
+          pdf: 'Rediseño de Herbi - Presentación.pdf',
+          pdfTitle: 'Rediseño de Empaque HERBI'
+        }
+      ];
+
+      let currentIndex = 0;
+      let isMouseOver = false;
+      card.addEventListener('touchstart', () => { isMouseOver = true; });
+
+      function goToSlide(index) {
+        currentIndex = (index + slides.length) % slides.length;
+        const slide = slides[currentIndex];
+
+        imgWrap.classList.remove('slide-from-right');
+        content.classList.remove('slide-from-right');
+        void card.offsetWidth;
+
+        tag.textContent = slide.tag;
+        title.textContent = slide.title;
+        desc.textContent = slide.desc;
+        img.src = slide.img;
+        img.alt = slide.title;
+        mCurrentDecoartPdf = slide.pdf;
+        mCurrentDecoartTitle = slide.pdfTitle;
+
+        imgWrap.classList.add('slide-from-right');
+        content.classList.add('slide-from-right');
+      }
+
+      if (prevBtn) prevBtn.addEventListener('click', (e) => { e.stopPropagation(); goToSlide(currentIndex - 1); });
+      if (nextBtn) nextBtn.addEventListener('click', (e) => { e.stopPropagation(); goToSlide(currentIndex + 1); });
+
+      setInterval(() => {
+        if (isMouseOver) return;
+        goToSlide(currentIndex + 1);
+      }, 3000);
+    })();
+
+    // PDF Modal Viewer Logic
+    function openPdfModal(pdfUrl, title) {
+      let overlay = document.getElementById('m-pdf-modal-overlay');
+      if (!overlay) {
+        overlay = document.createElement('div');
+        overlay.id = 'm-pdf-modal-overlay';
+        overlay.style.cssText = 'position:fixed;inset:0;z-index:9999;display:flex;flex-direction:column;background:rgba(5,3,2,0.95);backdrop-filter:blur(8px);opacity:0;pointer-events:none;transition:opacity 0.3s ease;';
+        overlay.innerHTML = `
+          <div style="display:flex;align-items:center;justify-content:between;padding:12px 16px;border-bottom:1px solid rgba(237,224,200,0.12);background:var(--darker);gap:10px;">
+            <button onclick="closePdfModal()" style="display:flex;align-items:center;gap:6px;padding:6px 14px;border-radius:100px;border:1px solid rgba(237,224,200,0.25);font-size:0.7rem;font-weight:700;color:var(--cream);background:rgba(237,224,200,0.08);cursor:pointer;">← REGRESAR</button>
+            <span id="m-pdf-title" style="font-size:0.75rem;font-weight:600;color:var(--cream);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex:1;"></span>
+          </div>
+          <div style="flex:1;width:100%;height:100%;padding:6px;">
+            <iframe id="m-pdf-iframe" style="width:100%;height:100%;border-radius:10px;border:1px solid rgba(237,224,200,0.1);background:#111;"></iframe>
+          </div>
+        `;
+        document.body.appendChild(overlay);
+      }
+      const iframe = document.getElementById('m-pdf-iframe');
+      const titleEl = document.getElementById('m-pdf-title');
+      if (titleEl) titleEl.textContent = title || '';
+      if (iframe) iframe.src = pdfUrl + '#toolbar=1&navpanes=0';
+      overlay.style.opacity = '1';
+      overlay.style.pointerEvents = 'auto';
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closePdfModal() {
+      const overlay = document.getElementById('m-pdf-modal-overlay');
+      const iframe = document.getElementById('m-pdf-iframe');
+      if (!overlay) return;
+      overlay.style.opacity = '0';
+      overlay.style.pointerEvents = 'none';
+      setTimeout(() => { if (iframe) iframe.src = ''; }, 300);
+      document.body.style.overflow = '';
+    }
+
+    // ── Contact Modal Popup Logic (Mobile) ──
+    function openContactModal() {
+      let overlay = document.getElementById('m-contact-modal-overlay');
+      if (!overlay) {
+        overlay = document.createElement('div');
+        overlay.id = 'm-contact-modal-overlay';
+        overlay.onclick = function(e) { if (e.target === overlay) closeContactModal(); };
+        overlay.style.cssText = 'position:fixed;inset:0;z-index:9999;display:flex;align-items:center;justify-content:center;padding:16px;background:rgba(5,3,2,0.85);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);opacity:0;pointer-events:none;transition:opacity 0.3s ease;';
+        overlay.innerHTML = `
+          <div id="m-contact-card-content" style="position:relative;width:100%;max-width:380px;padding:1.5rem;background:rgba(13,8,5,0.95);border:1px solid rgba(237,224,200,0.18);border-radius:18px;box-shadow:0 20px 40px rgba(0,0,0,0.8);transform:scale(0.95);transition:transform 0.3s ease;">
+            <button onclick="closeContactModal()" style="position:absolute;top:12px;right:12px;width:32px;height:32px;border-radius:50%;background:rgba(237,224,200,0.08);border:1px solid rgba(237,224,200,0.2);color:var(--cream);display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:10;" title="Cerrar">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+            </button>
+            <p style="font-size:0.62rem;letter-spacing:0.18em;text-transform:uppercase;color:rgba(237,224,200,0.45);margin-bottom:4px;">¿Tienes un proyecto en mente?</p>
+            <h3 style="font-family:'Bebas Neue',sans-serif;font-size:2.2rem;letter-spacing:0.04em;line-height:1;margin-bottom:1.25rem;color:var(--cream);">HABLEMOS.</h3>
+            
+            <div style="display:flex;flex-direction:column;gap:1rem;">
+              <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;padding:0.75rem;border-radius:12px;background:rgba(237,224,200,0.03);border:1px solid rgba(237,224,200,0.1);">
+                <svg width="90" height="90" viewBox="0 0 100 100" fill="var(--cream)" xmlns="http://www.w3.org/2000/svg">
+                  <rect x="5" y="5" width="30" height="30" rx="4" fill="none" stroke="var(--cream)" stroke-width="5"/>
+                  <rect x="12" y="12" width="16" height="16" rx="2" fill="var(--cream)"/>
+                  <rect x="65" y="5" width="30" height="30" rx="4" fill="none" stroke="var(--cream)" stroke-width="5"/>
+                  <rect x="72" y="12" width="16" height="16" rx="2" fill="var(--cream)"/>
+                  <rect x="5" y="65" width="30" height="30" rx="4" fill="none" stroke="var(--cream)" stroke-width="5"/>
+                  <rect x="12" y="72" width="16" height="16" rx="2" fill="var(--cream)"/>
+                  <rect x="42" y="8" width="6" height="6" rx="1"/>
+                  <rect x="52" y="18" width="6" height="6" rx="1"/>
+                  <rect x="42" y="28" width="6" height="6" rx="1"/>
+                  <rect x="8" y="42" width="6" height="6" rx="1"/>
+                  <rect x="18" y="52" width="6" height="6" rx="1"/>
+                  <rect x="28" y="42" width="6" height="6" rx="1"/>
+                  <rect x="42" y="42" width="16" height="16" rx="2"/>
+                  <rect x="65" y="42" width="8" height="8" rx="1"/>
+                  <rect x="78" y="42" width="14" height="6" rx="1"/>
+                  <rect x="42" y="65" width="8" height="14" rx="1"/>
+                  <rect x="55" y="78" width="14" height="8" rx="1"/>
+                  <rect x="72" y="65" width="10" height="10" rx="1"/>
+                  <rect x="85" y="80" width="10" height="10" rx="1"/>
+                </svg>
+                <span style="font-size:0.6rem;letter-spacing:0.12em;text-transform:uppercase;color:rgba(237,224,200,0.35);margin-top:0.4rem;">Escanear vCard</span>
+              </div>
+
+              <div style="display:flex;flex-direction:column;gap:0.5rem;">
+                <a href="tel:+51924897902" style="display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:8px;background:rgba(237,224,200,0.04);border:1px solid rgba(237,224,200,0.06);text-decoration:none;color:var(--cream);">
+                  <div style="width:28px;height:28px;border-radius:6px;background:rgba(237,224,200,0.08);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 1.27h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.81a16 16 0 0 0 6.29 6.29l.95-.95a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7a2 2 0 0 1 1.72 2.02z"/></svg>
+                  </div>
+                  <span style="font-size:0.75rem;font-weight:600;">+51 924 897 902</span>
+                </a>
+
+                <a href="https://mail.google.com/mail/?view=cm&fs=1&to=levanoencinas@gmail.com" target="_blank" rel="noopener" style="display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:8px;background:rgba(237,224,200,0.04);border:1px solid rgba(237,224,200,0.06);text-decoration:none;color:var(--cream);">
+                  <div style="width:28px;height:28px;border-radius:6px;background:rgba(237,224,200,0.08);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                  </div>
+                  <span style="font-size:0.75rem;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">levanoencinas@gmail.com</span>
+                </a>
+
+                <a href="https://www.behance.net/linole" target="_blank" rel="noopener" style="display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:8px;background:rgba(237,224,200,0.04);border:1px solid rgba(237,224,200,0.06);text-decoration:none;color:var(--cream);">
+                  <div style="width:28px;height:28px;border-radius:6px;background:rgba(237,224,200,0.08);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                    <img src="Behance.png" alt="Behance" style="width:16px;height:16px;object-fit:contain;" />
+                  </div>
+                  <span style="font-size:0.75rem;font-weight:600;">behance.net/linole</span>
+                </a>
+
+                <a href="https://www.linkedin.com/in/valentino-levano" target="_blank" rel="noopener" style="display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:8px;background:rgba(237,224,200,0.04);border:1px solid rgba(237,224,200,0.06);text-decoration:none;color:var(--cream);">
+                  <div style="width:28px;height:28px;border-radius:6px;background:rgba(237,224,200,0.08);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+                  </div>
+                  <span style="font-size:0.75rem;font-weight:600;">linkedin.com/in/valentino-levano</span>
+                </a>
+              </div>
+            </div>
+          </div>
+        `;
+        document.body.appendChild(overlay);
+      }
+      const card = document.getElementById('m-contact-card-content');
+      overlay.style.opacity = '1';
+      overlay.style.pointerEvents = 'auto';
+      if (card) card.style.transform = 'scale(1)';
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeContactModal() {
+      const overlay = document.getElementById('m-contact-modal-overlay');
+      const card = document.getElementById('m-contact-card-content');
+      if (!overlay) return;
+      overlay.style.opacity = '0';
+      overlay.style.pointerEvents = 'none';
+      if (card) card.style.transform = 'scale(0.95)';
+      document.body.style.overflow = '';
+    }
   </script>
 
 </body>
