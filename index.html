@@ -1,0 +1,2015 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- ── Device Detection: redirect to mobile version on small screens ── -->
+  <script>
+    (function () {
+      function checkDevice() {
+        if (window.innerWidth <= 768) {
+          window.location.replace('mobile.html');
+        }
+      }
+      checkDevice();
+      window.addEventListener('resize', checkDevice);
+    })();
+  </script>
+  <title>Lino — Diseñador UX/UI · Gráfico Freelance</title>
+  <!-- Favicon / Tab Icon -->
+  <link rel="icon" type="image/png" href="Isotipo@4x.png" />
+  <link rel="shortcut icon" type="image/png" href="Isotipo@4x.png" />
+  <link rel="apple-touch-icon" href="Isotipo@4x.png" />
+  <meta name="description"
+    content="Portafolio de Valentino Levano (Lino), Diseñador UX/UI y Gráfico Freelance desde Callao, Perú. Especialista en branding, packaging, señalética y diseño de interfaces." />
+  <meta name="keywords"
+    content="diseñador gráfico, UX/UI, portafolio, branding, packaging, señalética, Callao, Perú, freelance" />
+  <meta property="og:title" content="Lino — Diseñador UX/UI · Gráfico Freelance" />
+  <meta property="og:description"
+    content="Valentino Levano (Lino): diseño que habla antes de que abras la boca. Callao, Perú." />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,700;0,900;1,700;1,900&family=Inter:wght@300;400;500&family=Bebas+Neue&family=Antonio:wght@700&display=swap"
+    rel="stylesheet" />
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              dark: '#1A0F0A',
+              darker: '#0D0805',
+              cream: '#EDE0C8',
+              creamlt: '#F5EDD9',
+              brown: '#3D2314',
+            }
+          },
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            editorial: ['Bebas Neue', 'sans-serif'],
+            body: ['Inter', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    :root {
+      --dark: #1A0F0A;
+      --darker: #0D0805;
+      --cream: #EDE0C8;
+      --creamlt: #F5EDD9;
+      --brown: #3D2314;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background-color: var(--darker);
+      color: var(--cream);
+      font-family: 'Inter', sans-serif;
+      overflow-x: hidden;
+      cursor: none;
+    }
+
+    /* Noise texture */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 1000;
+      opacity: 0.45;
+    }
+
+    /* Custom Cursor */
+    #cursor {
+      width: 12px;
+      height: 12px;
+      background: var(--cream);
+      border-radius: 50%;
+      position: fixed;
+      top: 0;
+      left: 0;
+      pointer-events: none;
+      z-index: 9999;
+      transform: translate(-50%, -50%);
+      transition: transform 0.15s ease, opacity 0.3s ease;
+      mix-blend-mode: difference;
+    }
+
+    #cursor-ring {
+      width: 40px;
+      height: 40px;
+      border: 1.5px solid rgba(237, 224, 200, 0.4);
+      border-radius: 50%;
+      position: fixed;
+      top: 0;
+      left: 0;
+      pointer-events: none;
+      z-index: 9998;
+      transform: translate(-50%, -50%);
+      transition: width 0.3s ease, height 0.3s ease, opacity 0.3s ease;
+    }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar {
+      width: 4px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: var(--darker);
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: var(--brown);
+      border-radius: 2px;
+    }
+
+    /* Top Navigation Bar */
+    #sidebar-nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      width: 100%;
+      height: 90px;
+      z-index: 50;
+      background: rgba(13, 8, 5, 0.82);
+      backdrop-filter: blur(25px) saturate(180%);
+      -webkit-backdrop-filter: blur(25px) saturate(180%);
+      border-bottom: 1px solid rgba(237, 224, 200, 0.08);
+      border-right: none;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0;
+      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .sidebar-links {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 2.5rem;
+      margin-top: 0;
+      width: auto;
+    }
+
+    .nav-link {
+      position: relative;
+      color: rgba(237, 224, 200, 0.55);
+      font-size: 0.85rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      transition: color 0.3s ease;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+    }
+
+    .nav-link::before {
+      content: '';
+      width: 0;
+      height: 2px;
+      background: var(--cream);
+      transition: width 0.3s ease;
+    }
+
+    .nav-link:hover {
+      color: var(--cream);
+    }
+
+    .nav-link:hover::before {
+      width: 10px;
+    }
+
+    @media (max-width: 768px) {
+      #sidebar-nav {
+        padding: 0 1.2rem;
+        height: 75px;
+      }
+      .sidebar-links {
+        gap: 1.2rem;
+      }
+    }
+
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      width: 0;
+      height: 1px;
+      background: var(--cream);
+      transition: width 0.3s ease;
+    }
+
+    .nav-link:hover {
+      color: var(--cream);
+    }
+
+    .nav-link:hover::after {
+      width: 100%;
+    }
+
+    /* Hero glows */
+    .hero-glow {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(120px);
+      pointer-events: none;
+    }
+
+    .glow-1 {
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(61, 35, 20, 0.55) 0%, transparent 70%);
+      top: -120px;
+      left: -160px;
+      animation: floatGlow1 9s ease-in-out infinite;
+    }
+
+    .glow-2 {
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(circle, rgba(237, 224, 200, 0.055) 0%, transparent 70%);
+      bottom: -60px;
+      right: -100px;
+      animation: floatGlow2 11s ease-in-out infinite;
+    }
+
+    .glow-center {
+      width: 350px;
+      height: 350px;
+      background: radial-gradient(circle, rgba(61, 35, 20, 0.3) 0%, transparent 70%);
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      animation: pulseGlow 7s ease-in-out infinite;
+    }
+
+    @keyframes floatGlow1 {
+
+      0%,
+      100% {
+        transform: translate(0, 0) scale(1);
+      }
+
+      50% {
+        transform: translate(30px, 40px) scale(1.1);
+      }
+    }
+
+    @keyframes floatGlow2 {
+
+      0%,
+      100% {
+        transform: translate(0, 0) scale(1);
+      }
+
+      50% {
+        transform: translate(-20px, -30px) scale(1.05);
+      }
+    }
+
+    @keyframes pulseGlow {
+
+      0%,
+      100% {
+        opacity: 0.3;
+        transform: translate(-50%, -50%) scale(1);
+      }
+
+      50% {
+        opacity: 0.6;
+        transform: translate(-50%, -50%) scale(1.2);
+      }
+    }
+
+    /* Hero Poster Style */
+    .hero-poster-wrapper {
+      display: flex;
+      align-items: flex-end;
+      gap: 1.2rem;
+      position: relative;
+    }
+
+    .poster-vertical {
+      writing-mode: vertical-rl;
+      transform: rotate(180deg);
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(1.6rem, 3.8vw, 3.5rem);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--cream);
+      opacity: 0.9;
+      white-space: nowrap;
+      display: flex;
+      justify-content: flex-start;
+      line-height: 1;
+      padding-bottom: 0.25rem;
+    }
+
+    .poster-content-right {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      width: 100%;
+    }
+
+    .poster-by {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(1rem, 2.2vw, 2rem);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--cream);
+      margin-bottom: 0.75rem;
+      text-align: left;
+    }
+
+    .poster-by span {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 0.85em;
+      font-weight: 400;
+      text-transform: lowercase;
+      opacity: 0.7;
+      margin-right: 0.3em;
+    }
+
+    .poster-main-grid {
+      display: grid;
+      grid-template-columns: auto auto;
+      column-gap: 1.8rem;
+      row-gap: 0.6rem;
+      line-height: 0.88;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(4.5rem, 13vw, 12rem);
+      font-weight: 700;
+      color: var(--cream);
+      letter-spacing: 0.02em;
+      text-align: left;
+      align-items: center;
+    }
+
+    .poster-block {
+      text-transform: uppercase;
+    }
+
+    .poster-number-badge {
+      background-color: var(--cream);
+      color: var(--darker);
+      border-radius: 100px;
+      padding: 0.05em 0.35em 0em 0.35em;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      line-height: 0.85;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    }
+
+    /* Section Divider Bar (Inspired by image) */
+    .section-divider-bar {
+      display: flex;
+      align-items: center;
+      gap: 1.2rem;
+      width: 100%;
+      max-width: 80rem;
+      margin: 4rem auto;
+      padding: 0 1.5rem;
+      opacity: 0.85;
+    }
+
+    .section-divider-icons {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .section-divider-circle {
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      border: 1.5px solid var(--cream);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--cream);
+      line-height: 1;
+    }
+
+    .section-divider-line {
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(90deg, rgba(237, 224, 200, 0.6) 0%, rgba(237, 224, 200, 0.3) 50%, rgba(237, 224, 200, 0.6) 100%);
+    }
+
+    .section-divider-text {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.72rem;
+      letter-spacing: 0.05em;
+      color: rgba(237, 224, 200, 0.7);
+      white-space: nowrap;
+    }
+
+    .hero-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 16px;
+      border: 1px solid rgba(237, 224, 200, 0.15);
+      border-radius: 100px;
+      background: rgba(237, 224, 200, 0.04);
+      backdrop-filter: blur(10px);
+      font-size: 0.72rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: rgba(237, 224, 200, 0.6);
+    }
+
+    .hero-tag .dot {
+      width: 6px;
+      height: 6px;
+      background: var(--cream);
+      border-radius: 50%;
+      animation: blink 2s ease-in-out infinite;
+    }
+
+    @keyframes blink {
+
+      0%,
+      100% {
+        opacity: 1;
+      }
+
+      50% {
+        opacity: 0.15;
+      }
+    }
+
+    /* Buttons */
+    .cta-btn {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 14px 32px;
+      background: var(--cream);
+      color: var(--darker);
+      border-radius: 100px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      text-decoration: none;
+      overflow: hidden;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      box-shadow: 0 0 40px rgba(237, 224, 200, 0.15), 0 4px 20px rgba(0, 0, 0, 0.4);
+    }
+
+    .cta-btn:hover {
+      transform: translateY(-3px) scale(1.02);
+      box-shadow: 0 0 60px rgba(237, 224, 200, 0.25), 0 10px 30px rgba(0, 0, 0, 0.5);
+    }
+
+    .cta-ghost {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 14px 32px;
+      border: 1px solid rgba(237, 224, 200, 0.2);
+      border-radius: 100px;
+      font-size: 0.82rem;
+      font-weight: 500;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      color: rgba(237, 224, 200, 0.7);
+      text-decoration: none;
+      backdrop-filter: blur(10px);
+      background: rgba(237, 224, 200, 0.03);
+      transition: all 0.3s ease;
+    }
+
+    .cta-ghost:hover {
+      background: rgba(237, 224, 200, 0.08);
+      border-color: rgba(237, 224, 200, 0.4);
+      color: var(--cream);
+      transform: translateY(-2px);
+    }
+
+    /* Modern Scroll Indicator Pill / Arrow */
+    .scroll-indicator-container {
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.4rem;
+      cursor: pointer;
+      text-decoration: none;
+      transition: opacity 0.3s ease;
+    }
+
+    .scroll-indicator-container:hover {
+      opacity: 0.85;
+    }
+
+    .scroll-pill {
+      width: 22px;
+      height: 38px;
+      border: 1.5px solid rgba(237, 224, 200, 0.35);
+      border-radius: 100px;
+      position: relative;
+      display: flex;
+      justify-content: center;
+      padding-top: 6px;
+      background: rgba(237, 224, 200, 0.02);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    .scroll-dot {
+      width: 4px;
+      height: 8px;
+      border-radius: 100px;
+      background: var(--cream);
+      box-shadow: 0 0 10px var(--cream);
+      animation: scrollMove 2s cubic-bezier(0.65, 0, 0.35, 1) infinite;
+    }
+
+    @keyframes scrollMove {
+      0% {
+        transform: translateY(0);
+        opacity: 1;
+      }
+
+      50% {
+        transform: translateY(12px);
+        opacity: 0.4;
+      }
+
+      100% {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    .scroll-arrow-icon {
+      color: rgba(237, 224, 200, 0.5);
+      animation: bounceArrow 2s ease-in-out infinite;
+    }
+
+    @keyframes bounceArrow {
+
+      0%,
+      100% {
+        transform: translateY(0);
+        opacity: 0.5;
+      }
+
+      50% {
+        transform: translateY(4px);
+        opacity: 1;
+      }
+    }
+
+    /* Section labels & titles */
+    .section-label {
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(237, 224, 200, 0.35);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .section-label::before {
+      content: '';
+      display: block;
+      width: 30px;
+      height: 1px;
+      background: rgba(237, 224, 200, 0.35);
+    }
+
+    .section-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(3rem, 6vw, 6rem);
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      line-height: 1;
+      color: var(--cream);
+    }
+
+    .section-title em {
+      font-style: normal;
+      color: inherit;
+      -webkit-text-stroke: 0;
+    }
+
+    /* Software Logo Tags (Expandable Hover & Auto-loop) */
+    .software-logo-tag {
+      display: inline-flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 0;
+      opacity: 0.75;
+      transition: opacity 0.6s ease-in-out;
+      cursor: pointer;
+      vertical-align: middle;
+    }
+
+    .software-logo-tag:hover,
+    .software-logo-tag.active {
+      opacity: 1;
+    }
+
+    .software-logo-tag img {
+      width: 44px;
+      height: 44px;
+      object-fit: contain;
+      flex-shrink: 0;
+      display: block;
+    }
+
+    .software-info {
+      display: inline-flex;
+      flex-direction: column;
+      justify-content: center;
+      max-width: 0;
+      opacity: 0;
+      overflow: hidden;
+      white-space: nowrap;
+      margin-left: 0;
+      transition: max-width 0.4s ease-in-out,
+                  opacity 0.3s ease-in-out,
+                  margin-left 0.4s ease-in-out;
+    }
+
+    .software-logo-tag:hover .software-info,
+    .software-logo-tag.active .software-info {
+      max-width: 140px;
+      opacity: 1;
+      margin-left: 10px;
+      transition: max-width 0.5s ease-in-out,
+                  opacity 0.4s ease-in-out 0.1s,
+                  margin-left 0.5s ease-in-out;
+    }
+
+    .software-name {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--cream);
+      line-height: 1.2;
+    }
+
+    .software-dots {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      margin-top: 4px;
+    }
+
+    .software-dots .dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      border: 1px solid var(--cream);
+      box-sizing: border-box;
+    }
+
+    .software-dots .dot.filled {
+      background-color: var(--cream);
+    }
+
+    /* Glass card */
+    .glass-card {
+      position: relative;
+      background: rgba(237, 224, 200, 0.03);
+      border: 1px solid rgba(237, 224, 200, 0.08);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-radius: 20px;
+      overflow: hidden;
+      transition: border-color 0.4s ease, background 0.4s ease, transform 0.4s ease, box-shadow 0.4s ease;
+    }
+
+    .glass-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 20px;
+      background: radial-gradient(400px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(237, 224, 200, 0.18), transparent 60%);
+      opacity: 0;
+      transition: opacity 0.4s ease;
+      pointer-events: none;
+    }
+
+    .glass-card:hover::before {
+      opacity: 1;
+    }
+
+    .glass-card:hover {
+      background: rgba(237, 224, 200, 0.05);
+      border-color: rgba(237, 224, 200, 0.45);
+      transform: translateY(-4px);
+      box-shadow: inset 0 0 25px rgba(237, 224, 200, 0.15);
+    }
+
+    /* Project cards */
+    .project-card {
+      position: relative;
+      border-radius: 16px;
+      overflow: hidden;
+      cursor: none;
+    }
+
+    .project-card .card-img-wrap {
+      position: absolute;
+      inset: 0;
+      transition: transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+
+    .project-card:hover .card-img-wrap {
+      transform: scale(1.07);
+    }
+
+    .card-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(13, 8, 5, 0.95) 0%, rgba(13, 8, 5, 0.2) 60%, transparent 100%);
+      transition: background 0.5s ease;
+    }
+
+    .project-card:hover .card-overlay {
+      background: linear-gradient(to top, rgba(13, 8, 5, 0.98) 0%, rgba(13, 8, 5, 0.55) 70%, rgba(13, 8, 5, 0.1) 100%);
+    }
+
+    .card-content {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 28px;
+      transform: translateY(8px);
+      transition: transform 0.4s ease;
+    }
+
+    .project-card:hover .card-content {
+      transform: translateY(0);
+    }
+
+    .card-tag {
+      display: inline-block;
+      padding: 3px 10px;
+      border: 1px solid rgba(237, 224, 200, 0.22);
+      border-radius: 100px;
+      font-size: 0.65rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: rgba(237, 224, 200, 0.6);
+      margin-bottom: 8px;
+      backdrop-filter: blur(6px);
+      background: rgba(237, 224, 200, 0.05);
+    }
+
+    .card-hover-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 20px;
+      border: 1px solid rgba(237, 224, 200, 0.28);
+      border-radius: 100px;
+      font-size: 0.72rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--cream);
+      margin-top: 14px;
+      opacity: 0;
+      transform: translateY(10px);
+      transition: opacity 0.4s ease 0.08s, transform 0.4s ease 0.08s;
+      backdrop-filter: blur(10px);
+      background: rgba(237, 224, 200, 0.06);
+      text-decoration: none;
+    }
+
+    .project-card:hover .card-hover-cta {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Method */
+    .method-number {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(5rem, 12vw, 12rem);
+      font-weight: 900;
+      color: transparent;
+      -webkit-text-stroke: 1px rgba(237, 224, 200, 0.07);
+      line-height: 1;
+      position: absolute;
+      top: -20px;
+      right: -10px;
+      pointer-events: none;
+      user-select: none;
+      transition: -webkit-text-stroke-color 0.4s ease;
+    }
+
+    .method-step:hover .method-number {
+      -webkit-text-stroke-color: rgba(237, 224, 200, 0.14);
+    }
+
+    .method-icon {
+      width: 52px;
+      height: 52px;
+      border-radius: 14px;
+      background: rgba(237, 224, 200, 0.05);
+      border: 1px solid rgba(237, 224, 200, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 24px;
+      transition: all 0.4s ease;
+    }
+
+    .method-step:hover .method-icon {
+      background: rgba(237, 224, 200, 0.1);
+      border-color: rgba(237, 224, 200, 0.25);
+      transform: rotate(-6deg) scale(1.06);
+    }
+
+    /* Stats */
+    .stat-num {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      font-weight: 900;
+      color: var(--cream);
+      line-height: 1;
+    }
+
+    .stat-label {
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(237, 224, 200, 0.38);
+      margin-top: 4px;
+    }
+
+    .skill-tag {
+      display: inline-block;
+      padding: 6px 16px;
+      background: rgba(237, 224, 200, 0.04);
+      border: 1px solid rgba(237, 224, 200, 0.1);
+      border-radius: 100px;
+      font-size: 0.74rem;
+      letter-spacing: 0.07em;
+      color: rgba(237, 224, 200, 0.6);
+      transition: all 0.3s ease;
+    }
+
+    .skill-tag:hover {
+      background: rgba(237, 224, 200, 0.1);
+      border-color: rgba(237, 224, 200, 0.25);
+      color: var(--cream);
+      transform: translateY(-2px);
+    }
+
+    /* Social links */
+    .social-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      border: 1px solid rgba(237, 224, 200, 0.12);
+      background: rgba(237, 224, 200, 0.03);
+      color: rgba(237, 224, 200, 0.5);
+      transition: all 0.3s ease;
+      text-decoration: none;
+    }
+
+    .social-link:hover {
+      border-color: rgba(237, 224, 200, 0.35);
+      background: rgba(237, 224, 200, 0.08);
+      color: var(--cream);
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+    }
+
+    /* Divider */
+    .divider {
+      height: 1px;
+      background: linear-gradient(to right, transparent, rgba(237, 224, 200, 0.1), transparent);
+    }
+
+    /* Marquee */
+    @keyframes marquee {
+      from {
+        transform: translateX(0);
+      }
+
+      to {
+        transform: translateX(-50%);
+      }
+    }
+
+    .marquee-track {
+      display: flex;
+      gap: 60px;
+      animation: marquee 28s linear infinite;
+      width: max-content;
+    }
+
+    .marquee-item {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.5rem, 3vw, 2.5rem);
+      font-weight: 700;
+      font-style: italic;
+      color: transparent;
+      -webkit-text-stroke: 1px rgba(237, 224, 200, 0.18);
+      white-space: nowrap;
+    }
+
+    .marquee-dot {
+      font-size: 0.8rem;
+      color: rgba(237, 224, 200, 0.18);
+      display: flex;
+      align-items: center;
+    }
+
+    /* Marquee Tape Styles */
+    .marquee-track {
+      display: flex;
+      align-items: center;
+      white-space: nowrap;
+      animation: marqueeScroll 25s linear infinite;
+    }
+
+    .marquee-item {
+      font-family: 'Inter', sans-serif;
+      font-weight: 300;
+      font-size: clamp(0.85rem, 1.4vw, 1.2rem);
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(237, 224, 200, 0.85);
+      display: inline-flex;
+      align-items: center;
+    }
+
+    @keyframes marqueeScroll {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    /* Reveal animations */
+    [data-reveal] {
+      opacity: 0;
+      transform: translateY(38px);
+      transition: opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1),
+        transform 0.85s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    [data-reveal].revealed {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    [data-delay="100"] {
+      transition-delay: 0.1s;
+    }
+
+    [data-delay="200"] {
+      transition-delay: 0.2s;
+    }
+
+    [data-delay="300"] {
+      transition-delay: 0.3s;
+    }
+
+    [data-delay="400"] {
+      transition-delay: 0.4s;
+    }
+
+    [data-delay="500"] {
+      transition-delay: 0.5s;
+    }
+
+    [data-delay="600"] {
+      transition-delay: 0.6s;
+    }
+
+    /* Hero animations */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+
+      to {
+        opacity: 1;
+      }
+    }
+
+    .anim-fadeup {
+      animation: fadeInUp 0.9s cubic-bezier(0.16, 1, 0.3, 1) both;
+    }
+
+    .anim-fadein {
+      animation: fadeIn 0.8s ease both;
+    }
+
+    @media (max-width: 768px) {
+      .hero-headline {
+        font-size: clamp(2.8rem, 13vw, 5rem);
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Custom Cursor -->
+  <div id="cursor"></div>
+  <div id="cursor-ring"></div>
+
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <!-- SIDEBAR NAVIGATION (MENÚ LATERAL IZQUIERDO)               -->
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <header id="sidebar-nav">
+    <div class="max-w-7xl mx-auto px-6 md:px-12 w-full flex items-center justify-between">
+      <!-- Top Logo -->
+      <a href="#hero" class="flex items-center">
+        <img src="Crema Horizontal transparente@4x.png" alt="Lino Logo"
+          style="height: 72px; width: auto; max-width: 100%; object-fit: contain;" />
+      </a>
+
+      <!-- Nav Links (Horizontal) -->
+      <div class="sidebar-links">
+        <a href="#sobre-mi" class="nav-link">Sobre mí</a>
+        <a href="#proyectos" class="nav-link">Proyectos</a>
+        <a href="#metodo" class="nav-link">Método</a>
+      </div>
+
+      <!-- Right CTA Button -->
+      <div class="flex items-center gap-4">
+        <a href="mailto:levanoencinas@gmail.com" class="cta-btn text-center justify-center"
+          style="padding: 8px 18px; font-size: 0.72rem; letter-spacing: 0.05em;">
+          <span>Contacto</span>
+          <svg width="10" height="10" viewBox="0 0 12 12" fill="none">
+            <path d="M2 10L10 2M10 2H4M10 2V8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+              stroke-linejoin="round" />
+          </svg>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <!-- HERO                                                        -->
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <section id="hero" class="relative flex items-center justify-center overflow-hidden pb-0 min-h-fit">
+    <!-- Glows -->
+    <div class="hero-glow glow-1"></div>
+    <div class="hero-glow glow-2"></div>
+    <div class="hero-glow glow-center"></div>
+
+    <div class="relative z-10 max-w-7xl mx-auto px-6 md:px-12 pt-44 pb-0 w-full">
+      <div class="grid lg:grid-cols-2 gap-16 items-center">
+
+        <!-- Left: Poster Layout -->
+        <div>
+          <div class="hero-poster-wrapper anim-fadeup mb-8" style="animation-delay:0.3s">
+            <!-- Vertical Text -->
+            <div class="poster-vertical">
+              DISEÑO GRÁFICO
+            </div>
+
+            <!-- Main Content -->
+            <div class="poster-content-right">
+              <!-- Top Sub-by header -->
+              <div class="poster-by">
+                <span>por</span> LINO <span class="ml-2 opacity-40 font-normal">/ 2026</span>
+              </div>
+
+              <!-- Big Grid Title: PORTA / FOLIO -->
+              <div class="poster-main-grid">
+                <div class="poster-block">PORTA</div>
+                <div class="poster-block"></div>
+                <div class="poster-block">FOLIO</div>
+                <div class="poster-block"></div>
+              </div>
+            </div>
+          </div>
+
+          <p class="anim-fadeup mb-10"
+            style="animation-delay:0.55s; font-size: 0.95rem; font-weight: 300; letter-spacing: 0.03em; color: rgba(237,224,200,0.48); max-width: 440px; line-height: 1.8;">
+            UX/UI, branding, packaging y señalética. Proyectos reales con impacto real. Disponible para freelance.
+          </p>
+
+          <div class="flex flex-wrap gap-4 anim-fadeup" style="animation-delay:0.75s">
+            <a href="#proyectos" class="cta-btn">
+              <span>Ver proyectos</span>
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                <path d="M3 11L11 3M11 3H5M11 3V9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                  stroke-linejoin="round" />
+              </svg>
+            </a>
+            <a href="#sobre-mi" class="cta-ghost">Sobre mí</a>
+          </div>
+        </div>
+
+        <!-- Visual -->
+        <div class="relative hidden lg:block">
+          <div class="relative w-full max-w-sm ml-auto" style="aspect-ratio: 1;">
+            <!-- Main card -->
+            <div class="absolute inset-0 rounded-3xl flex items-center justify-center"
+              style="background: linear-gradient(135deg, rgba(237,224,200,0.06) 0%, rgba(237,224,200,0.02) 100%); border: 1px solid rgba(237,224,200,0.1); backdrop-filter: blur(20px);">
+              <div class="text-center p-6">
+                <img src="Isotipo Transparente@4x.png" alt="Lino Logo" class="w-48 h-48 object-contain mx-auto" />
+                <p class="text-xs tracking-widest uppercase mt-4" style="color: rgba(237,224,200,0.4);">Portafolio 2026
+                </p>
+              </div>
+              <div class="absolute top-4 right-4 w-16 h-16 rounded-full"
+                style="background: radial-gradient(circle, rgba(237,224,200,0.07) 0%, transparent 70%);"></div>
+            </div>
+
+            <!-- Floating stat 1 -->
+            <div class="glass-card absolute bottom-0 -left-8 px-5 py-4"
+              style="animation: floatGlow2 6s ease-in-out infinite; animation-delay: 0s;">
+              <div class="stat-num" style="font-size: 1.8rem;">3+</div>
+              <div class="stat-label">Años en diseño</div>
+            </div>
+            <!-- Floating stat 2 -->
+            <div class="glass-card absolute -top-6 -right-6 px-5 py-4"
+              style="animation: floatGlow1 7.5s ease-in-out infinite; animation-delay: -3s;">
+              <div class="stat-num" style="font-size: 1.8rem;">5+</div>
+              <div class="stat-label">Proyectos reales</div>
+            </div>
+          </div>
+        </div>
+  </section>
+
+  <!-- Decorative Divider Bar -->
+  <div class="section-divider-bar" data-reveal style="margin-top: 1.25rem; margin-bottom: 8rem;">
+    <div class="section-divider-line"></div>
+    <div class="section-divider-text" style="font-size: 0.85rem; font-weight: 500;">Agosto, 2026 - Todos los derechos reservados©</div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <!-- MARQUEE                                                     -->
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <div class="mt-24 py-6 overflow-hidden flex items-center"
+    style="border-top: 1px solid rgba(237,224,200,0.06); border-bottom: 1px solid rgba(237,224,200,0.06);">
+    <div class="marquee-track flex items-center">
+      <span class="marquee-item">UI/UX</span><img src="Isotipo Transparente@4x.png" alt="Isotipo" class="inline-block h-8 w-auto mx-8 align-middle" />
+      <span class="marquee-item">Identidad Visual</span><img src="Isotipo Transparente@4x.png" alt="Isotipo" class="inline-block h-8 w-auto mx-8 align-middle" />
+      <span class="marquee-item">Diseño Digital</span><img src="Isotipo Transparente@4x.png" alt="Isotipo" class="inline-block h-8 w-auto mx-8 align-middle" />
+      <span class="marquee-item">Packaging & Retail</span><img src="Isotipo Transparente@4x.png" alt="Isotipo" class="inline-block h-8 w-auto mx-8 align-middle" />
+      <span class="marquee-item">Señalética & Espacios</span><img src="Isotipo Transparente@4x.png" alt="Isotipo" class="inline-block h-8 w-auto mx-8 align-middle" />
+      
+      <span class="marquee-item">UI/UX</span><img src="Isotipo Transparente@4x.png" alt="Isotipo" class="inline-block h-8 w-auto mx-8 align-middle" />
+      <span class="marquee-item">Identidad Visual</span><img src="Isotipo Transparente@4x.png" alt="Isotipo" class="inline-block h-8 w-auto mx-8 align-middle" />
+      <span class="marquee-item">Diseño Digital</span><img src="Isotipo Transparente@4x.png" alt="Isotipo" class="inline-block h-8 w-auto mx-8 align-middle" />
+      <span class="marquee-item">Packaging & Retail</span><img src="Isotipo Transparente@4x.png" alt="Isotipo" class="inline-block h-8 w-auto mx-8 align-middle" />
+      <span class="marquee-item">Señalética & Espacios</span><img src="Isotipo Transparente@4x.png" alt="Isotipo" class="inline-block h-8 w-auto mx-8 align-middle" />
+    </div>
+  </div>
+
+  <!-- Scroll indicator (Debajo de la cinta deslizable) -->
+  <div class="flex justify-center my-6" data-reveal>
+    <a href="#sobre-mi" class="scroll-indicator-container" aria-label="Desplazar abajo">
+      <div class="scroll-pill">
+        <div class="scroll-dot"></div>
+      </div>
+      <div class="scroll-arrow-icon">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="6 9 12 15 18 9"></polyline>
+        </svg>
+      </div>
+    </a>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <!-- SOBRE MÍ                                                    -->
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <section id="sobre-mi" class="py-24 md:py-36 max-w-7xl mx-auto px-6 md:px-12">
+    <div class="grid lg:grid-cols-2 gap-16 items-start">
+
+      <div>
+        <div class="section-label mb-4" data-reveal>Quién soy</div>
+        <h2 class="section-title mb-8" data-reveal data-delay="100">Sobre <em>mí</em></h2>
+
+        <div class="space-y-5 text-base leading-relaxed" style="color: rgba(237,224,200,0.58);">
+          <p data-reveal data-delay="200">
+            Soy <strong style="color: var(--cream); font-weight: 600;">Valentino Levano Encinas</strong> — Lino — diseñador UX/UI y gráfico ubicado en Callao, Perú. Autodidacta por naturaleza: combino mi formación en Cibertec con mentoring externo y práctica constante.
+          </p>
+          <p data-reveal data-delay="300">
+            Cuento con experiencia real diseñando para clientes en producción: la plataforma de CIERUM (proptech activa), Giantucchi (IA para empresas) y señalética para el Circuito Mágico del Agua. Cada píxel tiene una razón de ser.
+          </p>
+          <p data-reveal data-delay="400">
+            Busco proyectos donde aportar soluciones visuales claras — branding, packaging, UX/UI o señalética — y seguir creciendo junto a clientes reales.
+          </p>
+        </div>
+
+        <div class="mt-10" data-reveal data-delay="500">
+          <div class="text-xs tracking-widest uppercase mb-4" style="color: rgba(237,224,200,0.28);">Servicios</div>
+          <div class="flex flex-wrap gap-2">
+            <span class="skill-tag">Diseño UX/UI</span>
+            <span class="skill-tag">Piezas Publicitarias</span>
+            <span class="skill-tag">Diseño de Packaging</span>
+            <span class="skill-tag">Señalética & Wayfinding</span>
+            <span class="skill-tag">Branding</span>
+            <span class="skill-tag">Identidad Visual</span>
+          </div>
+        </div>
+
+        <div class="mt-8" data-reveal data-delay="600">
+          <div class="text-xs tracking-widest uppercase mb-4" style="color: rgba(237,224,200,0.28);">Software</div>
+          <div class="flex flex-wrap gap-6 items-center" style="padding: 0.25rem 0;">
+
+            <!-- Canva -->
+            <div class="software-logo-tag" title="Canva">
+              <img src="Canva.png" alt="Canva" />
+              <div class="software-info">
+                <span class="software-name">CANVA</span>
+                <div class="software-dots">
+                  <span class="dot filled"></span>
+                  <span class="dot filled"></span>
+                  <span class="dot filled"></span>
+                  <span class="dot filled"></span>
+                  <span class="dot"></span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Figma -->
+            <div class="software-logo-tag" title="Figma">
+              <img src="Figma.png" alt="Figma" />
+              <div class="software-info">
+                <span class="software-name">FIGMA</span>
+                <div class="software-dots">
+                  <span class="dot filled"></span>
+                  <span class="dot filled"></span>
+                  <span class="dot filled"></span>
+                  <span class="dot filled"></span>
+                  <span class="dot filled"></span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Illustrator -->
+            <div class="software-logo-tag" title="Adobe Illustrator">
+              <img src="Ilustrator.png" alt="Illustrator" />
+              <div class="software-info">
+                <span class="software-name">ILLUSTRATOR</span>
+                <div class="software-dots">
+                  <span class="dot filled"></span>
+                  <span class="dot filled"></span>
+                  <span class="dot filled"></span>
+                  <span class="dot filled"></span>
+                  <span class="dot filled"></span>
+                </div>
+              </div>
+            </div>
+
+            <!-- InDesign -->
+            <div class="software-logo-tag" title="Adobe InDesign">
+              <img src="Indesign.png" alt="InDesign" />
+              <div class="software-info">
+                <span class="software-name">INDESIGN</span>
+                <div class="software-dots">
+                  <span class="dot filled"></span>
+                  <span class="dot filled"></span>
+                  <span class="dot filled"></span>
+                  <span class="dot filled"></span>
+                  <span class="dot"></span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Photoshop -->
+            <div class="software-logo-tag" title="Adobe Photoshop">
+              <img src="Photoshop.png" alt="Photoshop" />
+              <div class="software-info">
+                <span class="software-name">PHOTOSHOP</span>
+                <div class="software-dots">
+                  <span class="dot filled"></span>
+                  <span class="dot filled"></span>
+                  <span class="dot filled"></span>
+                  <span class="dot filled"></span>
+                  <span class="dot"></span>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="mt-8" data-reveal data-delay="600">
+          <div class="text-xs tracking-widest uppercase mb-4" style="color: rgba(237,224,200,0.28);">Formación</div>
+          <div class="space-y-2">
+            <div class="flex items-start gap-3">
+              <div class="w-1 h-1 rounded-full mt-2 shrink-0" style="background: rgba(237,224,200,0.35);"></div>
+              <div>
+                <span style="color: var(--cream); font-size: 0.82rem; font-weight: 500;">Diseño Gráfico —
+                  Cibertec</span>
+                <span class="text-xs ml-2" style="color: rgba(237,224,200,0.3);">2023 – Actualidad</span>
+              </div>
+            </div>
+            <div class="flex items-start gap-3">
+              <div class="w-1 h-1 rounded-full mt-2 shrink-0" style="background: rgba(237,224,200,0.35);"></div>
+              <div>
+                <span style="color: var(--cream); font-size: 0.82rem; font-weight: 500;">Mentoring UX/UI —
+                  Giantucchi</span>
+                <span class="text-xs ml-2" style="color: rgba(237,224,200,0.3);">2026</span>
+              </div>
+            </div>
+            <div class="flex items-start gap-3">
+              <div class="w-1 h-1 rounded-full mt-2 shrink-0" style="background: rgba(237,224,200,0.35);"></div>
+              <div>
+                <span style="color: var(--cream); font-size: 0.82rem; font-weight: 500;">Inglés Intermedio —
+                  ICPNA</span>
+                <span class="text-xs ml-2" style="color: rgba(237,224,200,0.3);">2025</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="space-y-5">
+        <!-- Stats grid -->
+        <div id="stats-grid" class="grid grid-cols-2 gap-4" data-reveal data-delay="200">
+          <div class="glass-card p-6">
+            <div class="stat-num">3+</div>
+            <div class="stat-label">Años en diseño</div>
+          </div>
+          <div class="glass-card p-6">
+            <div class="stat-num">5</div>
+            <div class="stat-label">Proyectos reales</div>
+          </div>
+          <div class="glass-card p-6">
+            <div class="stat-num">4</div>
+            <div class="stat-label">Herramientas pro</div>
+          </div>
+          <div class="glass-card p-6">
+            <div class="stat-num">2</div>
+            <div class="stat-label">Idiomas</div>
+          </div>
+        </div>
+
+        <!-- Quote -->
+        <div class="glass-card p-8 relative overflow-hidden" data-reveal data-delay="300">
+          <div class="absolute top-3 left-6 font-editorial font-black"
+            style="font-size: 7rem; color: rgba(237,224,200,0.04); line-height: 1;">"</div>
+          <p class="font-editorial italic font-bold text-brand-cream leading-snug relative z-10 mt-4"
+            style="font-size: 1.35rem;">
+            "El diseño es la embajada silenciosa de una marca en el mundo."
+          </p>
+          <div class="mt-4 flex items-center gap-3 relative z-10">
+            <div class="w-8 h-px" style="background: rgba(237,224,200,0.3);"></div>
+            <span class="text-xs tracking-wider uppercase" style="color: rgba(237,224,200,0.35);">Lino · Filosofía de
+              diseño</span>
+          </div>
+        </div>
+
+        <!-- CTA & Contact Card -->
+        <div class="glass-card p-6 md:p-8" data-reveal data-delay="400">
+          <p class="text-xs uppercase tracking-widest mb-1" style="color: rgba(237,224,200,0.45);">¿Tienes un proyecto en mente?</p>
+          <h3 class="font-editorial italic font-bold text-brand-cream mb-6" style="font-size: 2.2rem; line-height: 1;">HABLEMOS.</h3>
+          
+          <div class="grid grid-cols-1 sm:grid-cols-12 gap-6 items-center">
+            <!-- QR Code (Left Side) -->
+            <div class="sm:col-span-4 flex flex-col items-center justify-center p-3 rounded-xl" style="background: rgba(237,224,200,0.03); border: 1px solid rgba(237,224,200,0.1);">
+              <svg width="105" height="105" viewBox="0 0 100 100" fill="var(--cream)" xmlns="http://www.w3.org/2000/svg">
+                <!-- QR Outer borders -->
+                <rect x="5" y="5" width="30" height="30" rx="4" fill="none" stroke="var(--cream)" stroke-width="5"/>
+                <rect x="12" y="12" width="16" height="16" rx="2" fill="var(--cream)"/>
+                <rect x="65" y="5" width="30" height="30" rx="4" fill="none" stroke="var(--cream)" stroke-width="5"/>
+                <rect x="72" y="12" width="16" height="16" rx="2" fill="var(--cream)"/>
+                <rect x="5" y="65" width="30" height="30" rx="4" fill="none" stroke="var(--cream)" stroke-width="5"/>
+                <rect x="12" y="72" width="16" height="16" rx="2" fill="var(--cream)"/>
+                <!-- QR Data Modules -->
+                <rect x="42" y="8" width="6" height="6" rx="1"/>
+                <rect x="52" y="18" width="6" height="6" rx="1"/>
+                <rect x="42" y="28" width="6" height="6" rx="1"/>
+                <rect x="8" y="42" width="6" height="6" rx="1"/>
+                <rect x="18" y="52" width="6" height="6" rx="1"/>
+                <rect x="28" y="42" width="6" height="6" rx="1"/>
+                <rect x="42" y="42" width="16" height="16" rx="2"/>
+                <rect x="65" y="42" width="8" height="8" rx="1"/>
+                <rect x="78" y="42" width="14" height="6" rx="1"/>
+                <rect x="42" y="65" width="8" height="14" rx="1"/>
+                <rect x="55" y="78" width="14" height="8" rx="1"/>
+                <rect x="72" y="65" width="10" height="10" rx="1"/>
+                <rect x="85" y="80" width="10" height="10" rx="1"/>
+              </svg>
+              <span class="text-[0.62rem] uppercase tracking-wider mt-2" style="color: rgba(237,224,200,0.35);">Escanear vCard</span>
+            </div>
+
+            <!-- Links & Social List (Right Side) -->
+            <div class="sm:col-span-8 flex flex-col gap-2.5">
+              <!-- Tel -->
+              <a href="tel:+51924897902" class="flex items-center gap-3 p-2 rounded-lg transition-colors hover:bg-[rgba(237,224,200,0.06)] group" id="link-contact-tel">
+                <div class="w-8 h-8 rounded shrink-0 flex items-center justify-center bg-[rgba(237,224,200,0.08)] text-[var(--cream)] group-hover:bg-[var(--cream)] group-hover:text-[var(--darker)] transition-colors">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 1.27h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.81a16 16 0 0 0 6.29 6.29l.95-.95a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7a2 2 0 0 1 1.72 2.02z"/></svg>
+                </div>
+                <span class="text-xs tracking-wide font-medium text-[var(--cream)]">+51 924 897 902</span>
+              </a>
+
+              <!-- Email -->
+              <a href="https://mail.google.com/mail/?view=cm&fs=1&to=levanoencinas@gmail.com" target="_blank" rel="noopener" class="flex items-center gap-3 p-2 rounded-lg transition-colors hover:bg-[rgba(237,224,200,0.06)] group" id="link-contact-email">
+                <div class="w-8 h-8 rounded shrink-0 flex items-center justify-center bg-[rgba(237,224,200,0.08)] text-[var(--cream)] group-hover:bg-[var(--cream)] group-hover:text-[var(--darker)] transition-colors">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                </div>
+                <span class="text-xs tracking-wide font-medium text-[var(--cream)] truncate">levanoencinas@gmail.com</span>
+              </a>
+
+              <!-- Behance -->
+              <a href="https://www.behance.net/linole" target="_blank" rel="noopener" class="flex items-center gap-3 p-2 rounded-lg transition-colors hover:bg-[rgba(237,224,200,0.06)] group" id="link-contact-behance">
+                <div class="w-8 h-8 rounded shrink-0 flex items-center justify-center bg-[rgba(237,224,200,0.08)] text-[var(--cream)] group-hover:bg-[var(--cream)] transition-colors">
+                  <img src="Behance.png" alt="Behance" class="w-5 h-5 object-contain" />
+                </div>
+                <span class="text-xs tracking-wide font-medium text-[var(--cream)]">behance.net/linole</span>
+              </a>
+
+              <!-- LinkedIn -->
+              <a href="https://www.linkedin.com/in/valentino-levano" target="_blank" rel="noopener" class="flex items-center gap-3 p-2 rounded-lg transition-colors hover:bg-[rgba(237,224,200,0.06)] group" id="link-contact-linkedin">
+                <div class="w-8 h-8 rounded shrink-0 flex items-center justify-center bg-[rgba(237,224,200,0.08)] text-[var(--cream)] group-hover:bg-[var(--cream)] group-hover:text-[var(--darker)] transition-colors">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+                </div>
+                <span class="text-xs tracking-wide font-medium text-[var(--cream)]">linkedin.com/in/valentino-levano</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+
+
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <!-- PROYECTOS                                                   -->
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <section id="proyectos" class="py-24 md:py-36 max-w-7xl mx-auto px-6 md:px-12">
+    <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-16">
+      <div>
+        <div class="section-label mb-4" data-reveal>Trabajo selecto</div>
+        <h2 class="section-title" data-reveal data-delay="100">
+          Proyectos<br /><em>destacados</em>
+        </h2>
+      </div>
+      <a href="#" class="cta-ghost self-start md:self-auto" data-reveal data-delay="200">
+        Ver todo el trabajo
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+          <path d="M3 11L11 3M11 3H5M11 3V9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+            stroke-linejoin="round" />
+        </svg>
+      </a>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-12 gap-4 md:gap-5">
+
+      <!-- P1 — Large: CIERUM UX/UI -->
+      <div class="project-card md:col-span-7" style="height: 480px;" data-reveal data-delay="100">
+        <div class="card-img-wrap">
+          <svg class="w-full h-full" preserveAspectRatio="xMidYMid slice" viewBox="0 0 700 480"
+            xmlns="http://www.w3.org/2000/svg">
+            <rect width="700" height="480" fill="#0C0E18" />
+            <defs>
+              <radialGradient id="rg1" cx="35%" cy="40%">
+                <stop offset="0%" stop-color="#1A2340" stop-opacity="0.85" />
+                <stop offset="100%" stop-color="#0D0805" stop-opacity="0" />
+              </radialGradient>
+              <filter id="f1">
+                <feGaussianBlur stdDeviation="50" />
+              </filter>
+            </defs>
+            <circle cx="220" cy="200" r="290" fill="url(#rg1)" filter="url(#f1)" />
+            <!-- UI wireframe elements -->
+            <rect x="120" y="120" width="460" height="30" rx="6" fill="rgba(237,224,200,0.04)"
+              stroke="rgba(237,224,200,0.07)" stroke-width="1" />
+            <rect x="120" y="165" width="220" height="160" rx="8" fill="rgba(237,224,200,0.03)"
+              stroke="rgba(237,224,200,0.06)" stroke-width="1" />
+            <rect x="360" y="165" width="220" height="75" rx="8" fill="rgba(237,224,200,0.03)"
+              stroke="rgba(237,224,200,0.06)" stroke-width="1" />
+            <rect x="360" y="250" width="220" height="75" rx="8" fill="rgba(237,224,200,0.03)"
+              stroke="rgba(237,224,200,0.06)" stroke-width="1" />
+            <rect x="120" y="340" width="460" height="50" rx="8" fill="rgba(237,224,200,0.025)"
+              stroke="rgba(237,224,200,0.05)" stroke-width="1" />
+            <text x="350" y="250" text-anchor="middle" dominant-baseline="middle" font-family="Playfair Display"
+              font-size="72" font-style="italic" font-weight="900" fill="rgba(237,224,200,0.04)">UX</text>
+          </svg>
+        </div>
+        <div class="card-overlay"></div>
+        <div class="card-content">
+          <div class="card-tag">UX/UI · Proyecto real en producción</div>
+          <h3 class="font-editorial font-bold text-brand-cream leading-tight"
+            style="font-size: clamp(1.4rem, 2.5vw, 2rem);">Plataforma CIERUM</h3>
+          <p class="text-sm mt-1" style="color: rgba(237,224,200,0.52);">Landing page y plataforma web para proptech de
+            inversión inmobiliaria. En uso activo por la empresa.</p>
+          <a href="https://www.behance.net/linole" target="_blank" rel="noopener" class="card-hover-cta">Ver en Behance
+            →</a>
+        </div>
+      </div>
+
+      <!-- P2 — Small: Señalética CMA -->
+      <div class="project-card md:col-span-5" style="height: 230px;" data-reveal data-delay="200">
+        <div class="card-img-wrap">
+          <svg class="w-full h-full" preserveAspectRatio="xMidYMid slice" viewBox="0 0 500 230"
+            xmlns="http://www.w3.org/2000/svg">
+            <rect width="500" height="230" fill="#0A1008" />
+            <defs>
+              <radialGradient id="rg2" cx="60%" cy="35%">
+                <stop offset="0%" stop-color="#1A3D14" stop-opacity="0.7" />
+                <stop offset="100%" stop-color="#0D0805" stop-opacity="0" />
+              </radialGradient>
+              <filter id="f2">
+                <feGaussianBlur stdDeviation="30" />
+              </filter>
+            </defs>
+            <circle cx="300" cy="80" r="180" fill="url(#rg2)" filter="url(#f2)" />
+            <!-- Wayfinding pictograms -->
+            <circle cx="160" cy="115" r="35" stroke="rgba(237,224,200,0.09)" stroke-width="1" fill="none" />
+            <text x="160" y="120" text-anchor="middle" dominant-baseline="middle" font-size="22"
+              fill="rgba(237,224,200,0.09)">→</text>
+            <circle cx="250" cy="115" r="35" stroke="rgba(237,224,200,0.07)" stroke-width="1" fill="none" />
+            <text x="250" y="120" text-anchor="middle" dominant-baseline="middle" font-size="18"
+              fill="rgba(237,224,200,0.07)">i</text>
+            <circle cx="340" cy="115" r="35" stroke="rgba(237,224,200,0.07)" stroke-width="1" fill="none" />
+            <text x="340" y="120" text-anchor="middle" dominant-baseline="middle" font-size="18"
+              fill="rgba(237,224,200,0.07)">⛔</text>
+          </svg>
+        </div>
+        <div class="card-overlay"></div>
+        <div class="card-content">
+          <div class="card-tag">Señalética · Wayfinding</div>
+          <h3 class="font-editorial font-bold text-brand-cream text-xl">Circuito Mágico del Agua</h3>
+          <a href="https://www.behance.net/linole" target="_blank" rel="noopener" class="card-hover-cta">Ver en Behance
+            →</a>
+        </div>
+      </div>
+
+      <!-- P3 — Small: Packaging HERBI -->
+      <div class="project-card md:col-span-5" style="height: 230px;" data-reveal data-delay="300">
+        <div class="card-img-wrap">
+          <svg class="w-full h-full" preserveAspectRatio="xMidYMid slice" viewBox="0 0 500 230"
+            xmlns="http://www.w3.org/2000/svg">
+            <rect width="500" height="230" fill="#0D1008" />
+            <defs>
+              <radialGradient id="rg3" cx="30%" cy="65%">
+                <stop offset="0%" stop-color="#2D3D14" stop-opacity="0.75" />
+                <stop offset="100%" stop-color="#0D0805" stop-opacity="0" />
+              </radialGradient>
+              <filter id="f3">
+                <feGaussianBlur stdDeviation="35" />
+              </filter>
+            </defs>
+            <circle cx="120" cy="160" r="190" fill="url(#rg3)" filter="url(#f3)" />
+            <!-- Box dieline shape -->
+            <polygon points="190,50 310,50 340,85 340,185 160,185 160,85" stroke="rgba(237,224,200,0.08)"
+              stroke-width="1" fill="rgba(237,224,200,0.025)" />
+            <line x1="190" y1="50" x2="160" y2="85" stroke="rgba(237,224,200,0.06)" stroke-width="1"
+              stroke-dasharray="3 4" />
+            <line x1="310" y1="50" x2="340" y2="85" stroke="rgba(237,224,200,0.06)" stroke-width="1"
+              stroke-dasharray="3 4" />
+            <text x="250" y="122" text-anchor="middle" dominant-baseline="middle" font-family="Playfair Display"
+              font-size="24" font-weight="900" fill="rgba(237,224,200,0.08)">HERBI</text>
+          </svg>
+        </div>
+        <div class="card-overlay"></div>
+        <div class="card-content">
+          <div class="card-tag">Packaging · Rediseño</div>
+          <h3 class="font-editorial font-bold text-brand-cream text-xl">Caja HERBI Manzanilla</h3>
+          <a href="https://www.behance.net/linole" target="_blank" rel="noopener" class="card-hover-cta">Ver en Behance
+            →</a>
+        </div>
+      </div>
+
+      <!-- P4 — Wide: Branding Luminé -->
+      <div class="project-card md:col-span-7" style="height: 280px;" data-reveal data-delay="200">
+        <div class="card-img-wrap">
+          <svg class="w-full h-full" preserveAspectRatio="xMidYMid slice" viewBox="0 0 700 280"
+            xmlns="http://www.w3.org/2000/svg">
+            <rect width="700" height="280" fill="#100A10" />
+            <defs>
+              <radialGradient id="rg4" cx="50%" cy="50%">
+                <stop offset="0%" stop-color="#3D1440" stop-opacity="0.5" />
+                <stop offset="100%" stop-color="#0D0805" stop-opacity="0" />
+              </radialGradient>
+              <filter id="f4">
+                <feGaussianBlur stdDeviation="55" />
+              </filter>
+            </defs>
+            <circle cx="350" cy="140" r="220" fill="url(#rg4)" filter="url(#f4)" />
+            <line x1="80" y1="140" x2="620" y2="140" stroke="rgba(237,224,200,0.04)" stroke-width="1" />
+            <!-- Brand mark circles -->
+            <circle cx="320" cy="140" r="55" stroke="rgba(237,224,200,0.07)" stroke-width="1" fill="none" />
+            <circle cx="380" cy="140" r="55" stroke="rgba(237,224,200,0.05)" stroke-width="1" fill="none" />
+            <text x="350" y="155" text-anchor="middle" dominant-baseline="middle" font-family="Playfair Display"
+              font-size="90" font-weight="900" font-style="italic" fill="rgba(237,224,200,0.04)">Luminé</text>
+          </svg>
+        </div>
+        <div class="card-overlay"></div>
+        <div class="card-content">
+          <div class="card-tag">Branding · Manual de Marca</div>
+          <h3 class="font-editorial font-bold text-brand-cream" style="font-size: 1.5rem;">Manual de Marca Luminé</h3>
+          <p class="text-sm mt-1" style="color: rgba(237,224,200,0.48);">Sistema de identidad completo para marca de
+            skincare: logo, paleta, tipografía y aplicaciones.</p>
+          <a href="https://www.behance.net/linole" target="_blank" rel="noopener" class="card-hover-cta">Ver en Behance
+            →</a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+
+
+
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <!-- MÉTODO DE DISEÑO                                            -->
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <section id="metodo" class="py-24 md:py-36 relative overflow-hidden">
+    <div class="absolute inset-0 pointer-events-none">
+      <div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full"
+        style="width: 800px; height: 400px; background: radial-gradient(ellipse, rgba(61,35,20,0.18) 0%, transparent 70%); filter: blur(60px);">
+      </div>
+    </div>
+
+    <div class="max-w-7xl mx-auto px-6 md:px-12 relative z-10">
+      <div class="mb-20">
+        <div class="section-label mb-4" data-reveal>Mi proceso</div>
+        <h2 class="section-title" data-reveal data-delay="100">Método de <em>diseño</em></h2>
+        <p class="mt-6 max-w-xl text-sm leading-relaxed" style="color: rgba(237,224,200,0.42);" data-reveal
+          data-delay="200">
+          Cada proyecto sigue un proceso riguroso que transforma incertidumbre en claridad visual. Sin atajos, sin
+          soluciones genéricas.
+        </p>
+      </div>
+
+      <div class="grid md:grid-cols-3 gap-5">
+
+        <!-- Step 01 -->
+        <div class="method-step glass-card p-8 relative overflow-hidden" data-reveal data-delay="100">
+          <div class="method-number">01</div>
+          <div class="method-icon">
+            <svg width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="rgba(237,224,200,0.7)"
+              stroke-width="1.5" stroke-linecap="round">
+              <circle cx="10" cy="10" r="7" />
+              <path d="M15.5 15.5L20 20" />
+            </svg>
+          </div>
+          <div class="text-xs tracking-widest uppercase mb-3"
+            style="color: rgba(237,224,200,0.28); letter-spacing: 0.18em;">Fase 01</div>
+          <h3 class="font-editorial font-bold text-brand-cream mb-4" style="font-size: 2rem;">Investigación</h3>
+          <p class="text-sm leading-relaxed" style="color: rgba(237,224,200,0.5);">
+            Inmersión total en el mundo del cliente: mercado, competencia, arquetipos de audiencia y territorio
+            simbólico de la marca.
+          </p>
+          <div class="mt-8 flex flex-wrap gap-2">
+            <span class="skill-tag">Brand Audit</span>
+            <span class="skill-tag">Benchmarking</span>
+            <span class="skill-tag">Moodboard</span>
+          </div>
+        </div>
+
+        <!-- Step 02 -->
+        <div class="method-step glass-card p-8 relative overflow-hidden" data-reveal data-delay="200">
+          <div class="method-number">02</div>
+          <div class="method-icon">
+            <svg width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="rgba(237,224,200,0.7)"
+              stroke-width="1.5" stroke-linecap="round">
+              <path d="M9 2H2V9H9V2Z" />
+              <path d="M20 2H13V9H20V2Z" />
+              <path d="M9 13H2V20H9V13Z" />
+              <circle cx="16.5" cy="16.5" r="3.5" />
+            </svg>
+          </div>
+          <div class="text-xs tracking-widest uppercase mb-3"
+            style="color: rgba(237,224,200,0.28); letter-spacing: 0.18em;">Fase 02</div>
+          <h3 class="font-editorial font-bold text-brand-cream mb-4" style="font-size: 2rem;">Ideación</h3>
+          <p class="text-sm leading-relaxed" style="color: rgba(237,224,200,0.5);">
+            Exploración conceptual desinhibida. Bocetos rápidos, mapas mentales y síntesis de múltiples direcciones
+            creativas antes de seleccionar la más potente.
+          </p>
+          <div class="mt-8 flex flex-wrap gap-2">
+            <span class="skill-tag">Sketching</span>
+            <span class="skill-tag">Concepto</span>
+            <span class="skill-tag">Narrativa</span>
+          </div>
+        </div>
+
+        <!-- Step 03 -->
+        <div class="method-step glass-card p-8 relative overflow-hidden" data-reveal data-delay="300">
+          <div class="method-number">03</div>
+          <div class="method-icon">
+            <svg width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="rgba(237,224,200,0.7)"
+              stroke-width="1.5" stroke-linecap="round">
+              <path d="M12 2L2 7L12 12L22 7L12 2Z" />
+              <path d="M2 17L12 22L22 17" />
+              <path d="M2 12L12 17L22 12" />
+            </svg>
+          </div>
+          <div class="text-xs tracking-widest uppercase mb-3"
+            style="color: rgba(237,224,200,0.28); letter-spacing: 0.18em;">Fase 03</div>
+          <h3 class="font-editorial font-bold text-brand-cream mb-4" style="font-size: 2rem;">Ejecución</h3>
+          <p class="text-sm leading-relaxed" style="color: rgba(237,224,200,0.5);">
+            Producción con precisión artesanal. Cada píxel, tipografía y espacio negativo tiene una razón de ser.
+            Entrega con brand book completo.
+          </p>
+          <div class="mt-8 flex flex-wrap gap-2">
+            <span class="skill-tag">Alta fidelidad</span>
+            <span class="skill-tag">Brand book</span>
+            <span class="skill-tag">Assets</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+
+
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <!-- FOOTER                                                      -->
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <footer class="relative overflow-hidden">
+    <div class="divider"></div>
+
+    <!-- Big background text -->
+    <div class="absolute bottom-0 left-0 right-0 flex items-end justify-center overflow-hidden pointer-events-none"
+      style="height: 200px;">
+      <span class="font-editorial font-black select-none"
+        style="font-size: clamp(80px, 20vw, 200px); color: transparent; -webkit-text-stroke: 1px rgba(237,224,200,0.025); line-height: 1;">LINO</span>
+    </div>
+
+    <div class="max-w-7xl mx-auto px-6 md:px-12 pt-16 pb-10 relative z-10">
+      <div class="grid md:grid-cols-3 gap-10 mb-14">
+
+        <!-- Brand -->
+        <div>
+          <div class="flex items-center mb-5">
+            <img src="Crema Horizontal transparente@4x.png" alt="Lino Logo" style="height: 76px; width: auto; object-fit: contain;" />
+          </div>
+          <p class="text-sm leading-relaxed" style="color: rgba(237,224,200,0.38); max-width: 220px;">
+            Valentino Levano (Lino). UX/UI · Gráfico · Callao, Perú. Disponible para freelance.
+          </p>
+        </div>
+
+        <!-- Nav -->
+        <div>
+          <div class="text-xs tracking-widest uppercase mb-5" style="color: rgba(237,224,200,0.22);">Navegación</div>
+          <ul class="space-y-3">
+            <li><a href="#proyectos" class="nav-link"
+                style="font-size: 0.875rem; letter-spacing: 0.04em; text-transform: none;">Proyectos</a></li>
+            <li><a href="#metodo" class="nav-link"
+                style="font-size: 0.875rem; letter-spacing: 0.04em; text-transform: none;">Método de diseño</a></li>
+            <li><a href="#sobre-mi" class="nav-link"
+                style="font-size: 0.875rem; letter-spacing: 0.04em; text-transform: none;">Sobre mí</a></li>
+          </ul>
+        </div>
+
+        <!-- Contact -->
+        <div>
+          <div class="text-xs tracking-widest uppercase mb-5" style="color: rgba(237,224,200,0.22);">Contacto</div>
+          <a href="mailto:levanoencinas@gmail.com" class="block mb-1 hover:opacity-70 transition-opacity"
+            style="color: var(--cream); font-size: 0.88rem;">levanoencinas@gmail.com</a>
+          <a href="tel:+51924897902" class="block mb-4 hover:opacity-70 transition-opacity"
+            style="color: rgba(237,224,200,0.6); font-size: 0.85rem;">+51 924 897 902</a>
+          <p class="text-xs mb-5" style="color: rgba(237,224,200,0.28);">Callao, Perú · Disponible para freelance</p>
+          <div class="flex gap-3">
+            <!-- Behance -->
+            <a href="https://www.behance.net/linole" target="_blank" rel="noopener" id="social-behance"
+              class="social-link" aria-label="Behance">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                <path
+                  d="M22 7h-7V5h7v2zm1.726 10c-.442 1.297-2.029 3-5.101 3-3.074 0-5.564-1.729-5.564-5.675 0-3.91 2.325-5.92 5.466-5.92 3.082 0 4.964 1.782 5.375 4.426.078.506.109 1.188.095 2.14H15.97c.13 1.2.836 1.884 2.109 1.884.559 0 1.011-.167 1.339-.5h3.308zm-3.917-2.5c-.012-.578-.295-1.584-1.45-1.584-.92 0-1.476.612-1.62 1.584h3.07zm-14.023 2.5H0v-13h5.675c2.617 0 4.625 1.02 4.625 3.577 0 1.308-.692 2.234-1.835 2.912 1.509.576 2.407 1.592 2.407 3.18 0 2.85-2.3 4.331-5.086 4.331zM3.11 9.7h2.069c1.151 0 1.947-.417 1.947-1.593 0-1.129-.896-1.449-1.947-1.449H3.11V9.7zm0 5.3h2.411c1.274 0 2.081-.591 2.081-1.897 0-1.268-.947-1.812-2.194-1.812H3.11V15z" />
+              </svg>
+            </a>
+            <!-- Instagram -->
+            <a href="#" id="social-instagram" class="social-link" aria-label="Instagram">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+                stroke-linecap="round" stroke-linejoin="round">
+                <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
+                <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" />
+              </svg>
+            </a>
+            <!-- LinkedIn -->
+            <a href="#" id="social-linkedin" class="social-link" aria-label="LinkedIn">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
+                <rect x="2" y="9" width="4" height="12" />
+                <circle cx="4" cy="4" r="2" />
+              </svg>
+            </a>
+            <!-- Email -->
+            <a href="mailto:levanoencinas@gmail.com" id="social-email" class="social-link" aria-label="Email">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+                <polyline points="22,6 12,13 2,6" />
+              </svg>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="divider mb-8"></div>
+      <div class="flex flex-col md:flex-row items-center justify-between gap-4 text-xs"
+        style="color: rgba(237,224,200,0.22); letter-spacing: 0.06em;">
+        <span>© 2026 Valentino Levano (Lino) · Diseñador UX/UI & Gráfico · Callao, Perú</span>
+        <span>Diseñado con intención ✦ Construido con precisión</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <!-- JAVASCRIPT                                                  -->
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <script>
+    // ── Custom Cursor ──────────────────────────────────────────
+    const cursor = document.getElementById('cursor');
+    const cursorRing = document.getElementById('cursor-ring');
+    let mouseX = 0, mouseY = 0, ringX = 0, ringY = 0;
+
+    document.addEventListener('mousemove', e => {
+      mouseX = e.clientX; mouseY = e.clientY;
+      cursor.style.left = mouseX + 'px';
+      cursor.style.top = mouseY + 'px';
+    });
+    function animateRing() {
+      ringX += (mouseX - ringX) * 0.1;
+      ringY += (mouseY - ringY) * 0.1;
+      cursorRing.style.left = ringX + 'px';
+      cursorRing.style.top = ringY + 'px';
+      requestAnimationFrame(animateRing);
+    }
+    animateRing();
+
+    // ── Mouse spotlight for glass cards ─────────────────────
+    document.querySelectorAll('.glass-card').forEach(card => {
+      card.addEventListener('mousemove', e => {
+        const rect = card.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        card.style.setProperty('--mouse-x', `${x}px`);
+        card.style.setProperty('--mouse-y', `${y}px`);
+      });
+    });
+
+    document.querySelectorAll('a, button, .project-card, .skill-tag').forEach(el => {
+      el.addEventListener('mouseenter', () => {
+        cursor.style.transform = 'translate(-50%,-50%) scale(2.5)';
+        cursorRing.style.width = '60px';
+        cursorRing.style.height = '60px';
+        cursorRing.style.opacity = '0.6';
+      });
+      el.addEventListener('mouseleave', () => {
+        cursor.style.transform = 'translate(-50%,-50%) scale(1)';
+        cursorRing.style.width = '40px';
+        cursorRing.style.height = '40px';
+        cursorRing.style.opacity = '1';
+      });
+    });
+
+    document.addEventListener('mouseleave', () => { cursor.style.opacity = '0'; cursorRing.style.opacity = '0'; });
+    document.addEventListener('mouseenter', () => { cursor.style.opacity = '1'; cursorRing.style.opacity = '1'; });
+
+    // ── Navbar scroll ─────────────────────────────────────────
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      navbar.classList.toggle('scrolled', window.scrollY > 60);
+    });
+
+    // ── Scroll reveal ─────────────────────────────────────────
+    const revealObs = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) { e.target.classList.add('revealed'); revealObs.unobserve(e.target); }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+    document.querySelectorAll('[data-reveal]').forEach(el => revealObs.observe(el));
+
+    // ── Animated counters ─────────────────────────────────────
+    function animateCount(el, target, suffix) {
+      let cur = 0; const step = target / 60;
+      const t = setInterval(() => {
+        cur += step;
+        if (cur >= target) { cur = target; clearInterval(t); }
+        el.textContent = Math.floor(cur) + suffix;
+      }, 16);
+    }
+    const statsObs = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.querySelectorAll('.stat-num').forEach(num => {
+            const txt = num.textContent;
+            const plus = txt.includes('+');
+            animateCount(num, parseInt(txt), plus ? '+' : '');
+          });
+          statsObs.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.4 });
+    const sg = document.getElementById('stats-grid');
+    if (sg) statsObs.observe(sg);
+
+    // ── Hero parallax glows ───────────────────────────────────
+    document.addEventListener('mousemove', e => {
+      const x = (e.clientX / window.innerWidth - 0.5) * 28;
+      const y = (e.clientY / window.innerHeight - 0.5) * 28;
+      const g1 = document.querySelector('.glow-1');
+      const g2 = document.querySelector('.glow-2');
+      if (g1) g1.style.transform = `translate(${x}px, ${y}px)`;
+      if (g2) g2.style.transform = `translate(${-x}px, ${-y}px)`;
+    });
+
+    // ── 3D tilt on project cards ──────────────────────────────
+    document.querySelectorAll('.project-card').forEach(card => {
+      card.addEventListener('mousemove', e => {
+        const r = card.getBoundingClientRect();
+        const x = (e.clientX - r.left) / r.width - 0.5;
+        const y = (e.clientY - r.top) / r.height - 0.5;
+        card.style.transform = `perspective(900px) rotateX(${-y * 5}deg) rotateY(${x * 5}deg)`;
+      });
+      card.addEventListener('mouseleave', () => {
+        card.style.transform = 'perspective(900px) rotateX(0deg) rotateY(0deg)';
+        card.style.transition = 'transform 0.5s ease';
+      });
+      card.addEventListener('mouseenter', () => {
+        card.style.transition = 'transform 0.1s ease';
+      });
+    });
+
+    // ── Software auto-loop (Close first, then open next) ──
+    (function () {
+      const tags = document.querySelectorAll('.software-logo-tag');
+      if (!tags.length) return;
+      let currentIndex = 0;
+      let isHovered = false;
+
+      function stepLoop() {
+        if (isHovered) return;
+        
+        // 1. Remove active class from all tags (trigger closing animation)
+        tags.forEach(tag => tag.classList.remove('active'));
+
+        // 2. Wait for closing animation (420ms) then open the next active tag
+        setTimeout(() => {
+          if (isHovered) return;
+          tags[currentIndex].classList.add('active');
+          currentIndex = (currentIndex + 1) % tags.length;
+        }, 420);
+      }
+
+      stepLoop();
+      setInterval(stepLoop, 3000);
+
+      tags.forEach(tag => {
+        tag.addEventListener('mouseenter', () => {
+          isHovered = true;
+          tags.forEach(t => t.classList.remove('active'));
+        });
+        tag.addEventListener('mouseleave', () => {
+          isHovered = false;
+        });
+      });
+    })();
+  </script>
+</body>
+
+</html>

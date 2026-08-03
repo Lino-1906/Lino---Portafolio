@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+  <script>
+    (function () {
+      function checkDevice() {
+        if (window.innerWidth > 768) { window.location.replace('index.html'); }
+      }
+      checkDevice();
+      window.addEventListener('resize', checkDevice);
+    })();
+  </script>
+  <title>Lino — Diseñador UX/UI · Gráfico Freelance</title>
+  <link rel="icon" type="image/png" href="Isotipo@4x.png" />
+  <link rel="shortcut icon" type="image/png" href="Isotipo@4x.png" />
+  <link rel="apple-touch-icon" href="Isotipo@4x.png" />
+  <meta name="description" content="Portafolio de Valentino Levano (Lino), Diseñador UX/UI y Gráfico Freelance desde Callao, Perú." />
+  <meta property="og:title" content="Lino — Diseñador UX/UI · Gráfico Freelance" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700;1,900&family=Inter:wght@300;400;500&family=Bebas+Neue&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --dark: #1A0F0A; --darker: #0D0805; --cream: #EDE0C8; --creamlt: #F5EDD9; --brown: #3D2314; --nav-h: 68px;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; -webkit-tap-highlight-color: transparent; }
+    body { background-color: var(--darker); color: var(--cream); font-family: 'Inter', sans-serif; overflow-x: hidden; -webkit-font-smoothing: antialiased; }
+    body::before { content: ''; position: fixed; inset: 0; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E"); pointer-events: none; z-index: 1000; opacity: 0.4; }
+    img { max-width: 100%; display: block; }
+    a { color: inherit; text-decoration: none; }
+    button { background: none; border: none; cursor: pointer; font: inherit; color: inherit; }
+    ::-webkit-scrollbar { width: 3px; }
+    ::-webkit-scrollbar-track { background: var(--darker); }
+    ::-webkit-scrollbar-thumb { background: var(--brown); border-radius: 2px; }
+
+    /* ── NAV ─────────────────────────────────────── */
+    #mobile-nav {
+      position: fixed; top: 0; left: 0; right: 0; height: var(--nav-h); z-index: 500;
+      background: rgba(13,8,5,0.88); backdrop-filter: blur(20px) saturate(160%); -webkit-backdrop-filter: blur(20px) saturate(160%);
+      border-bottom: 1px solid rgba(237,224,200,0.07); display: flex; align-items: center;
+      justify-content: space-between; padding: 0 1.25rem; transition: background 0.3s ease;
+    }
+    #mobile-nav.scrolled { background: rgba(13,8,5,0.97); }
+    .nav-logo img { height: 44px; width: auto; object-fit: contain; }
+    #hamburger {
+      width: 44px; height: 44px; display: flex; flex-direction: column;
+      align-items: center; justify-content: center; gap: 5px; padding: 10px;
+      border-radius: 10px; transition: background 0.2s;
+    }
+    #hamburger:active { background: rgba(237,224,200,0.06); }
+    .ham-line {
+      display: block; width: 22px; height: 1.5px; background: var(--cream);
+      border-radius: 2px; transition: transform 0.35s cubic-bezier(0.4,0,0.2,1), opacity 0.25s, width 0.3s;
+      transform-origin: center;
+    }
+    #hamburger.open .ham-line:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+    #hamburger.open .ham-line:nth-child(2) { opacity: 0; width: 0; }
+    #hamburger.open .ham-line:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+    /* Backdrop overlay */
+    #nav-backdrop {
+      position: fixed; inset: 0; z-index: 489;
+      background: rgba(0,0,0,0.45);
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.35s ease;
+    }
+    #nav-backdrop.open { opacity: 1; pointer-events: auto; }
+
+    /* Right-side drawer */
+    #nav-menu {
+      position: fixed;
+      top: 0; right: 0; bottom: 0;
+      width: 72vw;
+      max-width: 260px;
+      z-index: 490;
+      background: rgba(9,5,3,0.97);
+      backdrop-filter: blur(24px) saturate(160%);
+      -webkit-backdrop-filter: blur(24px) saturate(160%);
+      border-left: 1px solid rgba(237,224,200,0.08);
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      transform: translateX(105%);
+      transition: transform 0.42s cubic-bezier(0.4, 0, 0.2, 1);
+      overflow: hidden;
+    }
+    #nav-menu.open { transform: translateX(0); }
+
+    /* Inner padding wrapper */
+    .nav-menu-inner {
+      padding: 2rem 1.6rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .nav-menu-link {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.85rem 0;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.35rem;
+      letter-spacing: 0.1em;
+      color: rgba(237,224,200,0.6);
+      border-bottom: 1px solid rgba(237,224,200,0.05);
+      transition: color 0.22s ease, padding-left 0.22s ease;
+    }
+    .nav-menu-link:last-child { border-bottom: none; }
+    .nav-menu-link:active {
+      color: var(--cream);
+      padding-left: 6px;
+    }
+    .nav-menu-link svg { opacity: 0.3; flex-shrink: 0; }
+
+    /* Small tagline at bottom of drawer */
+    .nav-menu-tag {
+      margin-top: 2rem;
+      padding-top: 1.25rem;
+      border-top: 1px solid rgba(237,224,200,0.06);
+      font-size: 0.6rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(237,224,200,0.2);
+      line-height: 1.6;
+    }
+
+    /* ── LAYOUT ─────────────────────────────────── */
+    .page-wrap { padding-top: var(--nav-h); }
+    .section-label { display: flex; align-items: center; gap: 10px; font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(237,224,200,0.32); margin-bottom: 1rem; }
+    .section-label::before { content: ''; display: block; width: 24px; height: 1px; background: rgba(237,224,200,0.3); flex-shrink: 0; }
+    .section-title { font-family: 'Bebas Neue', sans-serif; font-size: clamp(2.8rem,13vw,4.5rem); letter-spacing: 0.04em; line-height: 0.95; }
+    .section-title em { font-style: italic; color: rgba(237,224,200,0.45); }
+    .glass-card { background: rgba(237,224,200,0.03); border: 1px solid rgba(237,224,200,0.1); border-radius: 16px; backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
+    .skill-tag { display: inline-block; padding: 5px 13px; background: rgba(237,224,200,0.04); border: 1px solid rgba(237,224,200,0.1); border-radius: 100px; font-size: 0.72rem; letter-spacing: 0.06em; color: rgba(237,224,200,0.6); }
+    .cta-btn { display: inline-flex; align-items: center; gap: 8px; padding: 14px 24px; background: var(--cream); color: var(--darker); border-radius: 100px; font-size: 0.8rem; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; transition: background 0.25s, transform 0.2s; }
+    .cta-btn:active { background: var(--creamlt); transform: scale(0.97); }
+    .cta-ghost { display: inline-flex; align-items: center; gap: 8px; padding: 14px 24px; border: 1px solid rgba(237,224,200,0.22); border-radius: 100px; font-size: 0.8rem; letter-spacing: 0.06em; text-transform: uppercase; color: rgba(237,224,200,0.7); }
+    .cta-ghost:active { border-color: rgba(237,224,200,0.5); color: var(--cream); }
+    .divider { height: 1px; background: linear-gradient(to right, transparent, rgba(237,224,200,0.1), transparent); }
+    .stat-num { font-family: 'Playfair Display', serif; font-size: 2.2rem; font-weight: 900; line-height: 1; }
+    .stat-label { font-size: 0.65rem; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(237,224,200,0.38); margin-top: 4px; }
+    .social-link { display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px; border-radius: 50%; border: 1px solid rgba(237,224,200,0.12); background: rgba(237,224,200,0.03); color: rgba(237,224,200,0.5); transition: all 0.25s; }
+    .social-link:active { border-color: rgba(237,224,200,0.4); background: rgba(237,224,200,0.1); color: var(--cream); }
+    .section-divider-bar { display: flex; align-items: center; gap: 16px; padding: 0 1.25rem; margin: 2rem 0; }
+    .section-divider-line { flex: 1; height: 1px; background: rgba(237,224,200,0.07); }
+    .section-divider-text { font-size: 0.6rem; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(237,224,200,0.2); white-space: nowrap; }
+
+    /* ── REVEAL ─────────────────────────────────── */
+    [data-reveal] { opacity: 0; transform: translateY(28px); transition: opacity 0.75s cubic-bezier(0.16,1,0.3,1), transform 0.75s cubic-bezier(0.16,1,0.3,1); }
+    [data-reveal].revealed { opacity: 1; transform: translateY(0); }
+    [data-delay="100"] { transition-delay: 0.1s; }
+    [data-delay="200"] { transition-delay: 0.2s; }
+    [data-delay="300"] { transition-delay: 0.3s; }
+    [data-delay="400"] { transition-delay: 0.4s; }
+    [data-delay="500"] { transition-delay: 0.5s; }
+
+    /* ── HERO ───────────────────────────────────── */
+    #hero { position: relative; min-height: 90svh; display: flex; flex-direction: column; justify-content: center; padding: 3rem 1.25rem 4rem; overflow: hidden; }
+    .m-glow { position: absolute; border-radius: 50%; pointer-events: none; filter: blur(80px); }
+    .m-glow-1 { width: 280px; height: 280px; background: radial-gradient(circle, rgba(61,35,20,0.45) 0%, transparent 70%); top: -60px; right: -80px; animation: gFloat1 10s ease-in-out infinite; }
+    .m-glow-2 { width: 220px; height: 220px; background: radial-gradient(circle, rgba(237,224,200,0.04) 0%, transparent 70%); bottom: 20px; left: -50px; animation: gFloat2 13s ease-in-out infinite; }
+    @keyframes gFloat1 { 0%,100%{transform:translate(0,0) scale(1);} 50%{transform:translate(-20px,30px) scale(1.1);} }
+    @keyframes gFloat2 { 0%,100%{transform:translate(0,0) scale(1);} 50%{transform:translate(15px,-20px) scale(1.05);} }
+    .hero-eyebrow { font-size: 0.65rem; letter-spacing: 0.22em; text-transform: uppercase; color: rgba(237,224,200,0.38); display: flex; align-items: center; gap: 10px; margin-bottom: 1.5rem; }
+    .hero-eyebrow::before { content:''; display:block; width:20px; height:1px; background:rgba(237,224,200,0.3); }
+    .hero-headline { font-family: 'Bebas Neue', sans-serif; font-size: clamp(4rem,22vw,6rem); line-height: 0.9; letter-spacing: 0.02em; margin-bottom: 0.4rem; }
+    .hero-headline-sub { font-family: 'Playfair Display', serif; font-size: clamp(1.5rem,8vw,2.5rem); font-style: italic; font-weight: 700; color: rgba(237,224,200,0.38); margin-bottom: 1.8rem; }
+    .hero-desc { font-size: 0.88rem; line-height: 1.8; color: rgba(237,224,200,0.48); max-width: 320px; margin-bottom: 2.5rem; }
+    .hero-ctas { display: flex; flex-direction: column; gap: 0.75rem; }
+    .hero-ctas .cta-btn, .hero-ctas .cta-ghost { justify-content: center; width: 100%; }
+    .hero-badge { margin-top: 3rem; display: flex; align-items: center; gap: 1rem; }
+    .hero-badge img { width: 52px; height: 52px; object-fit: contain; opacity: 0.7; }
+    .hero-badge-text { font-size: 0.65rem; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(237,224,200,0.25); line-height: 1.5; }
+
+    /* ── MARQUEE ────────────────────────────────── */
+    .marquee-wrap { overflow: hidden; border-top: 1px solid rgba(237,224,200,0.06); border-bottom: 1px solid rgba(237,224,200,0.06); padding: 0.85rem 0; }
+    .marquee-track { display: flex; align-items: center; gap: 40px; width: max-content; animation: marqueeScroll 22s linear infinite; }
+    .marquee-item { font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(237,224,200,0.75); white-space: nowrap; }
+    .marquee-dot { width: 3px; height: 3px; border-radius: 50%; background: rgba(237,224,200,0.25); flex-shrink: 0; }
+    @keyframes marqueeScroll { 0%{transform:translateX(0);} 100%{transform:translateX(-50%);} }
+
+    /* ── SOBRE MI ───────────────────────────────── */
+    #sobre-mi { padding: 4rem 1.25rem; }
+    .bio-text { font-size: 0.9rem; line-height: 1.85; color: rgba(237,224,200,0.55); }
+    .bio-text strong { color: var(--cream); font-weight: 600; }
+    .bio-text p + p { margin-top: 1rem; }
+    .stats-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; margin-top: 2rem; }
+    .skills-wrap { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1.25rem; }
+    .soft-tag { display: flex; align-items: center; gap: 6px; padding: 6px 12px; background: rgba(237,224,200,0.04); border: 1px solid rgba(237,224,200,0.08); border-radius: 8px; font-size: 0.72rem; color: rgba(237,224,200,0.55); }
+    .software-row { display: flex; flex-wrap: wrap; gap: 0.65rem; margin-top: 1rem; }
+    .software-logo-tag { display: inline-flex; flex-direction: row; align-items: center; gap: 0; opacity: 0.75; transition: opacity 0.4s ease-in-out; cursor: pointer; vertical-align: middle; }
+    .software-logo-tag:hover, .software-logo-tag.active { opacity: 1; }
+    .software-info { display: inline-flex; flex-direction: column; justify-content: center; max-width: 0; opacity: 0; overflow: hidden; white-space: nowrap; margin-left: 0; transition: max-width 0.4s ease-in-out, opacity 0.3s ease-in-out, margin-left 0.4s ease-in-out; }
+    .software-logo-tag:hover .software-info, .software-logo-tag.active .software-info { max-width: 140px; opacity: 1; margin-left: 8px; transition: max-width 0.5s ease-in-out, opacity 0.4s ease-in-out 0.1s, margin-left 0.5s ease-in-out; }
+    .software-name { font-size: 0.65rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--cream); line-height: 1.2; }
+    .software-dots { display: flex; align-items: center; gap: 3px; margin-top: 3px; }
+    .software-dots .dot { width: 5px; height: 5px; border-radius: 50%; border: 1px solid var(--cream); box-sizing: border-box; }
+    .software-dots .dot.filled { background-color: var(--cream); }
+    .formation-item { display: flex; align-items: flex-start; gap: 10px; padding: 0.6rem 0; border-bottom: 1px solid rgba(237,224,200,0.05); }
+    .formation-item:last-child { border-bottom: none; }
+    .formation-dot { width: 4px; height: 4px; border-radius: 50%; background: rgba(237,224,200,0.35); flex-shrink: 0; margin-top: 6px; }
+    .formation-name { font-size: 0.82rem; font-weight: 500; }
+    .formation-year { font-size: 0.72rem; color: rgba(237,224,200,0.3); margin-left: 6px; }
+    .contact-card { margin-top: 2rem; padding: 1.75rem 1.5rem; text-align: center; }
+    .contact-card h3 { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.6rem; font-weight: 700; margin-bottom: 1.25rem; }
+    .contact-card p { font-size: 0.82rem; color: rgba(237,224,200,0.4); margin-bottom: 1rem; }
+    .contact-btns { display: flex; flex-direction: column; gap: 0.65rem; }
+    .contact-btns .cta-btn, .contact-btns .cta-ghost { justify-content: center; }
+
+    /* ── PROYECTOS ──────────────────────────────── */
+    #proyectos { padding: 4rem 1.25rem; }
+    .project-card { position: relative; border-radius: 14px; overflow: hidden; margin-bottom: 1rem; }
+    .card-img-wrap { width: 100%; height: 220px; }
+    .card-img-wrap svg { width: 100%; height: 100%; }
+    .card-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(13,8,5,0.95) 0%, rgba(13,8,5,0.25) 55%, transparent 100%); }
+    .card-content { position: absolute; bottom: 0; left: 0; right: 0; padding: 1.25rem; }
+    .card-tag { display: inline-block; padding: 3px 10px; border: 1px solid rgba(237,224,200,0.2); border-radius: 100px; font-size: 0.6rem; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(237,224,200,0.55); margin-bottom: 6px; backdrop-filter: blur(6px); background: rgba(237,224,200,0.04); }
+    .card-title { font-family: 'Bebas Neue', sans-serif; font-size: 1.5rem; letter-spacing: 0.04em; line-height: 1.1; }
+    .card-desc { font-size: 0.78rem; color: rgba(237,224,200,0.5); margin-top: 4px; line-height: 1.5; }
+    .card-link { display: inline-flex; align-items: center; gap: 5px; margin-top: 10px; font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(237,224,200,0.55); padding: 6px 14px; border: 1px solid rgba(237,224,200,0.18); border-radius: 100px; background: rgba(237,224,200,0.05); }
+
+    /* ── METODO ─────────────────────────────────── */
+    #metodo { padding: 4rem 1.25rem; position: relative; overflow: hidden; }
+    #metodo::before { content:''; position: absolute; left:50%; top:50%; transform:translate(-50%,-50%); width:600px; height:300px; background: radial-gradient(ellipse, rgba(61,35,20,0.15) 0%, transparent 70%); filter:blur(50px); pointer-events:none; }
+    .method-card { position: relative; overflow: hidden; padding: 1.75rem 1.5rem; margin-bottom: 0.75rem; }
+    .method-card:last-child { margin-bottom: 0; }
+    .method-num-bg { position: absolute; top: -16px; right: -8px; font-family: 'Playfair Display', serif; font-size: 7rem; font-weight: 900; color: transparent; -webkit-text-stroke: 1px rgba(237,224,200,0.05); line-height: 1; pointer-events: none; user-select: none; }
+    .method-phase { font-size: 0.6rem; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(237,224,200,0.28); margin-bottom: 6px; }
+    .method-title { font-family: 'Bebas Neue', sans-serif; font-size: 2rem; letter-spacing: 0.04em; margin-bottom: 0.6rem; }
+    .method-desc { font-size: 0.82rem; line-height: 1.7; color: rgba(237,224,200,0.5); margin-bottom: 1rem; }
+    .method-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+
+    /* ── FOOTER ─────────────────────────────────── */
+    footer { position: relative; overflow: hidden; padding: 3rem 1.25rem 2rem; }
+    .footer-brand { display: flex; align-items: center; gap: 10px; margin-bottom: 0.85rem; }
+    .footer-brand-name { font-weight: 700; font-size: 1rem; letter-spacing: 0.08em; }
+    .footer-tagline { font-size: 0.78rem; line-height: 1.6; color: rgba(237,224,200,0.35); margin-bottom: 1.75rem; }
+    .footer-contact-title { font-size: 0.6rem; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(237,224,200,0.22); margin-bottom: 0.65rem; }
+    .footer-email { font-size: 0.85rem; display: block; margin-bottom: 0.25rem; }
+    .footer-phone { font-size: 0.8rem; color: rgba(237,224,200,0.5); display: block; margin-bottom: 0.4rem; }
+    .footer-location { font-size: 0.7rem; color: rgba(237,224,200,0.25); margin-bottom: 1.25rem; }
+    .social-row { display: flex; gap: 0.65rem; margin-bottom: 2rem; }
+    .footer-copy { font-size: 0.65rem; letter-spacing: 0.06em; color: rgba(237,224,200,0.18); text-align: center; padding-top: 1.25rem; border-top: 1px solid rgba(237,224,200,0.06); }
+    .footer-watermark { position: absolute; bottom: 0; left: 0; right: 0; text-align: center; pointer-events: none; overflow: hidden; }
+    .footer-watermark span { font-family: 'Bebas Neue', sans-serif; font-size: clamp(80px,35vw,160px); color: transparent; -webkit-text-stroke: 1px rgba(237,224,200,0.025); line-height: 0.85; }
+
+    @keyframes fadeInUp { from{opacity:0;transform:translateY(24px);} to{opacity:1;transform:translateY(0);} }
+    .anim-up { animation: fadeInUp 0.85s cubic-bezier(0.16,1,0.3,1) both; }
+    .anim-up-d1{animation-delay:0.1s;} .anim-up-d2{animation-delay:0.25s;} .anim-up-d3{animation-delay:0.4s;} .anim-up-d4{animation-delay:0.55s;} .anim-up-d5{animation-delay:0.7s;}
+  </style>
+</head>
+
+<body>
+
+  <!-- NAVIGATION -->
+  <nav id="mobile-nav" role="navigation" aria-label="Menú principal">
+    <a href="#hero" class="nav-logo" id="nav-logo-link">
+      <img src="Crema Horizontal transparente@4x.png" alt="Lino Logo" />
+    </a>
+    <button id="hamburger" aria-label="Abrir menú" aria-expanded="false" aria-controls="nav-menu">
+      <span class="ham-line"></span>
+      <span class="ham-line"></span>
+      <span class="ham-line"></span>
+    </button>
+  </nav>
+
+  <!-- Backdrop overlay -->
+  <div id="nav-backdrop" aria-hidden="true"></div>
+
+  <!-- Right-side drawer menu -->
+  <div id="nav-menu" role="dialog" aria-label="Menú de navegación" aria-hidden="true">
+    <div class="nav-menu-inner">
+      <a href="#sobre-mi" class="nav-menu-link" id="menu-sobre">Sobre mí <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 13L13 3M13 3H7M13 3V9" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <a href="#proyectos" class="nav-menu-link" id="menu-proyectos">Proyectos <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 13L13 3M13 3H7M13 3V9" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <a href="#metodo" class="nav-menu-link" id="menu-metodo">Método <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 13L13 3M13 3H7M13 3V9" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <a href="mailto:levanoencinas@gmail.com" class="nav-menu-link" id="menu-contacto">Contacto <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 13L13 3M13 3H7M13 3V9" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <div class="nav-menu-tag">Lino · Diseñador UX/UI<br/>Callao, Perú · 2026</div>
+    </div>
+  </div>
+
+  <div class="page-wrap">
+
+    <!-- HERO -->
+    <section id="hero">
+      <div class="m-glow m-glow-1"></div>
+      <div class="m-glow m-glow-2"></div>
+      <div style="position:relative;z-index:2;">
+        <div class="hero-eyebrow anim-up anim-up-d1">Portafolio 2026</div>
+        <h1 class="hero-headline anim-up anim-up-d2">PORTA<br/>FOLIO</h1>
+        <p class="hero-headline-sub anim-up anim-up-d2">por Lino</p>
+        <p class="hero-desc anim-up anim-up-d3">UX/UI, branding, packaging y señalética. Proyectos reales con impacto real. Disponible para freelance.</p>
+        <div class="hero-ctas anim-up anim-up-d4">
+          <a href="#proyectos" class="cta-btn" id="hero-ver-proyectos">
+            <span>Ver proyectos</span>
+            <svg width="12" height="12" viewBox="0 0 14 14" fill="none"><path d="M3 11L11 3M11 3H5M11 3V9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+          <a href="#sobre-mi" class="cta-ghost" id="hero-sobre-mi">Sobre mí</a>
+        </div>
+        <div class="hero-badge anim-up anim-up-d5">
+          <img src="Isotipo Transparente@4x.png" alt="Isotipo Lino" />
+          <div class="hero-badge-text">Diseñador UX/UI<br/>Callao, Perú</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- MARQUEE -->
+    <div class="marquee-wrap">
+      <div class="marquee-track">
+        <span class="marquee-item">UI/UX</span><span class="marquee-dot"></span>
+        <span class="marquee-item">Identidad Visual</span><span class="marquee-dot"></span>
+        <span class="marquee-item">Diseño Digital</span><span class="marquee-dot"></span>
+        <span class="marquee-item">Packaging &amp; Retail</span><span class="marquee-dot"></span>
+        <span class="marquee-item">Señalética</span><span class="marquee-dot"></span>
+        <span class="marquee-item">Branding</span><span class="marquee-dot"></span>
+        <span class="marquee-item">UI/UX</span><span class="marquee-dot"></span>
+        <span class="marquee-item">Identidad Visual</span><span class="marquee-dot"></span>
+        <span class="marquee-item">Diseño Digital</span><span class="marquee-dot"></span>
+        <span class="marquee-item">Packaging &amp; Retail</span><span class="marquee-dot"></span>
+        <span class="marquee-item">Señalética</span><span class="marquee-dot"></span>
+        <span class="marquee-item">Branding</span><span class="marquee-dot"></span>
+      </div>
+    </div>
+
+    <!-- SOBRE MI -->
+    <section id="sobre-mi">
+      <div class="section-label" data-reveal>Quién soy</div>
+      <h2 class="section-title" data-reveal data-delay="100">Sobre <em>mí</em></h2>
+      <div class="bio-text" style="margin-top:1.5rem;" data-reveal data-delay="200">
+        <p>Soy <strong>Valentino Levano Encinas</strong> — Lino — diseñador UX/UI y gráfico ubicado en Callao, Perú. Autodidacta por naturaleza: combino mi formación en Cibertec con mentoring externo y práctica constante.</p>
+        <p>Experiencia real diseñando para clientes en producción: CIERUM (proptech activa), Giantucchi (IA para empresas) y señalética para el Circuito Mágico del Agua. Cada píxel tiene una razón de ser.</p>
+        <p>Busco proyectos donde aportar soluciones visuales claras — branding, packaging, UX/UI o señalética — y seguir creciendo junto a clientes reales.</p>
+      </div>
+      <div class="stats-row" data-reveal data-delay="200">
+        <div class="glass-card" style="padding:1.1rem;"><div class="stat-num" data-count="3" data-suffix="+">3+</div><div class="stat-label">Años en diseño</div></div>
+        <div class="glass-card" style="padding:1.1rem;"><div class="stat-num" data-count="5" data-suffix="">5</div><div class="stat-label">Proyectos reales</div></div>
+        <div class="glass-card" style="padding:1.1rem;"><div class="stat-num" data-count="4" data-suffix="">4</div><div class="stat-label">Herramientas pro</div></div>
+        <div class="glass-card" style="padding:1.1rem;"><div class="stat-num" data-count="2" data-suffix="">2</div><div class="stat-label">Idiomas</div></div>
+      </div>
+      <div style="margin-top:2rem;" data-reveal data-delay="300">
+        <div class="footer-contact-title" style="margin-bottom:0.75rem;">Servicios</div>
+        <div class="skills-wrap">
+          <span class="skill-tag">Diseño UX/UI</span><span class="skill-tag">Piezas Publicitarias</span>
+          <span class="skill-tag">Packaging</span><span class="skill-tag">Señalética</span>
+          <span class="skill-tag">Branding</span><span class="skill-tag">Identidad Visual</span>
+        </div>
+      </div>
+      <div style="margin-top:1.75rem;" data-reveal data-delay="300">
+        <div class="footer-contact-title" style="margin-bottom:0.75rem;">Software</div>
+        <div class="software-row flex flex-wrap gap-4 items-center">
+          <div class="software-logo-tag" title="Canva">
+            <img src="Canva.png" alt="Canva" style="width:36px;height:36px;object-fit:contain;" />
+            <div class="software-info">
+              <span class="software-name">CANVA</span>
+              <div class="software-dots"><span class="dot filled"></span><span class="dot filled"></span><span class="dot filled"></span><span class="dot filled"></span><span class="dot"></span></div>
+            </div>
+          </div>
+          <div class="software-logo-tag" title="Figma">
+            <img src="Figma.png" alt="Figma" style="width:36px;height:36px;object-fit:contain;" />
+            <div class="software-info">
+              <span class="software-name">FIGMA</span>
+              <div class="software-dots"><span class="dot filled"></span><span class="dot filled"></span><span class="dot filled"></span><span class="dot filled"></span><span class="dot filled"></span></div>
+            </div>
+          </div>
+          <div class="software-logo-tag" title="Illustrator">
+            <img src="Ilustrator.png" alt="Illustrator" style="width:36px;height:36px;object-fit:contain;" />
+            <div class="software-info">
+              <span class="software-name">ILLUSTRATOR</span>
+              <div class="software-dots"><span class="dot filled"></span><span class="dot filled"></span><span class="dot filled"></span><span class="dot filled"></span><span class="dot filled"></span></div>
+            </div>
+          </div>
+          <div class="software-logo-tag" title="InDesign">
+            <img src="Indesign.png" alt="InDesign" style="width:36px;height:36px;object-fit:contain;" />
+            <div class="software-info">
+              <span class="software-name">INDESIGN</span>
+              <div class="software-dots"><span class="dot filled"></span><span class="dot filled"></span><span class="dot filled"></span><span class="dot filled"></span><span class="dot"></span></div>
+            </div>
+          </div>
+          <div class="software-logo-tag" title="Photoshop">
+            <img src="Photoshop.png" alt="Photoshop" style="width:36px;height:36px;object-fit:contain;" />
+            <div class="software-info">
+              <span class="software-name">PHOTOSHOP</span>
+              <div class="software-dots"><span class="dot filled"></span><span class="dot filled"></span><span class="dot filled"></span><span class="dot filled"></span><span class="dot"></span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div style="margin-top:1.75rem;" data-reveal data-delay="400">
+        <div class="footer-contact-title" style="margin-bottom:0.75rem;">Formación</div>
+        <div class="formation-item"><div class="formation-dot"></div><div><span class="formation-name">Diseño Gráfico — Cibertec</span><span class="formation-year">2023 – Actualidad</span></div></div>
+        <div class="formation-item"><div class="formation-dot"></div><div><span class="formation-name">Mentoring UX/UI — Giantucchi</span><span class="formation-year">2026</span></div></div>
+        <div class="formation-item"><div class="formation-dot"></div><div><span class="formation-name">Inglés Intermedio — ICPNA</span><span class="formation-year">2025</span></div></div>
+      </div>
+      <div class="glass-card" style="padding:1.75rem 1.5rem;margin-top:2rem;position:relative;overflow:hidden;" data-reveal data-delay="400">
+        <div style="position:absolute;top:-10px;left:12px;font-family:'Playfair Display',serif;font-size:5rem;color:rgba(237,224,200,0.04);line-height:1;pointer-events:none;">"</div>
+        <p style="font-family:'Playfair Display',serif;font-style:italic;font-weight:700;font-size:1.05rem;line-height:1.55;position:relative;z-index:1;">"El diseño es la embajada silenciosa de una marca en el mundo."</p>
+        <div style="display:flex;align-items:center;gap:10px;margin-top:12px;position:relative;z-index:1;"><div style="width:22px;height:1px;background:rgba(237,224,200,0.28);"></div><span style="font-size:0.65rem;letter-spacing:0.12em;text-transform:uppercase;color:rgba(237,224,200,0.32);">Lino · Filosofía de diseño</span></div>
+      </div>
+      <div class="glass-card" style="padding:1.5rem 1.25rem;margin-top:2rem;" data-reveal data-delay="500">
+        <p style="font-size:0.65rem;letter-spacing:0.18em;text-transform:uppercase;color:rgba(237,224,200,0.45);margin-bottom:0.25rem;">¿Tienes un proyecto en mente?</p>
+        <h3 style="font-family:'Bebas Neue',sans-serif;font-size:2.2rem;letter-spacing:0.04em;line-height:1;margin-bottom:1.25rem;">HABLEMOS.</h3>
+        
+        <div style="display:flex;flex-direction:column;gap:1.25rem;">
+          <!-- QR Code (Left/Top) -->
+          <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;padding:0.85rem;border-radius:12px;background:rgba(237,224,200,0.03);border:1px solid rgba(237,224,200,0.1);">
+            <svg width="90" height="90" viewBox="0 0 100 100" fill="var(--cream)" xmlns="http://www.w3.org/2000/svg">
+              <rect x="5" y="5" width="30" height="30" rx="4" fill="none" stroke="var(--cream)" stroke-width="5"/>
+              <rect x="12" y="12" width="16" height="16" rx="2" fill="var(--cream)"/>
+              <rect x="65" y="5" width="30" height="30" rx="4" fill="none" stroke="var(--cream)" stroke-width="5"/>
+              <rect x="72" y="12" width="16" height="16" rx="2" fill="var(--cream)"/>
+              <rect x="5" y="65" width="30" height="30" rx="4" fill="none" stroke="var(--cream)" stroke-width="5"/>
+              <rect x="12" y="72" width="16" height="16" rx="2" fill="var(--cream)"/>
+              <rect x="42" y="8" width="6" height="6" rx="1"/>
+              <rect x="52" y="18" width="6" height="6" rx="1"/>
+              <rect x="42" y="28" width="6" height="6" rx="1"/>
+              <rect x="8" y="42" width="6" height="6" rx="1"/>
+              <rect x="18" y="52" width="6" height="6" rx="1"/>
+              <rect x="28" y="42" width="6" height="6" rx="1"/>
+              <rect x="42" y="42" width="16" height="16" rx="2"/>
+              <rect x="65" y="42" width="8" height="8" rx="1"/>
+              <rect x="78" y="42" width="14" height="6" rx="1"/>
+              <rect x="42" y="65" width="8" height="14" rx="1"/>
+              <rect x="55" y="78" width="14" height="8" rx="1"/>
+              <rect x="72" y="65" width="10" height="10" rx="1"/>
+              <rect x="85" y="80" width="10" height="10" rx="1"/>
+            </svg>
+            <span style="font-size:0.6rem;letter-spacing:0.12em;text-transform:uppercase;color:rgba(237,224,200,0.35);margin-top:0.4rem;">Escanear vCard</span>
+          </div>
+
+          <!-- Social Links List -->
+          <div style="display:flex;flex-direction:column;gap:0.5rem;">
+            <a href="tel:+51924897902" style="display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:8px;background:rgba(237,224,200,0.03);text-decoration:none;color:var(--cream);" id="m-link-tel">
+              <div style="width:28px;height:28px;border-radius:6px;background:rgba(237,224,200,0.08);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 1.27h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.81a16 16 0 0 0 6.29 6.29l.95-.95a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7a2 2 0 0 1 1.72 2.02z"/></svg>
+              </div>
+              <span style="font-size:0.75rem;font-weight:500;">+51 924 897 902</span>
+            </a>
+
+            <a href="https://mail.google.com/mail/?view=cm&fs=1&to=levanoencinas@gmail.com" target="_blank" rel="noopener" style="display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:8px;background:rgba(237,224,200,0.03);text-decoration:none;color:var(--cream);" id="m-link-email">
+              <div style="width:28px;height:28px;border-radius:6px;background:rgba(237,224,200,0.08);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+              </div>
+              <span style="font-size:0.75rem;font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">levanoencinas@gmail.com</span>
+            </a>
+
+            <a href="https://www.behance.net/linole" target="_blank" rel="noopener" style="display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:8px;background:rgba(237,224,200,0.03);text-decoration:none;color:var(--cream);" id="m-link-behance">
+              <div style="width:28px;height:28px;border-radius:6px;background:rgba(237,224,200,0.08);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                <img src="Behance.png" alt="Behance" style="width:18px;height:18px;object-fit:contain;" />
+              </div>
+              <span style="font-size:0.75rem;font-weight:500;">behance.net/linole</span>
+            </a>
+
+            <a href="https://www.linkedin.com/in/valentino-levano" target="_blank" rel="noopener" style="display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:8px;background:rgba(237,224,200,0.03);text-decoration:none;color:var(--cream);" id="m-link-linkedin">
+              <div style="width:28px;height:28px;border-radius:6px;background:rgba(237,224,200,0.08);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+              </div>
+              <span style="font-size:0.75rem;font-weight:500;">linkedin.com/in/valentino-levano</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="section-divider-bar"><div class="section-divider-line"></div><div class="section-divider-text">LINO PORTAFOLIO — 2026©</div><div class="section-divider-line"></div></div>
+
+    <!-- PROYECTOS -->
+    <section id="proyectos">
+      <div class="section-label" data-reveal>Trabajo selecto</div>
+      <h2 class="section-title" data-reveal data-delay="100">Proyectos<br/><em>destacados</em></h2>
+      <div style="margin-top:1.75rem;">
+        <div class="project-card" data-reveal data-delay="100">
+          <div class="card-img-wrap"><svg width="100%" height="100%" viewBox="0 0 375 220" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice"><rect width="375" height="220" fill="#0C0E18"/><defs><radialGradient id="mrg1" cx="35%" cy="40%"><stop offset="0%" stop-color="#1A2340" stop-opacity="0.85"/><stop offset="100%" stop-color="#0D0805" stop-opacity="0"/></radialGradient><filter id="mf1"><feGaussianBlur stdDeviation="30"/></filter></defs><circle cx="130" cy="100" r="180" fill="url(#mrg1)" filter="url(#mf1)"/><rect x="60" y="60" width="255" height="18" rx="4" fill="rgba(237,224,200,0.04)" stroke="rgba(237,224,200,0.07)" stroke-width="1"/><rect x="60" y="88" width="120" height="90" rx="6" fill="rgba(237,224,200,0.03)" stroke="rgba(237,224,200,0.06)" stroke-width="1"/><rect x="192" y="88" width="123" height="43" rx="6" fill="rgba(237,224,200,0.03)" stroke="rgba(237,224,200,0.06)" stroke-width="1"/><text x="187" y="118" text-anchor="middle" dominant-baseline="middle" font-family="Playfair Display" font-size="52" font-style="italic" font-weight="900" fill="rgba(237,224,200,0.04)">UX</text></svg></div>
+          <div class="card-overlay"></div>
+          <div class="card-content"><div class="card-tag">UX/UI · Proyecto real en producción</div><div class="card-title">Plataforma CIERUM</div><div class="card-desc">Landing page y plataforma web para proptech de inversión inmobiliaria. En uso activo.</div><a href="https://www.behance.net/linole" target="_blank" rel="noopener" class="card-link" id="card-link-cierum">Ver en Behance &rarr;</a></div>
+        </div>
+        <div class="project-card" data-reveal data-delay="200">
+          <div class="card-img-wrap"><svg width="100%" height="100%" viewBox="0 0 375 220" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice"><rect width="375" height="220" fill="#0A1008"/><defs><radialGradient id="mrg2" cx="60%" cy="35%"><stop offset="0%" stop-color="#1A3D14" stop-opacity="0.7"/><stop offset="100%" stop-color="#0D0805" stop-opacity="0"/></radialGradient><filter id="mf2"><feGaussianBlur stdDeviation="25"/></filter></defs><circle cx="225" cy="80" r="160" fill="url(#mrg2)" filter="url(#mf2)"/><circle cx="110" cy="110" r="32" stroke="rgba(237,224,200,0.09)" stroke-width="1" fill="none"/><text x="110" y="115" text-anchor="middle" dominant-baseline="middle" font-size="20" fill="rgba(237,224,200,0.09)">&#x2192;</text><circle cx="187" cy="110" r="32" stroke="rgba(237,224,200,0.07)" stroke-width="1" fill="none"/><text x="187" y="115" text-anchor="middle" dominant-baseline="middle" font-size="16" fill="rgba(237,224,200,0.07)">i</text><circle cx="264" cy="110" r="32" stroke="rgba(237,224,200,0.07)" stroke-width="1" fill="none"/></svg></div>
+          <div class="card-overlay"></div>
+          <div class="card-content"><div class="card-tag">Señalética · Wayfinding</div><div class="card-title">Circuito Mágico del Agua</div><a href="https://www.behance.net/linole" target="_blank" rel="noopener" class="card-link" id="card-link-cma">Ver en Behance &rarr;</a></div>
+        </div>
+        <div class="project-card" data-reveal data-delay="300">
+          <div class="card-img-wrap"><svg width="100%" height="100%" viewBox="0 0 375 220" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice"><rect width="375" height="220" fill="#0D1008"/><defs><radialGradient id="mrg3" cx="30%" cy="65%"><stop offset="0%" stop-color="#2D3D14" stop-opacity="0.75"/><stop offset="100%" stop-color="#0D0805" stop-opacity="0"/></radialGradient><filter id="mf3"><feGaussianBlur stdDeviation="28"/></filter></defs><circle cx="80" cy="155" r="160" fill="url(#mrg3)" filter="url(#mf3)"/><polygon points="140,45 235,45 262,78 262,175 113,175 113,78" stroke="rgba(237,224,200,0.08)" stroke-width="1" fill="rgba(237,224,200,0.025)"/><text x="187" y="112" text-anchor="middle" dominant-baseline="middle" font-family="Playfair Display" font-size="22" font-weight="900" fill="rgba(237,224,200,0.08)">HERBI</text></svg></div>
+          <div class="card-overlay"></div>
+          <div class="card-content"><div class="card-tag">Packaging · Rediseño</div><div class="card-title">Caja HERBI Manzanilla</div><a href="https://www.behance.net/linole" target="_blank" rel="noopener" class="card-link" id="card-link-herbi">Ver en Behance &rarr;</a></div>
+        </div>
+        <div class="project-card" data-reveal data-delay="400">
+          <div class="card-img-wrap"><svg width="100%" height="100%" viewBox="0 0 375 220" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice"><rect width="375" height="220" fill="#100A10"/><defs><radialGradient id="mrg4" cx="50%" cy="50%"><stop offset="0%" stop-color="#3D1440" stop-opacity="0.5"/><stop offset="100%" stop-color="#0D0805" stop-opacity="0"/></radialGradient><filter id="mf4"><feGaussianBlur stdDeviation="40"/></filter></defs><circle cx="187" cy="110" r="190" fill="url(#mrg4)" filter="url(#mf4)"/><circle cx="162" cy="110" r="50" stroke="rgba(237,224,200,0.07)" stroke-width="1" fill="none"/><circle cx="213" cy="110" r="50" stroke="rgba(237,224,200,0.05)" stroke-width="1" fill="none"/><text x="187" y="120" text-anchor="middle" dominant-baseline="middle" font-family="Playfair Display" font-size="68" font-weight="900" font-style="italic" fill="rgba(237,224,200,0.04)">Lumin&#233;</text></svg></div>
+          <div class="card-overlay"></div>
+          <div class="card-content"><div class="card-tag">Branding · Manual de Marca</div><div class="card-title">Manual de Marca Lumin&#233;</div><div class="card-desc">Sistema de identidad completo para marca de skincare: logo, paleta, tipografía y aplicaciones.</div><a href="https://www.behance.net/linole" target="_blank" rel="noopener" class="card-link" id="card-link-lumine">Ver en Behance &rarr;</a></div>
+        </div>
+      </div>
+      <div style="margin-top:1.5rem;text-align:center;" data-reveal data-delay="400">
+        <a href="https://www.behance.net/linole" target="_blank" rel="noopener" class="cta-ghost" id="ver-todo-behance" style="width:100%;justify-content:center;">Ver todo el trabajo &rarr;</a>
+      </div>
+    </section>
+
+    <div class="section-divider-bar"><div class="section-divider-line"></div><div class="section-divider-text">PROYECTOS Y SISTEMAS VISUALES</div><div class="section-divider-line"></div></div>
+
+    <!-- METODO -->
+    <section id="metodo">
+      <div style="margin-bottom:2.5rem;">
+        <div class="section-label" data-reveal>Mi proceso</div>
+        <h2 class="section-title" data-reveal data-delay="100">Método de <em>diseño</em></h2>
+        <p style="font-size:0.82rem;color:rgba(237,224,200,0.4);line-height:1.7;margin-top:1rem;max-width:320px;" data-reveal data-delay="200">Cada proyecto sigue un proceso riguroso que transforma incertidumbre en claridad visual.</p>
+      </div>
+      <div class="glass-card method-card" data-reveal data-delay="100">
+        <div class="method-num-bg">01</div>
+        <div class="method-phase">Fase 01</div>
+        <div class="method-title">Investigación</div>
+        <p class="method-desc">Inmersión total en el mundo del cliente: mercado, competencia, arquetipos de audiencia y territorio simbólico de la marca.</p>
+        <div class="method-tags"><span class="skill-tag">Brand Audit</span><span class="skill-tag">Benchmarking</span><span class="skill-tag">Moodboard</span></div>
+      </div>
+      <div class="glass-card method-card" data-reveal data-delay="200">
+        <div class="method-num-bg">02</div>
+        <div class="method-phase">Fase 02</div>
+        <div class="method-title">Ideación</div>
+        <p class="method-desc">Exploración conceptual desinhibida. Bocetos rápidos, mapas mentales y síntesis de múltiples direcciones creativas antes de seleccionar la más potente.</p>
+        <div class="method-tags"><span class="skill-tag">Sketching</span><span class="skill-tag">Concepto</span><span class="skill-tag">Narrativa</span></div>
+      </div>
+      <div class="glass-card method-card" data-reveal data-delay="300">
+        <div class="method-num-bg">03</div>
+        <div class="method-phase">Fase 03</div>
+        <div class="method-title">Ejecución</div>
+        <p class="method-desc">Producción con precisión artesanal. Cada píxel, tipografía y espacio negativo tiene una razón de ser. Entrega con brand book completo.</p>
+        <div class="method-tags"><span class="skill-tag">Alta fidelidad</span><span class="skill-tag">Brand book</span><span class="skill-tag">Assets</span></div>
+      </div>
+    </section>
+
+    <div class="section-divider-bar"><div class="section-divider-line"></div><div class="section-divider-text">AGOSTO 2026 — TODOS LOS DERECHOS RESERVADOS©</div><div class="section-divider-line"></div></div>
+
+    <!-- FOOTER -->
+    <footer>
+      <div class="divider" style="margin-bottom:2rem;"></div>
+      <div class="footer-brand">
+        <img src="Crema Horizontal transparente@4x.png" alt="Lino Logo" style="height: 56px; width: auto; object-fit: contain;" />
+      </div>
+      <p class="footer-tagline">Valentino Levano (Lino).<br/>UX/UI · Gráfico · Callao, Perú.<br/>Disponible para freelance.</p>
+      <div class="footer-contact-title">Contacto</div>
+      <a href="mailto:levanoencinas@gmail.com" class="footer-email">levanoencinas@gmail.com</a>
+      <a href="tel:+51924897902" class="footer-phone">+51 924 897 902</a>
+      <p class="footer-location">Callao, Perú · Disponible para freelance</p>
+      <div class="social-row">
+        <a href="https://www.behance.net/linole" target="_blank" rel="noopener" id="footer-behance" class="social-link" aria-label="Behance"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M22 7h-7V5h7v2zm1.726 10c-.442 1.297-2.029 3-5.101 3-3.074 0-5.564-1.729-5.564-5.675 0-3.91 2.325-5.92 5.466-5.92 3.082 0 4.964 1.782 5.375 4.426.078.506.109 1.188.095 2.14H15.97c.13 1.2.836 1.884 2.109 1.884.559 0 1.011-.167 1.339-.5h3.308zm-3.917-2.5c-.012-.578-.295-1.584-1.45-1.584-.92 0-1.476.612-1.62 1.584h3.07zm-14.023 2.5H0v-13h5.675c2.617 0 4.625 1.02 4.625 3.577 0 1.308-.692 2.234-1.835 2.912 1.509.576 2.407 1.592 2.407 3.18 0 2.85-2.3 4.331-5.086 4.331zM3.11 9.7h2.069c1.151 0 1.947-.417 1.947-1.593 0-1.129-.896-1.449-1.947-1.449H3.11V9.7zm0 5.3h2.411c1.274 0 2.081-.591 2.081-1.897 0-1.268-.947-1.812-2.194-1.812H3.11V15z"/></svg></a>
+        <a href="#" id="footer-instagram" class="social-link" aria-label="Instagram"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+        <a href="#" id="footer-linkedin" class="social-link" aria-label="LinkedIn"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></a>
+        <a href="mailto:levanoencinas@gmail.com" id="footer-email-link" class="social-link" aria-label="Email"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></a>
+      </div>
+      <div class="footer-copy">&#169; 2026 Valentino Levano (Lino) &middot; Dise&#241;ador UX/UI &amp; Gr&#225;fico &middot; Callao, Per&#250;</div>
+      <div class="footer-watermark" aria-hidden="true"><span>LINO</span></div>
+    </footer>
+
+  </div>
+
+  <script>
+    // Hamburger Menu — right-side drawer
+    const hamburger = document.getElementById('hamburger');
+    const navMenu = document.getElementById('nav-menu');
+    const backdrop = document.getElementById('nav-backdrop');
+    let menuOpen = false;
+
+    function toggleMenu(forceClose) {
+      menuOpen = forceClose ? false : !menuOpen;
+      hamburger.classList.toggle('open', menuOpen);
+      navMenu.classList.toggle('open', menuOpen);
+      backdrop.classList.toggle('open', menuOpen);
+      hamburger.setAttribute('aria-expanded', menuOpen);
+      navMenu.setAttribute('aria-hidden', !menuOpen);
+      // Lock body scroll when drawer is open
+      document.body.style.overflow = menuOpen ? 'hidden' : '';
+    }
+
+    hamburger.addEventListener('click', () => toggleMenu());
+    // Close when any link is tapped
+    navMenu.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => toggleMenu(true));
+    });
+    // Close when backdrop is tapped
+    backdrop.addEventListener('click', () => toggleMenu(true));
+    // Close on Escape key
+    document.addEventListener('keydown', e => { if (e.key === 'Escape' && menuOpen) toggleMenu(true); });
+
+    // Navbar scroll
+    const mobileNav = document.getElementById('mobile-nav');
+    window.addEventListener('scroll', () => { mobileNav.classList.toggle('scrolled', window.scrollY > 40); }, { passive: true });
+
+    // Scroll Reveal
+    const revealObs = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('revealed'); revealObs.unobserve(e.target); } });
+    }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+    document.querySelectorAll('[data-reveal]').forEach(el => revealObs.observe(el));
+
+    // Animated Counters
+    function animateCount(el, target, suffix) {
+      let cur = 0; const step = target / 50;
+      const t = setInterval(() => { cur += step; if (cur >= target) { cur = target; clearInterval(t); } el.textContent = Math.floor(cur) + suffix; }, 20);
+    }
+    const statsObs = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.querySelectorAll('.stat-num').forEach(num => { animateCount(num, parseInt(num.dataset.count), num.dataset.suffix || ''); }); statsObs.unobserve(e.target); } });
+    }, { threshold: 0.4 });
+    const statsRow = document.querySelector('.stats-row');
+    if (statsRow) statsObs.observe(statsRow);
+
+    // Software auto-loop (Close first, then open next)
+    (function () {
+      const tags = document.querySelectorAll('.software-logo-tag');
+      if (!tags.length) return;
+      let currentIndex = 0;
+      let isHovered = false;
+      function stepLoop() {
+        if (isHovered) return;
+        tags.forEach(tag => tag.classList.remove('active'));
+        setTimeout(() => {
+          if (isHovered) return;
+          tags[currentIndex].classList.add('active');
+          currentIndex = (currentIndex + 1) % tags.length;
+        }, 420);
+      }
+      stepLoop();
+      setInterval(stepLoop, 3000);
+      tags.forEach(tag => {
+        tag.addEventListener('mouseenter', () => { isHovered = true; tags.forEach(t => t.classList.remove('active')); });
+        tag.addEventListener('touchstart', () => { isHovered = true; tags.forEach(t => t.classList.remove('active')); });
+        tag.addEventListener('mouseleave', () => { isHovered = false; });
+      });
+    })();
+  </script>
+
+</body>
+</html>
