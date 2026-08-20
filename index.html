@@ -1326,6 +1326,12 @@
         font-size: clamp(2.8rem, 13vw, 5rem);
       }
     }
+
+    @media (min-width: 1024px) {
+      .about-side-panel {
+        padding-top: calc(clamp(3rem, 6vw, 6rem) + 4.05rem);
+      }
+    }
   </style>
 </head>
 
@@ -1674,7 +1680,7 @@
         </div>
       </div>
 
-      <div class="space-y-5">
+      <div class="space-y-5 about-side-panel">
         <!-- Stats grid -->
         <div id="stats-grid" class="grid grid-cols-2 gap-4" data-reveal data-delay="200">
           <div class="glass-card p-6">
