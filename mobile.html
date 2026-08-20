@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <script src="assets/mobile/mobile-performance.js?v=20260820-1" defer></script>
   <script>
     (function () {
@@ -2287,16 +2287,40 @@
             <button onclick="closePdfModal()" style="display:flex;align-items:center;gap:6px;padding:6px 14px;border-radius:100px;border:1px solid rgba(237,224,200,0.25);font-size:0.7rem;font-weight:700;color:var(--cream);background:rgba(237,224,200,0.08);cursor:pointer;">← REGRESAR</button>
             <span id="m-pdf-title" style="font-size:0.75rem;font-weight:600;color:var(--cream);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex:1;"></span>
           </div>
-          <div style="flex:1;width:100%;height:100%;padding:6px;">
-            <iframe id="m-pdf-iframe" style="width:100%;height:100%;border-radius:10px;border:1px solid rgba(237,224,200,0.1);background:#111;"></iframe>
+          <div id="m-pdf-content" style="flex:1;min-height:0;width:100%;padding:6px;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;touch-action:pan-y pinch-zoom;">
+            <img id="m-pdf-image" src="" alt="" width="1154" height="6344" style="display:none;width:100%;height:auto;border-radius:10px;border:1px solid rgba(237,224,200,0.1);background:#f4f0ea;" />
+            <iframe id="m-pdf-iframe" style="display:none;width:100%;height:100%;border-radius:10px;border:1px solid rgba(237,224,200,0.1);background:#111;"></iframe>
           </div>
         `;
         document.body.appendChild(overlay);
       }
       const iframe = document.getElementById('m-pdf-iframe');
+      const image = document.getElementById('m-pdf-image');
+      const content = document.getElementById('m-pdf-content');
       const titleEl = document.getElementById('m-pdf-title');
       if (titleEl) titleEl.textContent = title || '';
-      if (iframe) iframe.src = pdfUrl + '#toolbar=1&navpanes=0';
+      const isCurrentCv = pdfUrl.includes('CV_Valentino_Levano_Actualizado_2026.pdf');
+      if (isCurrentCv) {
+        if (iframe) {
+          iframe.style.display = 'none';
+          iframe.src = 'about:blank';
+        }
+        if (image) {
+          image.src = 'assets/documents/CV_Valentino_Levano_Actualizado_2026-mobile.png?v=20260820-1';
+          image.alt = title || 'CV de Valentino Levano';
+          image.style.display = 'block';
+        }
+      } else {
+        if (image) {
+          image.style.display = 'none';
+          image.src = '';
+        }
+        if (iframe) {
+          iframe.style.display = 'block';
+          iframe.src = pdfUrl + '#toolbar=1&navpanes=0';
+        }
+      }
+      if (content) content.scrollTop = 0;
       overlay.style.opacity = '1';
       overlay.style.pointerEvents = 'auto';
       document.body.style.overflow = 'hidden';
@@ -2305,10 +2329,14 @@
     function closePdfModal() {
       const overlay = document.getElementById('m-pdf-modal-overlay');
       const iframe = document.getElementById('m-pdf-iframe');
+      const image = document.getElementById('m-pdf-image');
       if (!overlay) return;
       overlay.style.opacity = '0';
       overlay.style.pointerEvents = 'none';
-      setTimeout(() => { if (iframe) iframe.src = 'about:blank'; }, 300);
+      setTimeout(() => {
+        if (iframe) iframe.src = 'about:blank';
+        if (image) image.src = '';
+      }, 300);
       document.body.style.overflow = '';
     }
 
