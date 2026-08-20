@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
-  <script src="performance.js" defer></script>
+  <script src="performance.js?v=20260819-5" defer></script>
   <script>
     (function () {
       function checkDevice() {
@@ -52,11 +52,13 @@
 
     html {
       scroll-behavior: smooth;
-      scroll-padding-top: 20px;
+      scroll-padding-top: 0;
     }
 
-    section {
-      scroll-margin-top: 20px;
+    #sobre-mi,
+    #proyectos,
+    #metodo {
+      scroll-margin-top: 88px;
     }
 
     body {
@@ -646,7 +648,7 @@
 
     /* ── SOBRE MI ───────────────────────────────── */
     #sobre-mi {
-      padding: 2.25rem 1.25rem;
+      padding: 1.75rem 1.25rem 2.25rem;
     }
 
     .bio-text {
@@ -826,7 +828,7 @@
 
     /* ── PROYECTOS ──────────────────────────────── */
     #proyectos {
-      padding: 2.25rem 1.25rem;
+      padding: 1.75rem 1.25rem 2.25rem;
     }
 
     .project-card {
@@ -835,6 +837,146 @@
       overflow: hidden;
       margin-bottom: 1rem;
       contain: layout paint;
+    }
+
+    .project-category-group {
+      min-width: 0;
+      margin-bottom: 5.5rem;
+      scroll-margin-top: 88px;
+    }
+
+    #proyectos-packaging {
+      margin-top: 4.5rem;
+    }
+
+    .identity-project-grid,
+    .editorial-project-grid,
+    .packaging-project-grid,
+    .uxui-project-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1rem;
+    }
+
+    .identity-project-grid .project-card,
+    .editorial-project-grid .project-card,
+    .packaging-project-grid .project-card,
+    .uxui-project-grid .project-card {
+      margin-bottom: 0;
+    }
+
+    .project-category-menu {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 7px;
+      margin: 1.5rem 0 2.75rem;
+    }
+
+    .project-category-menu-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      min-height: 40px;
+      padding: 9px 13px;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      border-radius: 8px;
+      background: var(--cream);
+      color: var(--darker);
+      text-decoration: none;
+      box-shadow: 0 3px 9px rgba(0, 0, 0, 0.24);
+    }
+
+    .project-category-menu-link:active,
+    .project-category-menu-link:focus-visible {
+      background: #fff5e2;
+      color: var(--darker);
+      outline: 2px solid rgba(237, 224, 200, 0.28);
+      outline-offset: 2px;
+    }
+
+    .project-category-menu-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 16px;
+      height: 16px;
+      flex: 0 0 16px;
+    }
+
+    .project-category-menu-icon svg {
+      width: 16px;
+      height: 16px;
+    }
+
+    .project-category-menu-label {
+      font-size: 0.76rem;
+      font-weight: 700;
+      letter-spacing: 0.01em;
+      line-height: 1;
+      text-transform: none;
+    }
+
+    .project-category-group .project-card {
+      margin-bottom: 0;
+    }
+
+    .project-category-tape {
+      position: relative;
+      left: 50%;
+      width: 100vw;
+      max-width: 100vw;
+      transform: translateX(-50%);
+      overflow: hidden;
+      margin-bottom: 24px;
+      padding: 16px 0;
+      border-top: 1px solid rgba(237, 224, 200, 0.11);
+      border-bottom: 1px solid rgba(237, 224, 200, 0.11);
+      background: rgba(237, 224, 200, 0.018);
+    }
+
+    .project-category-track {
+      display: flex;
+      align-items: center;
+      width: max-content;
+      animation: projectTapeScroll var(--tape-duration, 16s) linear infinite;
+      will-change: transform;
+      backface-visibility: hidden;
+    }
+
+    .project-category-sequence,
+    .project-category-unit {
+      display: flex;
+      align-items: center;
+      flex: 0 0 auto;
+    }
+
+    .project-category-unit {
+      gap: 60px;
+      padding-right: 60px;
+    }
+
+    .project-category-name {
+      color: rgba(237, 224, 200, 0.78);
+      font-size: 1rem;
+      font-style: italic;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    .project-category-mark {
+      width: 38px;
+      height: 38px;
+      object-fit: contain;
+      opacity: 0.72;
+      flex: 0 0 auto;
+    }
+
+    @keyframes projectTapeScroll {
+      from { transform: translate3d(0, 0, 0); }
+      to { transform: translate3d(-50%, 0, 0); }
     }
 
     .slide-from-right {
@@ -974,7 +1116,7 @@
 
     /* ── METODO ─────────────────────────────────── */
     #metodo {
-      padding: 4rem 1.25rem;
+      padding: 3rem 1.25rem 4rem;
       position: relative;
       overflow: hidden;
     }
@@ -1119,17 +1261,20 @@
       bottom: 0;
       left: 0;
       right: 0;
-      text-align: center;
+      height: 145px;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
       pointer-events: none;
       overflow: hidden;
     }
 
-    .footer-watermark span {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: clamp(80px, 35vw, 160px);
-      color: transparent;
-      -webkit-text-stroke: 1px rgba(237, 224, 200, 0.025);
-      line-height: 0.85;
+    .footer-watermark img {
+      width: auto;
+      height: clamp(110px, 34vw, 145px);
+      object-fit: contain;
+      opacity: 0.045;
+      transform: translateY(14%);
     }
 
     @keyframes fadeInUp {
@@ -1376,7 +1521,7 @@
 
         <div style="display:flex;flex-direction:column;gap:0.65rem;">
           <!-- Ver CV Button -->
-          <a href="https://drive.google.com/file/d/18MFKfj253ZwOvvi0cbZPXE-uFHOr3gMx/view?usp=drive_link" target="_blank" rel="noopener" style="display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:10px;background:var(--cream);color:var(--darker);text-decoration:none;font-weight:700;font-size:0.82rem;box-shadow:0 3px 10px rgba(0,0,0,0.3);transition:transform 0.2s ease;">
+          <a href="javascript:void(0)" onclick="openPdfModal('assets/documents/CV_Valentino_Levano.pdf', 'CV - Valentino Levano')" style="display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:10px;background:var(--cream);color:var(--darker);text-decoration:none;font-weight:700;font-size:0.82rem;box-shadow:0 3px 10px rgba(0,0,0,0.3);transition:transform 0.2s ease;">
             <div style="width:30px;height:30px;border-radius:8px;background:rgba(26,15,10,0.12);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
               <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><polyline points="9 15 12 18 15 15"/></svg>
             </div>
@@ -1429,128 +1574,188 @@
   <section id="proyectos">
     <div class="section-label" data-reveal>Trabajo selecto</div>
     <h2 class="section-title" data-reveal data-delay="100">Proyectos<br /><em>destacados</em></h2>
-    <div style="margin-top:1.75rem;">
+    <nav class="project-category-menu" aria-label="Ir a una categoría de proyectos" data-reveal data-delay="200">
+      <a class="project-category-menu-link" href="#proyectos-identidad"><span class="project-category-menu-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3l2.1 5.1L19 10l-4.9 1.9L12 17l-2.1-5.1L5 10l4.9-1.9L12 3z"/><path d="M19 16l.9 2.1L22 19l-2.1.9L19 22l-.9-2.1L16 19l2.1-.9L19 16z"/></svg></span><span class="project-category-menu-label">Identidad visual</span></a>
+      <a class="project-category-menu-link" href="#proyectos-uxui"><span class="project-category-menu-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M3 8h18M8 21h8M12 18v3"/></svg></span><span class="project-category-menu-label">Diseño UX/UI</span></a>
+      <a class="project-category-menu-link" href="#proyectos-editorial"><span class="project-category-menu-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 5.5A2.5 2.5 0 016.5 3H11v16H6.5A2.5 2.5 0 004 21V5.5zM20 5.5A2.5 2.5 0 0017.5 3H13v16h4.5A2.5 2.5 0 0120 21V5.5z"/></svg></span><span class="project-category-menu-label">Diseño editorial</span></a>
+      <a class="project-category-menu-link" href="#proyectos-packaging"><span class="project-category-menu-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 7l8-4 8 4-8 4-8-4zM4 7v10l8 4 8-4V7M12 11v10"/></svg></span><span class="project-category-menu-label">Packaging &amp; retail</span></a>
+    </nav>
+    <div>
       <!-- Bloque 1: Identidad & Branding (Luminé) -->
-      <div class="project-card has-multi-slides" data-reveal data-delay="100" id="m-lumine-card">
-        <div class="card-arrow-controls"><button class="card-arrow-btn" id="m-lumine-prev"><svg width="12" height="12"
-              viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
-              <line x1="19" y1="12" x2="5" y2="12" />
-              <polyline points="12 19 5 12 12 5" />
-            </svg></button><button class="card-arrow-btn" id="m-lumine-next"><svg width="12" height="12"
-              viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
-              <line x1="5" y1="12" x2="19" y2="12" />
-              <polyline points="12 5 19 12 12 19" />
-            </svg></button></div>
-        <div class="card-img-wrap" id="m-lumine-wrap"><img src="assets/projects/Mockup Lumine-768.webp" alt="Manual de Marca Luminé"
-            id="m-lumine-img" loading="lazy" decoding="async"
-            style="width:100%;height:100%;object-fit:cover;object-position:center;" /></div>
-        <div class="card-overlay"
-          style="background:linear-gradient(to top, rgba(13,8,5,0.85) 0%, rgba(13,8,5,0.15) 45%, transparent 70%);">
+      <div class="project-category-group" id="proyectos-identidad">
+        <div class="project-category-tape" aria-label="Categoría: Identidad visual y señalética">
+          <div class="project-category-track">
+            <span class="project-category-name">Identidad visual & Señalética</span><img class="project-category-mark" src="Isotipo Transparente@4x.png" alt="" />
+          </div>
         </div>
-        <div class="card-content" id="m-lumine-content">
-          <div class="card-tag" id="m-lumine-tag">Identidad & Branding · Manual de Marca</div>
-          <div class="card-title" id="m-lumine-title">MANUAL DE MARCA LUMINÉ</div>
-          <div class="card-desc" id="m-lumine-desc"
-            style="color:#ffffff;text-shadow:0 1px 4px rgba(0,0,0,0.85);font-weight:500;">Sistema de identidad completo
-            para marca de skincare: logotipo, paleta, tipografía y aplicaciones.</div><a href="javascript:void(0)"
-            onclick="openPdfModal(mCurrentLuminePdf, mCurrentLumineTitle)" class="card-link" id="card-link-lumine">Ver
-            más &rarr;</a>
-        </div>
+      <div class="identity-project-grid">
+        <article class="project-card" data-reveal data-delay="100">
+          <div class="card-img-wrap"><img src="assets/projects/Mockup Lumine-768.webp" alt="Manual de Marca Luminé"
+              loading="lazy" decoding="async"
+              style="width:100%;height:100%;object-fit:cover;object-position:center;" /></div>
+          <div class="card-overlay"
+            style="background:linear-gradient(to top, rgba(13,8,5,0.85) 0%, rgba(13,8,5,0.15) 45%, transparent 70%);"></div>
+          <div class="card-content">
+            <div class="card-tag">IDENTIDAD & BRANDING</div>
+            <div class="card-title">IDENTIDAD VISUAL LUMINÉ</div>
+            <div class="card-desc">Branding e identidad conceptual para marca de skincare: logotipo, valores de
+              marca, paleta cromática y aplicaciones.</div>
+            <a href="javascript:void(0)" onclick="openEditorialProgressModal('lumine')"
+              class="card-link">Ver más &rarr;</a>
+          </div>
+        </article>
+
+        <article class="project-card" data-reveal data-delay="180">
+          <div class="card-img-wrap"><img src="assets/projects/Mockup Circuito Magico Agua-768.webp"
+              alt="Circuito Mágico del Agua" loading="lazy" decoding="async"
+              style="width:100%;height:100%;object-fit:cover;object-position:center;" /></div>
+          <div class="card-overlay"
+            style="background:linear-gradient(to top, rgba(13,8,5,0.85) 0%, rgba(13,8,5,0.15) 45%, transparent 70%);"></div>
+          <div class="card-content">
+            <div class="card-tag">ESPACIOS & SEÑALÉTICA · WAYFINDING</div>
+            <div class="card-title">CIRCUITO MÁGICO DEL AGUA</div>
+            <div class="card-desc">Sistema de señalización, tótems informativos y mapas orientativos para parque
+              temático público en Lima.</div>
+            <a href="javascript:void(0)" onclick="openEditorialProgressModal('circuito')"
+              class="card-link">Ver más &rarr;</a>
+          </div>
+        </article>
+      </div>
       </div>
 
       <!-- Bloque 2: Productos Digitales / UI Prominente (CIERUM / GIANTUCCHI / PCI EXPRESS) -->
-      <div class="project-card has-multi-slides" data-reveal data-delay="200" id="m-cierum-card">
-        <div class="card-arrow-controls"><button class="card-arrow-btn" id="m-cierum-prev"><svg width="12" height="12"
-              viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
-              <line x1="19" y1="12" x2="5" y2="12" />
-              <polyline points="12 19 5 12 12 5" />
-            </svg></button><button class="card-arrow-btn" id="m-cierum-next"><svg width="12" height="12"
-              viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
-              <line x1="5" y1="12" x2="19" y2="12" />
-              <polyline points="12 5 19 12 12 19" />
-            </svg></button></div>
-        <div class="card-img-wrap" id="m-cierum-wrap"><img src="assets/projects/Mockup Cierum-768.webp" alt="Plataforma CIERUM"
-            id="m-cierum-img" loading="lazy" decoding="async"
-            style="width:100%;height:100%;object-fit:cover;object-position:top;" /></div>
-        <div class="card-overlay"
-          style="background:linear-gradient(to top, rgba(13,8,5,0.88) 0%, rgba(13,8,5,0.15) 45%, transparent 70%);">
+      <div class="project-category-group" id="proyectos-uxui">
+        <div class="project-category-tape" aria-label="Categoría: Diseño UX/UI">
+          <div class="project-category-track">
+            <span class="project-category-name">Diseño UX/UI</span><img class="project-category-mark" src="Isotipo Transparente@4x.png" alt="" />
+          </div>
         </div>
-        <div class="card-content" id="m-cierum-content">
-          <div class="card-tag" id="m-cierum-tag">Diseño UX / UI</div>
-          <div class="card-title" id="m-cierum-title">PLATAFORMA CIERUM</div>
-          <div class="card-desc" id="m-cierum-desc"
-            style="color:#ffffff;text-shadow:0 1px 4px rgba(0,0,0,0.85);font-weight:500;">Landing page y plataforma web
-            para proptech de inversión inmobiliaria e IA (Giantucchi). Proyecto en producción activa.</div><a
-            href="javascript:void(0)" onclick="openPdfModal(mCurrentCierumUrl, mCurrentCierumTitle)" class="card-link"
-            id="card-link-cierum">Ver más &rarr;</a>
-        </div>
+      <div class="uxui-project-grid">
+        <article class="project-card" data-reveal data-delay="200">
+          <div class="card-img-wrap"><img src="assets/projects/Mockup Cierum-768.webp" alt="Plataforma CIERUM"
+              loading="lazy" decoding="async" style="width:100%;height:100%;object-fit:cover;object-position:top;" /></div>
+          <div class="card-overlay"></div>
+          <div class="card-content">
+            <div class="card-tag">DISEÑO UX / UI</div>
+            <div class="card-title">PLATAFORMA CIERUM</div>
+            <div class="card-desc">Landing page y plataforma web para inversión inmobiliaria. Proyecto real en
+              producción activa.</div>
+            <a href="javascript:void(0)" onclick="openPdfModal('https://cieruminmobiliaria.com/', 'Plataforma CIERUM — Inmobiliaria')"
+              class="card-link">Ver más &rarr;</a>
+          </div>
+        </article>
+
+        <article class="project-card" data-reveal data-delay="280">
+          <div class="card-img-wrap"><img src="assets/projects/Mockup Giantucchi-768.webp" alt="Plataforma Giantucchi"
+              loading="lazy" decoding="async" style="width:100%;height:100%;object-fit:cover;object-position:center;" /></div>
+          <div class="card-overlay"></div>
+          <div class="card-content">
+            <div class="card-tag">DISEÑO UX / UI</div>
+            <div class="card-title">PLATAFORMA GIANTUCCHI</div>
+            <div class="card-desc">Interfaz, flujos de usuario y experiencia digital para automatización e inteligencia
+              artificial.</div>
+            <a href="javascript:void(0)" onclick="openPdfModal('https://giantucchi.com/', 'Plataforma Giantucchi — Inteligencia Artificial')"
+              class="card-link">Ver más &rarr;</a>
+          </div>
+        </article>
+
+        <article class="project-card" data-reveal data-delay="360">
+          <div class="card-img-wrap"><img src="assets/projects/Mockup PCI Express-768.webp" alt="PCI Express E-Commerce"
+              loading="lazy" decoding="async" style="width:100%;height:100%;object-fit:cover;object-position:center;" /></div>
+          <div class="card-overlay"></div>
+          <div class="card-content">
+            <div class="card-tag">E-COMMERCE & UI/UX</div>
+            <div class="card-title">PCI EXPRESS</div>
+            <div class="card-desc">Diseño de experiencia y arquitectura de interfaz para una tienda especializada en
+              hardware.</div>
+            <a href="javascript:void(0)" onclick="openEditorialProgressModal('pci')"
+              class="card-link">Ver más &rarr;</a>
+          </div>
+        </article>
+      </div>
       </div>
 
       <!-- Bloque 3: Edición Editorial (Arte Culinario & Ayacucho Slides) -->
-      <div class="project-card has-multi-slides" data-reveal data-delay="300" id="m-arteculinario-project-card">
-        <div class="card-arrow-controls">
-          <button class="card-arrow-btn prev-card-btn" id="m-arteculinario-prev" title="Anterior"><svg width="14"
-              height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
-              stroke-linecap="round" stroke-linejoin="round">
-              <line x1="19" y1="12" x2="5" y2="12" />
-              <polyline points="12 19 5 12 12 5" />
-            </svg></button>
-          <button class="card-arrow-btn next-card-btn" id="m-arteculinario-next" title="Siguiente"><svg width="14"
-              height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
-              stroke-linecap="round" stroke-linejoin="round">
-              <line x1="5" y1="12" x2="19" y2="12" />
-              <polyline points="12 5 19 12 12 19" />
-            </svg></button>
+      <div class="project-category-group" id="proyectos-editorial">
+        <div class="project-category-tape" aria-label="Categoría: Diseño editorial">
+          <div class="project-category-track">
+            <span class="project-category-name">Diseño editorial</span><img class="project-category-mark" src="Isotipo Transparente@4x.png" alt="" />
+          </div>
         </div>
-        <div class="card-img-wrap" id="m-arteculinario-img-wrap"><img src="assets/projects/Mockup Revista Gastronomica-768.webp"
-            alt="Arte Culinario" id="m-arteculinario-img" loading="lazy" decoding="async"
-            style="width:100%;height:100%;object-fit:cover;object-position:center;" /></div>
-        <div class="card-overlay"
-          style="background:linear-gradient(to top, rgba(13,8,5,0.85) 0%, rgba(13,8,5,0.15) 45%, transparent 70%);">
-        </div>
-        <div class="card-content" id="m-arteculinario-content">
-          <div class="card-tag" id="m-arteculinario-tag">EDICIÓN EDITORIAL • GASTRONOMÍA</div>
-          <div class="card-title" id="m-arteculinario-title">ARTE CULINARIO</div>
-          <div class="card-desc" id="m-arteculinario-desc">Proyecto editorial independiente que fusiona el diseño de
-            alta gama con la cultura gastronómica global, recetas y perfiles de chefs internacionales.</div><a
-            href="javascript:void(0)" onclick="openPdfModal(currentArteculinarioPdf, currentArteculinarioTitle)"
-            class="card-link" id="card-link-cma">Ver más &rarr;</a>
-        </div>
+      <div class="editorial-project-grid">
+        <article class="project-card" data-reveal data-delay="300">
+          <div class="card-img-wrap"><img src="assets/projects/Mockup Arte Culinario Sillon-768.webp"
+              alt="Revista Arte Culinario" loading="lazy" decoding="async"
+              style="width:100%;height:100%;object-fit:cover;object-position:center;" /></div>
+          <div class="card-overlay"
+            style="background:linear-gradient(to top, rgba(13,8,5,0.85) 0%, rgba(13,8,5,0.15) 45%, transparent 70%);"></div>
+          <div class="card-content">
+            <div class="card-tag">EDICIÓN EDITORIAL • GASTRONOMÍA</div>
+            <div class="card-title">ARTE CULINARIO</div>
+            <div class="card-desc">Revista gastronómica que reúne recetas, cultura culinaria y perfiles de chefs internacionales.</div>
+            <a href="javascript:void(0)" onclick="openEditorialProgressModal('arte')" class="card-link">Ver más &rarr;</a>
+          </div>
+        </article>
+
+        <article class="project-card" data-reveal data-delay="400">
+          <div class="card-img-wrap"><img src="assets/projects/Mockup Guia Ayacucho Mesa-768.webp"
+              alt="Guía Turística de Ayacucho" loading="lazy" decoding="async"
+              style="width:100%;height:100%;object-fit:cover;object-position:center;" /></div>
+          <div class="card-overlay"
+            style="background:linear-gradient(to top, rgba(13,8,5,0.85) 0%, rgba(13,8,5,0.15) 45%, transparent 70%);"></div>
+          <div class="card-content">
+            <div class="card-tag">EDICIÓN ESPECIAL • TURISMO</div>
+            <div class="card-title">GUÍA TURÍSTICA DE AYACUCHO</div>
+            <div class="card-desc">Guía de viaje sobre su historia colonial, paisajes andinos, tradición artesanal y gastronomía.</div>
+            <a href="javascript:void(0)" onclick="openEditorialProgressModal('ayacucho')"
+              class="card-link">Ver más &rarr;</a>
+          </div>
+        </article>
+      </div>
+      </div>
       </div>
 
-      <!-- Bloque 4: Packaging & Rediseño (DecoArt & Herbi Slides) -->
-      <div class="project-card has-multi-slides" data-reveal data-delay="400" id="m-decoart-project-card">
-        <div class="card-arrow-controls">
-          <button class="card-arrow-btn prev-card-btn" id="m-decoart-prev-btn" title="Anterior"><svg width="14"
-              height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
-              stroke-linecap="round" stroke-linejoin="round">
-              <line x1="19" y1="12" x2="5" y2="12" />
-              <polyline points="12 19 5 12 12 5" />
-            </svg></button>
-          <button class="card-arrow-btn next-card-btn" id="m-decoart-next-btn" title="Siguiente"><svg width="14"
-              height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
-              stroke-linecap="round" stroke-linejoin="round">
-              <line x1="5" y1="12" x2="19" y2="12" />
-              <polyline points="12 5 19 12 12 19" />
-            </svg></button>
+      <!-- Bloque 4: Packaging & Rediseño (DecoArt & Herbi) -->
+      <div class="project-category-group" id="proyectos-packaging">
+        <div class="project-category-tape" aria-label="Categoría: Packaging y retail">
+          <div class="project-category-track">
+            <span class="project-category-name">Packaging & Retail</span><img class="project-category-mark" src="Isotipo Transparente@4x.png" alt="" />
+          </div>
         </div>
-        <div class="card-img-wrap" id="m-decoart-img-wrap"><img src="assets/projects/Mockup Caja y botella Deco Art-768.webp"
-            alt="Rediseño de envase pintura acrílica DecoArt" id="m-decoart-card-img" loading="lazy" decoding="async"
-            style="width:100%;height:100%;object-fit:cover;object-position:center;" /></div>
-        <div class="card-overlay"></div>
-        <div class="card-content" id="m-decoart-content">
-          <div class="card-tag" id="m-decoart-tag">PACKAGING & REDISEÑO DE ETIQUETA</div>
-          <div class="card-title" id="m-decoart-title">REDISEÑO DE ENVASE PINTURA ACRÍLICA</div>
-          <div class="card-desc" id="m-decoart-desc">Rediseño estructural y gráfico de etiqueta para envase de pintura
-            acrílica (DecoArt), optimizando jerarquía informativa, legibilidad y normativas de producto.</div><a
-            href="javascript:void(0)" onclick="openPdfModal(mCurrentDecoartPdf, mCurrentDecoartTitle)" class="card-link"
-            id="card-link-decoart">Ver más &rarr;</a>
-        </div>
+      <div class="packaging-project-grid">
+        <article class="project-card" data-reveal data-delay="400">
+          <div class="card-img-wrap"><img src="assets/projects/Mockup Caja y botella Deco Art-768.webp"
+              alt="Rediseño de envase pintura acrílica DecoArt" loading="lazy" decoding="async"
+              style="width:100%;height:100%;object-fit:cover;object-position:center;" /></div>
+          <div class="card-overlay"></div>
+          <div class="card-content">
+            <div class="card-tag">PACKAGING & REDISEÑO DE ETIQUETA</div>
+            <div class="card-title">REDISEÑO DE ENVASE PINTURA ACRÍLICA</div>
+            <div class="card-desc">Rediseño estructural y gráfico de etiqueta para envase de pintura acrílica
+              (DecoArt), optimizando jerarquía informativa y legibilidad.</div>
+            <a href="javascript:void(0)"
+              onclick="openPdfModal('https://drive.google.com/file/d/1WPPuC694B9EmZfCYfcUX7J1MoyDu7dpJ/preview', 'Rediseño de Envase Pintura Acrílica — DecoArt')"
+              class="card-link">Ver más &rarr;</a>
+          </div>
+        </article>
+
+        <article class="project-card" data-reveal data-delay="480">
+          <div class="card-img-wrap"><img src="assets/projects/Mockup Herbi-768.webp" alt="Rediseño de empaque Herbi"
+              loading="lazy" decoding="async"
+              style="width:100%;height:100%;object-fit:cover;object-position:center;" /></div>
+          <div class="card-overlay"></div>
+          <div class="card-content">
+            <div class="card-tag">PACKAGING & REDISEÑO ESTRUCTURAL</div>
+            <div class="card-title">REDISEÑO DE EMPAQUE HERBI</div>
+            <div class="card-desc">Rediseño de empaque y gráfica para línea de infusiones de manzanilla, optimizando
+              la jerarquía visual y su presencia en anaquel.</div>
+            <a href="javascript:void(0)"
+              onclick="openPdfModal('https://drive.google.com/file/d/19vPngOrRrXWlWYJelkA2A-GabbdYult7/preview', 'Rediseño de Empaque HERBI')"
+              class="card-link">Ver más &rarr;</a>
+          </div>
+        </article>
       </div>
-    </div>
-    <div style="margin-top:1.5rem;text-align:center;" data-reveal data-delay="400">
-      <a href="https://www.behance.net/linole" target="_blank" rel="noopener" class="cta-ghost" id="ver-todo-behance"
-        style="width:100%;justify-content:center;">Ver todo el trabajo &rarr;</a>
+      </div>
     </div>
   </section>
 
@@ -1637,7 +1842,9 @@
     </div>
     <div class="footer-copy">&#169; 2026 Valentino Levano (Lino) &middot; Dise&#241;ador UX/UI &amp; Gr&#225;fico
       &middot; Callao, Per&#250;</div>
-    <div class="footer-watermark" aria-hidden="true"><span>LINO</span></div>
+    <div class="footer-watermark" aria-hidden="true">
+      <img src="Isotipo Transparente@4x.png" alt="" />
+    </div>
   </footer>
 
   </div>
@@ -1808,226 +2015,107 @@
       }, 3000);
     })();
 
-    // Arte Culinario & Ayacucho 3-second Card Toggle with Right-to-Left Slide
-    let currentArteculinarioPdf = 'https://drive.google.com/file/d/1_xC7MgBoK_reY2KxyrWZj0PUoCyB7Jj-/preview';
-    let currentArteculinarioTitle = 'Arte Culinario — Edición Editorial';
-
-    (function () {
-      const card = document.getElementById('m-arteculinario-project-card');
-      const imgWrap = document.getElementById('m-arteculinario-img-wrap');
-      const img = document.getElementById('m-arteculinario-img');
-      const content = document.getElementById('m-arteculinario-content');
-      const tag = document.getElementById('m-arteculinario-tag');
-      const title = document.getElementById('m-arteculinario-title');
-      const desc = document.getElementById('m-arteculinario-desc');
-      const prevBtn = document.getElementById('m-arteculinario-prev');
-      const nextBtn = document.getElementById('m-arteculinario-next');
-
-      if (!card || !img || !content || !tag || !title || !desc) return;
-
-      const slides = [
-        {
-          tag: 'EDICIÓN EDITORIAL • GASTRONOMÍA',
+    function openEditorialProgressModal(project = 'arte') {
+      const projects = {
+        arte: {
+          src: 'assets/editorial-magazine/reader.html?v=2b473c9b6f2f',
           title: 'ARTE CULINARIO',
-          desc: 'Proyecto editorial independiente que fusiona el diseño de alta gama con la cultura gastronómica global, recetas y perfiles de chefs internacionales.',
-          img: 'assets/projects/Mockup Revista Gastronomica-768.webp',
-          pdf: 'https://drive.google.com/file/d/1_xC7MgBoK_reY2KxyrWZj0PUoCyB7Jj-/preview',
-          pdfTitle: 'Arte Culinario — Edición Editorial'
+          frameTitle: 'Revista interactiva Arte Culinario',
+          category: 'Diseño editorial'
         },
-        {
-          tag: 'EDICIÓN ESPECIAL • TURISMO',
-          title: 'AYACUCHO',
-          desc: 'Guía de viajes definitiva que fusiona la historia colonial, la magia de sus paisajes andinos, la tradición artesanal y la auténtica sazón ayacuchana.',
-          img: 'assets/projects/Mockup guia Turistica-768.webp',
-          pdf: 'https://drive.google.com/file/d/19d_5PvUazXYdLNPiG3olCQCukdBwodCr/preview',
-          pdfTitle: 'Guía Turística — Ayacucho'
-        }
-      ];
-
-      let currentIndex = 0;
-      let isMouseOver = false;
-      card.addEventListener('touchstart', () => { isMouseOver = true; });
-
-      async function goToSlide(index) {
-        const nextIndex = (index + slides.length) % slides.length;
-        const slide = slides[nextIndex];
-        await window.portfolioPreloadImage(slide.img);
-        currentIndex = nextIndex;
-
-        imgWrap.classList.remove('slide-from-right');
-        content.classList.remove('slide-from-right');
-        await new Promise(resolve => requestAnimationFrame(resolve));
-
-        tag.textContent = slide.tag;
-        title.textContent = slide.title;
-        desc.textContent = slide.desc;
-        img.src = slide.img;
-        img.alt = slide.title;
-        currentArteculinarioPdf = slide.pdf;
-        currentArteculinarioTitle = slide.pdfTitle;
-
-        imgWrap.classList.add('slide-from-right');
-        content.classList.add('slide-from-right');
-      }
-
-      if (prevBtn) prevBtn.addEventListener('click', (e) => { e.stopPropagation(); goToSlide(currentIndex - 1); });
-      if (nextBtn) nextBtn.addEventListener('click', (e) => { e.stopPropagation(); goToSlide(currentIndex + 1); });
-
-      setInterval(() => {
-        if (isMouseOver || !window.portfolioCanAnimate(card)) return;
-        goToSlide(currentIndex + 1);
-      }, 3000);
-    })();
-
-    // Cierum / Giantucchi 3-second Card Toggle with Right-to-Left Slide
-    let mCurrentCierumUrl = 'https://cieruminmobiliaria.com/';
-    let mCurrentCierumTitle = 'Plataforma CIERUM — Inmobiliaria';
-
-    (function () {
-      const card = document.getElementById('m-cierum-card');
-      const imgWrap = document.getElementById('m-cierum-wrap');
-      const img = document.getElementById('m-cierum-img');
-      const content = document.getElementById('m-cierum-content');
-      const tag = document.getElementById('m-cierum-tag');
-      const title = document.getElementById('m-cierum-title');
-      const desc = document.getElementById('m-cierum-desc');
-      const prevBtn = document.getElementById('m-cierum-prev');
-      const nextBtn = document.getElementById('m-cierum-next');
-
-      if (!card || !img || !content || !tag || !title || !desc) return;
-
-      const slides = [
-        {
-          tag: 'DISEÑO UX / UI',
-          title: 'PLATAFORMA CIERUM',
-          desc: 'Landing page y plataforma web para proptech de inversión inmobiliaria e IA (Giantucchi). Proyecto en producción activa.',
-          img: 'assets/projects/Mockup Cierum-768.webp',
-          url: 'https://cieruminmobiliaria.com/',
-          modalTitle: 'Plataforma CIERUM — Inmobiliaria'
+        ayacucho: {
+          src: 'assets/ayacucho-magazine/reader.html?v=20260819-6',
+          title: 'GUÍA TURÍSTICA DE AYACUCHO',
+          frameTitle: 'Guía Turística de Ayacucho interactiva',
+          category: 'Diseño editorial'
         },
-        {
-          tag: 'DISEÑO UX/UI',
-          title: 'PLATAFORMA GIANTUCCHI',
-          desc: 'Diseño de interfaz, flujos de usuario y experiencia digital para soluciones de transformación digital, automatización e inteligencia artificial. Proyecto real en producción activa.',
-          img: 'assets/projects/Mockup Giantucchi-768.webp',
-          url: 'https://giantucchi.com/',
-          modalTitle: 'Plataforma Giantucchi — Inteligencia Artificial'
+        circuito: {
+          src: 'assets/circuito-magazine/reader.html?v=20260819-3',
+          title: 'CIRCUITO MÁGICO DEL AGUA',
+          frameTitle: 'Manual interactivo del Circuito Mágico del Agua',
+          category: 'Señalética & espacios'
         },
-        {
-          tag: 'E-COMMERCE & UI/UX',
+        lumine: {
+          src: 'assets/lumine-magazine/reader.html?v=20260819-1',
+          title: 'LUMINÉ - MANUAL DE MARCA',
+          frameTitle: 'Manual de marca Luminé interactivo',
+          category: 'Identidad & branding'
+        },
+        pci: {
+          src: '',
           title: 'PCI EXPRESS',
-          desc: 'Diseño de experiencia de usuario y arquitectura de interfaz para tienda especializada en hardware de PC, enfocada en transparencia, compatibilidad y seguridad total para el cliente.',
-          img: 'assets/projects/Mockup PCI Express-768.webp',
-          url: 'https://www.behance.net/linole',
-          modalTitle: 'PCI Express — E-Commerce & UI/UX'
+          frameTitle: '',
+          category: 'Diseño UX/UI',
+          progress: true
         }
-      ];
-
-      let currentIndex = 0;
-      let isMouseOver = false;
-      card.addEventListener('touchstart', () => { isMouseOver = true; });
-
-      async function goToSlide(index) {
-        const nextIndex = (index + slides.length) % slides.length;
-        const slide = slides[nextIndex];
-        await window.portfolioPreloadImage(slide.img);
-        currentIndex = nextIndex;
-
-        imgWrap.classList.remove('slide-from-right');
-        content.classList.remove('slide-from-right');
-        await new Promise(resolve => requestAnimationFrame(resolve));
-
-        tag.textContent = slide.tag;
-        title.textContent = slide.title;
-        desc.textContent = slide.desc;
-        img.src = slide.img;
-        img.alt = slide.title;
-        mCurrentCierumUrl = slide.url;
-        mCurrentCierumTitle = slide.modalTitle;
-
-        imgWrap.classList.add('slide-from-right');
-        content.classList.add('slide-from-right');
+      };
+      const selected = projects[project] || projects.arte;
+      let overlay = document.getElementById('m-editorial-progress-modal');
+      if (!overlay) {
+        overlay = document.createElement('div');
+        overlay.id = 'm-editorial-progress-modal';
+        overlay.setAttribute('role', 'dialog');
+        overlay.setAttribute('aria-modal', 'true');
+        overlay.setAttribute('aria-labelledby', 'm-editorial-progress-title');
+        overlay.style.cssText = 'position:fixed;inset:0;z-index:9999;display:flex;flex-direction:column;background:rgba(5,3,2,.97);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);opacity:0;pointer-events:none;transition:opacity .3s ease;';
+        overlay.innerHTML = `
+          <div style="display:flex;align-items:center;gap:10px;padding:10px 12px;border-bottom:1px solid rgba(237,224,200,.12);background:var(--darker);">
+            <button type="button" onclick="closeEditorialProgressModal()" style="padding:9px 12px;border:0;border-radius:8px;background:var(--cream);color:var(--darker);font-size:.68rem;font-weight:800;cursor:pointer;white-space:nowrap;">← REGRESAR</button>
+            <div style="min-width:0;flex:1;text-align:center;">
+              <p id="m-editorial-progress-category" style="margin:0;font-size:.5rem;letter-spacing:.18em;text-transform:uppercase;color:rgba(237,224,200,.42);">Diseño editorial</p>
+              <h2 id="m-editorial-progress-title" style="margin:2px 0 0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:.72rem;color:var(--cream);">ARTE CULINARIO</h2>
+            </div>
+          </div>
+          <div style="min-height:0;flex:1;padding:5px;">
+            <div id="m-editorial-progress-message" style="display:none;width:100%;height:100%;align-items:center;justify-content:center;border-radius:10px;border:1px solid rgba(237,224,200,.1);background:#080503;">
+              <p style="margin:0;font-family:var(--font-editorial, sans-serif);font-size:clamp(2rem,10vw,3.5rem);font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--cream);">En proceso</p>
+            </div>
+            <iframe id="m-editorial-reader-frame" src="" title="Revista interactiva" allowfullscreen="allowfullscreen" allow="autoplay; fullscreen; clipboard-write" scrolling="no" class="fp-iframe" style="width:100%;height:100%;display:block;border-radius:10px;border:1px solid rgba(237,224,200,.1);background:#080503;"></iframe>
+          </div>`;
+        document.body.appendChild(overlay);
       }
-
-      if (prevBtn) prevBtn.addEventListener('click', (e) => { e.stopPropagation(); goToSlide(currentIndex - 1); });
-      if (nextBtn) nextBtn.addEventListener('click', (e) => { e.stopPropagation(); goToSlide(currentIndex + 1); });
-
-      setInterval(() => {
-        if (isMouseOver || !window.portfolioCanAnimate(card)) return;
-        goToSlide(currentIndex + 1);
-      }, 3000);
-    })();
-
-    // ── Packaging DecoArt & Herbi 3-second Card Toggle (Mobile) ──
-    let mCurrentDecoartPdf = 'https://drive.google.com/file/d/1WPPuC694B9EmZfCYfcUX7J1MoyDu7dpJ/preview';
-    let mCurrentDecoartTitle = 'Rediseño de Envase Pintura Acrílica — DecoArt';
-
-    (function () {
-      const card = document.getElementById('m-decoart-project-card');
-      const imgWrap = document.getElementById('m-decoart-img-wrap');
-      const img = document.getElementById('m-decoart-card-img');
-      const content = document.getElementById('m-decoart-content');
-      const tag = document.getElementById('m-decoart-tag');
-      const title = document.getElementById('m-decoart-title');
-      const desc = document.getElementById('m-decoart-desc');
-      const prevBtn = document.getElementById('m-decoart-prev-btn');
-      const nextBtn = document.getElementById('m-decoart-next-btn');
-
-      if (!card || !img || !content || !tag || !title || !desc) return;
-
-      const slides = [
-        {
-          tag: 'PACKAGING & REDISEÑO DE ETIQUETA',
-          title: 'REDISEÑO DE ENVASE PINTURA ACRÍLICA',
-          desc: 'Rediseño estructural y gráfico de etiqueta para envase de pintura acrílica (DecoArt), optimizando jerarquía informativa, legibilidad y normativas de producto.',
-          img: 'assets/projects/Mockup Caja y botella Deco Art-768.webp',
-          pdf: 'https://drive.google.com/file/d/1WPPuC694B9EmZfCYfcUX7J1MoyDu7dpJ/preview',
-          pdfTitle: 'Rediseño de Envase Pintura Acrílica — DecoArt'
-        },
-        {
-          tag: 'PACKAGING & REDISEÑO ESTRUCTURAL',
-          title: 'REDISEÑO DE EMPAQUE HERBI',
-          desc: 'Rediseño de empaque y gráfica para línea de infusiones de manzanilla, optimizando la jerarquía visual, retícula informativa y presencia de marca en anaquel.',
-          img: 'assets/projects/Mockup Herbi-768.webp',
-          pdf: 'https://drive.google.com/file/d/19vPngOrRrXWlWYJelkA2A-GabbdYult7/preview',
-          pdfTitle: 'Rediseño de Empaque HERBI'
+      const frame = document.getElementById('m-editorial-reader-frame');
+      const title = document.getElementById('m-editorial-progress-title');
+      const category = document.getElementById('m-editorial-progress-category');
+      const progressMessage = document.getElementById('m-editorial-progress-message');
+      if (selected.progress) {
+        if (frame) frame.style.display = 'none';
+        if (progressMessage) progressMessage.style.display = 'flex';
+      } else {
+        if (frame) frame.style.display = 'block';
+        if (progressMessage) progressMessage.style.display = 'none';
+        const nextFrameSrc = new URL(selected.src, window.location.href).href;
+        if (frame && (frame.dataset.project !== project || frame.src !== nextFrameSrc)) {
+          frame.src = selected.src;
+          frame.dataset.project = project;
         }
-      ];
-
-      let currentIndex = 0;
-      let isMouseOver = false;
-      card.addEventListener('touchstart', () => { isMouseOver = true; });
-
-      async function goToSlide(index) {
-        const nextIndex = (index + slides.length) % slides.length;
-        const slide = slides[nextIndex];
-        await window.portfolioPreloadImage(slide.img);
-        currentIndex = nextIndex;
-
-        imgWrap.classList.remove('slide-from-right');
-        content.classList.remove('slide-from-right');
-        await new Promise(resolve => requestAnimationFrame(resolve));
-
-        tag.textContent = slide.tag;
-        title.textContent = slide.title;
-        desc.textContent = slide.desc;
-        img.src = slide.img;
-        img.alt = slide.title;
-        mCurrentDecoartPdf = slide.pdf;
-        mCurrentDecoartTitle = slide.pdfTitle;
-
-        imgWrap.classList.add('slide-from-right');
-        content.classList.add('slide-from-right');
       }
+      if (frame) frame.title = selected.frameTitle;
+      if (title) title.textContent = selected.title;
+      if (category) category.textContent = selected.category;
+      overlay.style.opacity = '1';
+      overlay.style.pointerEvents = 'auto';
+      document.body.style.overflow = 'hidden';
+      overlay.querySelector('button')?.focus({ preventScroll: true });
+    }
 
-      if (prevBtn) prevBtn.addEventListener('click', (e) => { e.stopPropagation(); goToSlide(currentIndex - 1); });
-      if (nextBtn) nextBtn.addEventListener('click', (e) => { e.stopPropagation(); goToSlide(currentIndex + 1); });
+    function closeEditorialProgressModal() {
+      const overlay = document.getElementById('m-editorial-progress-modal');
+      const frame = document.getElementById('m-editorial-reader-frame');
+      if (!overlay) return;
+      frame?.contentWindow?.postMessage({ type: 'resetEditorialReader' }, '*');
+      overlay.style.opacity = '0';
+      overlay.style.pointerEvents = 'none';
+      document.body.style.overflow = '';
+    }
 
-      setInterval(() => {
-        if (isMouseOver || !window.portfolioCanAnimate(card)) return;
-        goToSlide(currentIndex + 1);
-      }, 3000);
-    })();
+    document.addEventListener('keydown', event => {
+      if (event.key === 'Escape') closeEditorialProgressModal();
+    });
+
+    window.addEventListener('message', event => {
+      if (event.data?.type === 'closeEditorialReader') closeEditorialProgressModal();
+    });
 
     // PDF Modal Viewer Logic
     function openPdfModal(pdfUrl, title) {
@@ -2084,7 +2172,7 @@
             
             <div style="display:flex;flex-direction:column;gap:0.6rem;">
               <!-- Ver CV Button -->
-              <a href="https://drive.google.com/file/d/18MFKfj253ZwOvvi0cbZPXE-uFHOr3gMx/view?usp=drive_link" target="_blank" rel="noopener" style="display:flex;align-items:center;gap:12px;padding:11px 14px;border-radius:10px;background:var(--cream);color:var(--darker);text-decoration:none;font-weight:700;font-size:0.82rem;box-shadow:0 3px 10px rgba(0,0,0,0.3);transition:transform 0.2s ease;">
+              <a href="javascript:void(0)" onclick="openCvFromContact()" style="display:flex;align-items:center;gap:12px;padding:11px 14px;border-radius:10px;background:var(--cream);color:var(--darker);text-decoration:none;font-weight:700;font-size:0.82rem;box-shadow:0 3px 10px rgba(0,0,0,0.3);transition:transform 0.2s ease;">
                 <div style="width:30px;height:30px;border-radius:8px;background:rgba(26,15,10,0.12);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
                   <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><polyline points="9 15 12 18 15 15"/></svg>
                 </div>
@@ -2143,6 +2231,13 @@
       overlay.style.pointerEvents = 'none';
       if (card) card.style.transform = 'scale(0.95)';
       document.body.style.overflow = '';
+    }
+
+    function openCvFromContact() {
+      closeContactModal();
+      window.setTimeout(() => {
+        openPdfModal('assets/documents/CV_Valentino_Levano.pdf', 'CV - Valentino Levano');
+      }, 320);
     }
   </script>
 
