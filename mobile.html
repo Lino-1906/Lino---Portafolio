@@ -852,13 +852,15 @@
       scroll-margin-top: 88px;
     }
 
-    #proyectos-packaging {
+    #proyectos-packaging,
+    #proyectos-fotografia {
       margin-top: 4.5rem;
     }
 
     .identity-project-grid,
     .editorial-project-grid,
     .packaging-project-grid,
+    .photography-project-grid,
     .uxui-project-grid {
       display: grid;
       grid-template-columns: 1fr;
@@ -870,8 +872,43 @@
     .identity-project-grid .project-card,
     .editorial-project-grid .project-card,
     .packaging-project-grid .project-card,
+    .photography-project-grid .project-card,
     .uxui-project-grid .project-card {
       margin-bottom: 0;
+    }
+
+    .photography-project-card {
+      cursor: default;
+      isolation: isolate;
+      border: 1px solid rgba(237, 224, 200, 0.13);
+      background:
+        radial-gradient(circle at 78% 34%, rgba(237, 224, 200, 0.15) 0 8%, transparent 8.5% 14%, rgba(237, 224, 200, 0.055) 14.5% 20%, transparent 20.5%),
+        linear-gradient(135deg, #21140e 0%, #0d0805 52%, #2b1b12 100%);
+    }
+
+    .photography-project-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      background:
+        linear-gradient(112deg, transparent 0 56%, rgba(237, 224, 200, 0.07) 56.2% 56.8%, transparent 57%),
+        radial-gradient(circle at 78% 34%, transparent 0 26%, rgba(237, 224, 200, 0.05) 26.4% 27%, transparent 27.4%);
+      pointer-events: none;
+    }
+
+    .photography-project-mark {
+      position: absolute;
+      top: 24px;
+      right: 24px;
+      z-index: 1;
+      width: 92px;
+      height: auto;
+      color: rgba(237, 224, 200, 0.16);
+    }
+
+    .photography-project-card .card-content {
+      z-index: 2;
     }
 
     .project-category-menu {
@@ -1607,6 +1644,7 @@
       <a class="project-category-menu-link" href="#proyectos-uxui"><span class="project-category-menu-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M3 8h18M8 21h8M12 18v3"/></svg></span><span class="project-category-menu-label">Diseño UX/UI</span></a>
       <a class="project-category-menu-link" href="#proyectos-editorial"><span class="project-category-menu-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 5.5A2.5 2.5 0 016.5 3H11v16H6.5A2.5 2.5 0 004 21V5.5zM20 5.5A2.5 2.5 0 0017.5 3H13v16h4.5A2.5 2.5 0 0120 21V5.5z"/></svg></span><span class="project-category-menu-label">Diseño editorial</span></a>
       <a class="project-category-menu-link" href="#proyectos-packaging"><span class="project-category-menu-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 7l8-4 8 4-8 4-8-4zM4 7v10l8 4 8-4V7M12 11v10"/></svg></span><span class="project-category-menu-label">Packaging &amp; retail</span></a>
+      <a class="project-category-menu-link" href="#proyectos-fotografia"><span class="project-category-menu-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h3l1.5-2h7L17 7h3a2 2 0 012 2v9a2 2 0 01-2 2H4a2 2 0 01-2-2V9a2 2 0 012-2z"/><circle cx="12" cy="13" r="4"/></svg></span><span class="project-category-menu-label">Fotografía</span></a>
     </nav>
     <div>
       <!-- Bloque 1: Identidad & Branding (Luminé) -->
@@ -1799,6 +1837,26 @@
           </div>
         </article>
       </div>
+      </div>
+
+      <!-- Bloque 5: Fotografía -->
+      <div class="project-category-group" id="proyectos-fotografia">
+        <div class="project-category-tape" aria-label="Categoría: Fotografía">
+          <div class="project-category-track">
+            <span class="project-category-name">Fotografía</span><svg class="project-category-mark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h3l1.5-2h7L17 7h3a2 2 0 012 2v9a2 2 0 01-2 2H4a2 2 0 01-2-2V9a2 2 0 012-2z"/><circle cx="12" cy="13" r="4"/></svg>
+          </div>
+        </div>
+        <div class="photography-project-grid">
+          <article class="project-card photography-project-card" style="height:260px;" data-reveal data-delay="500">
+            <svg class="photography-project-mark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h3l1.5-2h7L17 7h3a2 2 0 012 2v9a2 2 0 01-2 2H4a2 2 0 01-2-2V9a2 2 0 012-2z"/><circle cx="12" cy="13" r="4"/><circle cx="18" cy="10" r=".75" fill="currentColor" stroke="none"/></svg>
+            <div class="card-overlay"></div>
+            <div class="card-content">
+              <div class="card-tag">FOTOGRAFÍA · ARCHIVO VISUAL</div>
+              <div class="card-title">FOTOGRAFÍA</div>
+              <div class="card-desc">Selección fotográfica en preparación. Próximamente se incorporarán las primeras series y proyectos.</div>
+            </div>
+          </article>
+        </div>
       </div>
     </div>
   </section>

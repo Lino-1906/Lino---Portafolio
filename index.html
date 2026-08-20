@@ -712,18 +712,60 @@
       scroll-margin-top: 120px;
     }
 
-    #proyectos-packaging {
+    #proyectos-packaging,
+    #proyectos-fotografia {
       margin-top: 128px;
     }
 
     .identity-project-grid,
     .editorial-project-grid,
-    .packaging-project-grid {
+    .packaging-project-grid,
+    .photography-project-grid {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: 20px;
       content-visibility: auto;
       contain-intrinsic-size: auto 460px;
+    }
+
+    .photography-project-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .photography-project-card {
+      cursor: default;
+      isolation: isolate;
+      border: 1px solid rgba(237, 224, 200, 0.13);
+      background:
+        radial-gradient(circle at 76% 42%, rgba(237, 224, 200, 0.15) 0 7%, transparent 7.5% 12%, rgba(237, 224, 200, 0.055) 12.5% 17%, transparent 17.5%),
+        linear-gradient(122deg, #21140e 0%, #0d0805 48%, #2b1b12 100%);
+    }
+
+    .photography-project-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      background:
+        linear-gradient(112deg, transparent 0 54%, rgba(237, 224, 200, 0.075) 54.2% 54.6%, transparent 54.8%),
+        radial-gradient(circle at 76% 42%, transparent 0 23%, rgba(237, 224, 200, 0.05) 23.3% 23.7%, transparent 24%);
+      pointer-events: none;
+    }
+
+    .photography-project-mark {
+      position: absolute;
+      top: 50%;
+      right: clamp(2rem, 9vw, 8rem);
+      z-index: 1;
+      width: clamp(108px, 15vw, 190px);
+      height: auto;
+      color: rgba(237, 224, 200, 0.17);
+      transform: translateY(-50%);
+    }
+
+    .photography-project-card .card-content {
+      z-index: 2;
+      max-width: 720px;
     }
 
     .uxui-project-grid {
@@ -858,6 +900,7 @@
       .identity-project-grid .project-card,
       .editorial-project-grid .project-card,
       .packaging-project-grid .project-card,
+      .photography-project-grid .project-card,
       .uxui-project-grid .project-card {
         height: clamp(400px, 34vw, 460px) !important;
       }
@@ -872,11 +915,13 @@
     @media (max-width: 768px) {
       .identity-project-grid,
       .editorial-project-grid,
-      .packaging-project-grid {
+      .packaging-project-grid,
+      .photography-project-grid {
         grid-template-columns: 1fr;
       }
 
-      #proyectos-packaging {
+      #proyectos-packaging,
+      #proyectos-fotografia {
         margin-top: 72px;
       }
     }
@@ -1391,13 +1436,13 @@
 
             <!-- Floating stat 1 -->
             <div class="glass-card absolute bottom-0 -left-8 px-5 py-4"
-              style="animation: floatGlow2 6s ease-in-out infinite; animation-delay: 0s;">
+              style="width: 18rem; max-width: calc(100% - 1rem); animation: floatGlow2 6s ease-in-out infinite; animation-delay: 0s;">
               <div class="stat-num" style="font-size: 1.8rem;">3+</div>
               <div class="stat-label">Años en diseño</div>
             </div>
             <!-- Floating stat 2 -->
-            <div class="glass-card absolute -top-6 -right-6 px-5 py-4"
-              style="animation: floatGlow1 7.5s ease-in-out infinite; animation-delay: -3s;">
+            <div class="glass-card absolute px-5 py-4"
+              style="position: absolute; bottom: 1.5rem; right: 1.5rem; animation: floatGlow1 7.5s ease-in-out infinite; animation-delay: -3s;">
               <div class="stat-num" style="font-size: 1.8rem;">5+</div>
               <div class="stat-label">Proyectos reales</div>
             </div>
@@ -1757,6 +1802,10 @@
         <span class="project-category-menu-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 7l8-4 8 4-8 4-8-4zM4 7v10l8 4 8-4V7M12 11v10"/></svg></span>
         <span class="project-category-menu-label">Packaging &amp; retail</span>
       </a>
+      <a class="project-category-menu-link" href="#proyectos-fotografia">
+        <span class="project-category-menu-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h3l1.5-2h7L17 7h3a2 2 0 012 2v9a2 2 0 01-2 2H4a2 2 0 01-2-2V9a2 2 0 012-2z"/><circle cx="12" cy="13" r="4"/></svg></span>
+        <span class="project-category-menu-label">Fotografía</span>
+      </a>
     </nav>
 
     <div class="grid grid-cols-1 md:grid-cols-12 gap-y-36">
@@ -1957,6 +2006,26 @@
           </div>
         </article>
       </div>
+      </div>
+
+      <!-- Bloque 5: Fotografía -->
+      <div class="project-category-group md:col-span-12" id="proyectos-fotografia">
+        <div class="project-category-tape" aria-label="Categoría: Fotografía">
+          <div class="project-category-track">
+            <span class="project-category-name">Fotografía</span><svg class="project-category-mark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h3l1.5-2h7L17 7h3a2 2 0 012 2v9a2 2 0 01-2 2H4a2 2 0 01-2-2V9a2 2 0 012-2z"/><circle cx="12" cy="13" r="4"/></svg>
+          </div>
+        </div>
+        <div class="photography-project-grid">
+          <article class="project-card photography-project-card" style="height:380px;" data-reveal data-delay="500">
+            <svg class="photography-project-mark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h3l1.5-2h7L17 7h3a2 2 0 012 2v9a2 2 0 01-2 2H4a2 2 0 01-2-2V9a2 2 0 012-2z"/><circle cx="12" cy="13" r="4"/><circle cx="18" cy="10" r=".75" fill="currentColor" stroke="none"/></svg>
+            <div class="card-overlay card-overlay-clean"></div>
+            <div class="card-content">
+              <div class="card-tag">FOTOGRAFÍA · ARCHIVO VISUAL</div>
+              <h3 class="font-editorial font-bold text-brand-cream" style="font-size:clamp(1.4rem,2vw,1.8rem);">FOTOGRAFÍA</h3>
+              <p class="text-sm mt-1" style="color:rgba(237,224,200,0.62);">Selección fotográfica en preparación. Próximamente se incorporarán las primeras series y proyectos.</p>
+            </div>
+          </article>
+        </div>
       </div>
 
     </div>
