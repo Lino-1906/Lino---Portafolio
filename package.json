@@ -1,0 +1,10 @@
+{
+  "name": "lino-portafolio",
+  "private": true,
+  "scripts": {
+    "build:css": "tailwindcss -c tailwind.config.js -i styles/tailwind-input.css -o assets/css/tailwind.min.css --minify"
+  },
+  "devDependencies": {
+    "tailwindcss": "3.4.17"
+  }
+}

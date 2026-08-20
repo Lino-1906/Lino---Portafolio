@@ -4,14 +4,21 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
-  <script src="performance.js?v=20260819-5" defer></script>
+  <script src="assets/mobile/mobile-performance.js?v=20260820-1" defer></script>
   <script>
     (function () {
+      let deviceCheckFrame = 0;
       function checkDevice() {
         if (window.innerWidth > 768) { window.location.replace('index.html'); }
       }
       checkDevice();
-      window.addEventListener('resize', checkDevice);
+      window.addEventListener('resize', function () {
+        if (deviceCheckFrame) return;
+        deviceCheckFrame = requestAnimationFrame(function () {
+          deviceCheckFrame = 0;
+          checkDevice();
+        });
+      }, { passive: true });
     })();
   </script>
   <title>Lino — Diseñador UX/UI · Gráfico Freelance</title>
@@ -21,11 +28,10 @@
   <meta name="description"
     content="Portafolio de Valentino Levano (Lino), Diseñador UX/UI y Gráfico Freelance desde Callao, Perú." />
   <meta property="og:title" content="Lino — Diseñador UX/UI · Gráfico Freelance" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link
-    href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700;1,900&family=Inter:wght@300;400;500&family=Bebas+Neue&display=swap"
-    rel="stylesheet" />
+  <link rel="preload" href="assets/mobile/images/lino-logo.webp" as="image" type="image/webp" fetchpriority="high" />
+  <link rel="preload" href="assets/fonts/JTUSjIg69CK48gW7PXoo9Wlhyw.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="assets/fonts/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa1ZL7.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="stylesheet" href="assets/css/fonts.css?v=20260820-1" />
 
   <style>
     :root {
@@ -73,10 +79,11 @@
       content: '';
       position: fixed;
       inset: 0;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+      background-image: url("assets/mobile/images/noise.png");
+      background-size: 64px 64px;
       pointer-events: none;
       z-index: 1000;
-      opacity: 0.4;
+      opacity: 0.014;
     }
 
     img {
@@ -856,6 +863,8 @@
       display: grid;
       grid-template-columns: 1fr;
       gap: 1rem;
+      content-visibility: auto;
+      contain-intrinsic-size: auto 520px;
     }
 
     .identity-project-grid .project-card,
@@ -941,7 +950,7 @@
       align-items: center;
       width: max-content;
       animation: projectTapeScroll var(--tape-duration, 16s) linear infinite;
-      will-change: transform;
+      will-change: auto;
       backface-visibility: hidden;
     }
 
@@ -970,6 +979,7 @@
       width: 38px;
       height: 38px;
       object-fit: contain;
+      color: rgba(237, 224, 200, 0.78);
       opacity: 0.72;
       flex: 0 0 auto;
     }
@@ -1313,6 +1323,17 @@
       animation-delay: 0.7s;
     }
 
+    /* Mobile-only rendering isolation for content far below the viewport. */
+    #metodo {
+      content-visibility: auto;
+      contain-intrinsic-size: auto 1100px;
+    }
+
+    footer {
+      content-visibility: auto;
+      contain-intrinsic-size: auto 460px;
+    }
+
     /* ── TABLET OPTIMIZATIONS ── */
     @media (min-width: 580px) {
       .hero-ctas {
@@ -1336,7 +1357,8 @@
   <!-- NAVIGATION -->
   <nav id="mobile-nav" role="navigation" aria-label="Menú principal">
     <a href="#hero" class="nav-logo" id="nav-logo-link">
-      <img src="Crema Horizontal transparente@4x.png" alt="Lino Logo" />
+      <img src="assets/mobile/images/lino-logo.webp" alt="Lino Logo" width="320" height="208"
+        loading="eager" decoding="async" fetchpriority="high" />
     </a>
     <button id="hamburger" aria-label="Abrir menú" aria-expanded="false" aria-controls="nav-menu">
       <span class="ham-line"></span>
@@ -1456,7 +1478,8 @@
         <div class="footer-contact-title" style="margin-bottom:0.75rem;">Software</div>
         <div class="software-row flex flex-wrap gap-4 items-center">
           <div class="software-logo-tag" title="Canva">
-            <img src="Canva.png" alt="Canva" style="width:36px;height:36px;object-fit:contain;" />
+            <img src="assets/mobile/images/canva.webp" alt="Canva" width="96" height="96"
+              loading="lazy" decoding="async" fetchpriority="low" style="width:36px;height:36px;object-fit:contain;" />
             <div class="software-info">
               <span class="software-name">CANVA</span>
               <div class="software-dots"><span class="dot filled"></span><span class="dot filled"></span><span
@@ -1464,7 +1487,8 @@
             </div>
           </div>
           <div class="software-logo-tag" title="Figma">
-            <img src="Figma.png" alt="Figma" style="width:36px;height:36px;object-fit:contain;" />
+            <img src="assets/mobile/images/figma.webp" alt="Figma" width="96" height="144"
+              loading="lazy" decoding="async" fetchpriority="low" style="width:36px;height:36px;object-fit:contain;" />
             <div class="software-info">
               <span class="software-name">FIGMA</span>
               <div class="software-dots"><span class="dot filled"></span><span class="dot filled"></span><span
@@ -1472,7 +1496,8 @@
             </div>
           </div>
           <div class="software-logo-tag" title="Illustrator">
-            <img src="Ilustrator.png" alt="Illustrator" style="width:36px;height:36px;object-fit:contain;" />
+            <img src="assets/mobile/images/illustrator.webp" alt="Illustrator" width="100" height="98"
+              loading="lazy" decoding="async" fetchpriority="low" style="width:36px;height:36px;object-fit:contain;" />
             <div class="software-info">
               <span class="software-name">ILLUSTRATOR</span>
               <div class="software-dots"><span class="dot filled"></span><span class="dot filled"></span><span
@@ -1480,7 +1505,8 @@
             </div>
           </div>
           <div class="software-logo-tag" title="InDesign">
-            <img src="Indesign.png" alt="InDesign" style="width:36px;height:36px;object-fit:contain;" />
+            <img src="assets/mobile/images/indesign.webp" alt="InDesign" width="100" height="98"
+              loading="lazy" decoding="async" fetchpriority="low" style="width:36px;height:36px;object-fit:contain;" />
             <div class="software-info">
               <span class="software-name">INDESIGN</span>
               <div class="software-dots"><span class="dot filled"></span><span class="dot filled"></span><span
@@ -1488,7 +1514,8 @@
             </div>
           </div>
           <div class="software-logo-tag" title="Photoshop">
-            <img src="Photoshop.png" alt="Photoshop" style="width:36px;height:36px;object-fit:contain;" />
+            <img src="assets/mobile/images/photoshop.webp" alt="Photoshop" width="100" height="98"
+              loading="lazy" decoding="async" fetchpriority="low" style="width:36px;height:36px;object-fit:contain;" />
             <div class="software-info">
               <span class="software-name">PHOTOSHOP</span>
               <div class="software-dots"><span class="dot filled"></span><span class="dot filled"></span><span
@@ -1547,7 +1574,8 @@
           <!-- Behance -->
           <a href="https://www.behance.net/linole" target="_blank" rel="noopener" style="display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:10px;background:rgba(237,224,200,0.04);border:1px solid rgba(237,224,200,0.08);text-decoration:none;color:var(--cream);" id="m-link-behance">
             <div style="width:30px;height:30px;border-radius:8px;background:rgba(237,224,200,0.08);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-              <img src="Behance.png" alt="Behance" style="width:16px;height:16px;object-fit:contain;" />
+              <img src="assets/mobile/images/behance.webp" alt="Behance" width="48" height="48"
+                loading="lazy" decoding="async" fetchpriority="low" style="width:16px;height:16px;object-fit:contain;" />
             </div>
             <span style="font-size:0.78rem;font-weight:600;">behance.net/linole</span>
           </a>
@@ -1585,13 +1613,14 @@
       <div class="project-category-group" id="proyectos-identidad">
         <div class="project-category-tape" aria-label="Categoría: Identidad visual y señalética">
           <div class="project-category-track">
-            <span class="project-category-name">Identidad visual & Señalética</span><img class="project-category-mark" src="Isotipo Transparente@4x.png" alt="" />
+            <span class="project-category-name">Identidad visual & Señalética</span><svg class="project-category-mark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l2.1 5.1L19 10l-4.9 1.9L12 17l-2.1-5.1L5 10l4.9-1.9L12 3z"/><path d="M19 16l.9 2.1L22 19l-2.1.9L19 22l-.9-2.1L16 19l2.1-.9L19 16z"/></svg>
           </div>
         </div>
       <div class="identity-project-grid">
         <article class="project-card" data-reveal data-delay="100">
-          <div class="card-img-wrap"><img src="assets/projects/Mockup Lumine-768.webp" alt="Manual de Marca Luminé"
-              loading="lazy" decoding="async"
+          <div class="card-img-wrap"><img src="assets/mobile/images/lumine-480.webp" alt="Manual de Marca Luminé"
+              srcset="assets/mobile/images/lumine-480.webp 480w, assets/projects/Mockup%20Lumine-768.webp 768w"
+              sizes="calc(100vw - 2.5rem)" width="480" height="339" loading="lazy" decoding="async" fetchpriority="low"
               style="width:100%;height:100%;object-fit:cover;object-position:center;" /></div>
           <div class="card-overlay"
             style="background:linear-gradient(to top, rgba(13,8,5,0.85) 0%, rgba(13,8,5,0.15) 45%, transparent 70%);"></div>
@@ -1606,8 +1635,10 @@
         </article>
 
         <article class="project-card" data-reveal data-delay="180">
-          <div class="card-img-wrap"><img src="assets/projects/Mockup Circuito Magico Agua-768.webp"
-              alt="Circuito Mágico del Agua" loading="lazy" decoding="async"
+          <div class="card-img-wrap"><img src="assets/mobile/images/circuito-480.webp"
+              srcset="assets/mobile/images/circuito-480.webp 480w, assets/projects/Mockup%20Circuito%20Magico%20Agua-768.webp 768w"
+              sizes="calc(100vw - 2.5rem)" width="480" height="335"
+              alt="Circuito Mágico del Agua" loading="lazy" decoding="async" fetchpriority="low"
               style="width:100%;height:100%;object-fit:cover;object-position:center;" /></div>
           <div class="card-overlay"
             style="background:linear-gradient(to top, rgba(13,8,5,0.85) 0%, rgba(13,8,5,0.15) 45%, transparent 70%);"></div>
@@ -1627,13 +1658,15 @@
       <div class="project-category-group" id="proyectos-uxui">
         <div class="project-category-tape" aria-label="Categoría: Diseño UX/UI">
           <div class="project-category-track">
-            <span class="project-category-name">Diseño UX/UI</span><img class="project-category-mark" src="Isotipo Transparente@4x.png" alt="" />
+            <span class="project-category-name">Diseño UX/UI</span><svg class="project-category-mark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M3 8h18M8 21h8M12 18v3"/></svg>
           </div>
         </div>
       <div class="uxui-project-grid">
         <article class="project-card" data-reveal data-delay="200">
-          <div class="card-img-wrap"><img src="assets/projects/Mockup Cierum-768.webp" alt="Plataforma CIERUM"
-              loading="lazy" decoding="async" style="width:100%;height:100%;object-fit:cover;object-position:top;" /></div>
+          <div class="card-img-wrap"><img src="assets/mobile/images/cierum-480.webp" alt="Plataforma CIERUM"
+              srcset="assets/mobile/images/cierum-480.webp 480w, assets/projects/Mockup%20Cierum-768.webp 768w"
+              sizes="calc(100vw - 2.5rem)" width="480" height="309" loading="lazy" decoding="async" fetchpriority="low"
+              style="width:100%;height:100%;object-fit:cover;object-position:top;" /></div>
           <div class="card-overlay"></div>
           <div class="card-content">
             <div class="card-tag">DISEÑO UX / UI</div>
@@ -1646,8 +1679,10 @@
         </article>
 
         <article class="project-card" data-reveal data-delay="280">
-          <div class="card-img-wrap"><img src="assets/projects/Mockup Giantucchi-768.webp" alt="Plataforma Giantucchi"
-              loading="lazy" decoding="async" style="width:100%;height:100%;object-fit:cover;object-position:center;" /></div>
+          <div class="card-img-wrap"><img src="assets/mobile/images/giantucchi-480.webp" alt="Plataforma Giantucchi"
+              srcset="assets/mobile/images/giantucchi-480.webp 480w, assets/projects/Mockup%20Giantucchi-768.webp 768w"
+              sizes="calc(100vw - 2.5rem)" width="480" height="339" loading="lazy" decoding="async" fetchpriority="low"
+              style="width:100%;height:100%;object-fit:cover;object-position:center;" /></div>
           <div class="card-overlay"></div>
           <div class="card-content">
             <div class="card-tag">DISEÑO UX / UI</div>
@@ -1660,8 +1695,10 @@
         </article>
 
         <article class="project-card" data-reveal data-delay="360">
-          <div class="card-img-wrap"><img src="assets/projects/Mockup PCI Express-768.webp" alt="PCI Express E-Commerce"
-              loading="lazy" decoding="async" style="width:100%;height:100%;object-fit:cover;object-position:center;" /></div>
+          <div class="card-img-wrap"><img src="assets/mobile/images/pci-express-480.webp" alt="PCI Express E-Commerce"
+              srcset="assets/mobile/images/pci-express-480.webp 480w, assets/projects/Mockup%20PCI%20Express-768.webp 768w"
+              sizes="calc(100vw - 2.5rem)" width="480" height="392" loading="lazy" decoding="async" fetchpriority="low"
+              style="width:100%;height:100%;object-fit:cover;object-position:center;" /></div>
           <div class="card-overlay"></div>
           <div class="card-content">
             <div class="card-tag">E-COMMERCE & UI/UX</div>
@@ -1679,13 +1716,15 @@
       <div class="project-category-group" id="proyectos-editorial">
         <div class="project-category-tape" aria-label="Categoría: Diseño editorial">
           <div class="project-category-track">
-            <span class="project-category-name">Diseño editorial</span><img class="project-category-mark" src="Isotipo Transparente@4x.png" alt="" />
+            <span class="project-category-name">Diseño editorial</span><svg class="project-category-mark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5.5A2.5 2.5 0 016.5 3H11v16H6.5A2.5 2.5 0 004 21V5.5zM20 5.5A2.5 2.5 0 0017.5 3H13v16h4.5A2.5 2.5 0 0120 21V5.5z"/></svg>
           </div>
         </div>
       <div class="editorial-project-grid">
         <article class="project-card" data-reveal data-delay="300">
-          <div class="card-img-wrap"><img src="assets/projects/Mockup Arte Culinario Sillon-768.webp"
-              alt="Revista Arte Culinario" loading="lazy" decoding="async"
+          <div class="card-img-wrap"><img src="assets/mobile/images/arte-culinario-480.webp"
+              srcset="assets/mobile/images/arte-culinario-480.webp 480w, assets/projects/Mockup%20Arte%20Culinario%20Sillon-768.webp 768w"
+              sizes="calc(100vw - 2.5rem)" width="480" height="360"
+              alt="Revista Arte Culinario" loading="lazy" decoding="async" fetchpriority="low"
               style="width:100%;height:100%;object-fit:cover;object-position:center;" /></div>
           <div class="card-overlay"
             style="background:linear-gradient(to top, rgba(13,8,5,0.85) 0%, rgba(13,8,5,0.15) 45%, transparent 70%);"></div>
@@ -1698,8 +1737,10 @@
         </article>
 
         <article class="project-card" data-reveal data-delay="400">
-          <div class="card-img-wrap"><img src="assets/projects/Mockup Guia Ayacucho Mesa-768.webp"
-              alt="Guía Turística de Ayacucho" loading="lazy" decoding="async"
+          <div class="card-img-wrap"><img src="assets/mobile/images/guia-ayacucho-480.webp"
+              srcset="assets/mobile/images/guia-ayacucho-480.webp 480w, assets/projects/Mockup%20Guia%20Ayacucho%20Mesa-768.webp 768w"
+              sizes="calc(100vw - 2.5rem)" width="480" height="320"
+              alt="Guía Turística de Ayacucho" loading="lazy" decoding="async" fetchpriority="low"
               style="width:100%;height:100%;object-fit:cover;object-position:center;" /></div>
           <div class="card-overlay"
             style="background:linear-gradient(to top, rgba(13,8,5,0.85) 0%, rgba(13,8,5,0.15) 45%, transparent 70%);"></div>
@@ -1719,13 +1760,15 @@
       <div class="project-category-group" id="proyectos-packaging">
         <div class="project-category-tape" aria-label="Categoría: Packaging y retail">
           <div class="project-category-track">
-            <span class="project-category-name">Packaging & Retail</span><img class="project-category-mark" src="Isotipo Transparente@4x.png" alt="" />
+            <span class="project-category-name">Packaging & Retail</span><svg class="project-category-mark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7l8-4 8 4-8 4-8-4zM4 7v10l8 4 8-4V7M12 11v10"/></svg>
           </div>
         </div>
       <div class="packaging-project-grid">
         <article class="project-card" data-reveal data-delay="400">
-          <div class="card-img-wrap"><img src="assets/projects/Mockup Caja y botella Deco Art-768.webp"
-              alt="Rediseño de envase pintura acrílica DecoArt" loading="lazy" decoding="async"
+          <div class="card-img-wrap"><img src="assets/mobile/images/decoart-envase-480.webp"
+              srcset="assets/mobile/images/decoart-envase-480.webp 480w, assets/projects/Mockup%20Caja%20y%20botella%20Deco%20Art-768.webp 768w"
+              sizes="calc(100vw - 2.5rem)" width="480" height="360"
+              alt="Rediseño de envase pintura acrílica DecoArt" loading="lazy" decoding="async" fetchpriority="low"
               style="width:100%;height:100%;object-fit:cover;object-position:center;" /></div>
           <div class="card-overlay"></div>
           <div class="card-content">
@@ -1740,8 +1783,9 @@
         </article>
 
         <article class="project-card" data-reveal data-delay="480">
-          <div class="card-img-wrap"><img src="assets/projects/Mockup Herbi-768.webp" alt="Rediseño de empaque Herbi"
-              loading="lazy" decoding="async"
+          <div class="card-img-wrap"><img src="assets/mobile/images/herbi-480.webp" alt="Rediseño de empaque Herbi"
+              srcset="assets/mobile/images/herbi-480.webp 480w, assets/projects/Mockup%20Herbi-768.webp 768w"
+              sizes="calc(100vw - 2.5rem)" width="480" height="339" loading="lazy" decoding="async" fetchpriority="low"
               style="width:100%;height:100%;object-fit:cover;object-position:center;" /></div>
           <div class="card-overlay"></div>
           <div class="card-content">
@@ -1813,7 +1857,8 @@
   <footer>
     <div class="divider" style="margin-bottom:2rem;"></div>
     <div class="footer-brand">
-      <img src="Crema Horizontal transparente@4x.png" alt="Lino Logo"
+      <img src="assets/mobile/images/lino-logo.webp" alt="Lino Logo" width="320" height="208"
+        loading="lazy" decoding="async" fetchpriority="low"
         style="height: 56px; width: auto; object-fit: contain;" />
     </div>
     <p class="footer-tagline">Valentino Levano (Lino).<br />UX/UI · Gráfico · Callao, Perú.<br />Disponible para
@@ -1843,7 +1888,8 @@
     <div class="footer-copy">&#169; 2026 Valentino Levano (Lino) &middot; Dise&#241;ador UX/UI &amp; Gr&#225;fico
       &middot; Callao, Per&#250;</div>
     <div class="footer-watermark" aria-hidden="true">
-      <img src="Isotipo Transparente@4x.png" alt="" />
+      <img src="assets/mobile/images/isotipo.webp" alt="" width="420" height="437"
+        loading="lazy" decoding="async" fetchpriority="low" />
     </div>
   </footer>
 
@@ -1924,22 +1970,34 @@
     (function () {
       const tags = document.querySelectorAll('.software-logo-tag');
       if (!tags.length) return;
+      const animationTarget = tags[0].closest('section') || tags[0].parentElement;
+      window.addEventListener('DOMContentLoaded', () => {
+        window.portfolioObserveAnimationTarget?.(animationTarget);
+      }, { once: true });
       let currentIndex = 0;
       let isHovered = false;
       function stepLoop() {
-        if (isHovered || document.hidden) return;
+        if (isHovered || document.hidden || (window.portfolioCanAnimate && !window.portfolioCanAnimate(animationTarget))) return;
         tags.forEach(tag => tag.classList.remove('active'));
         setTimeout(() => {
-          if (isHovered || document.hidden) return;
+          if (isHovered || document.hidden || (window.portfolioCanAnimate && !window.portfolioCanAnimate(animationTarget))) return;
           tags[currentIndex].classList.add('active');
           currentIndex = (currentIndex + 1) % tags.length;
         }, 420);
       }
       stepLoop();
-      setInterval(stepLoop, 3000);
+      const startSoftwareAutoplay = () => {
+        if (window.mobileCreateAutoplay) window.mobileCreateAutoplay(stepLoop, 3000, animationTarget);
+        else window.setInterval(stepLoop, 3000);
+      };
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', startSoftwareAutoplay, { once: true });
+      } else {
+        startSoftwareAutoplay();
+      }
       tags.forEach(tag => {
         tag.addEventListener('mouseenter', () => { isHovered = true; tags.forEach(t => t.classList.remove('active')); });
-        tag.addEventListener('touchstart', () => { isHovered = true; tags.forEach(t => t.classList.remove('active')); });
+        tag.addEventListener('touchstart', () => { isHovered = true; tags.forEach(t => t.classList.remove('active')); }, { passive: true });
         tag.addEventListener('mouseleave', () => { isHovered = false; });
       });
     })();
@@ -1961,12 +2019,17 @@
 
       if (!card || !img || !content || !tag || !title || !desc) return;
 
+      [imgWrap, content].forEach(element => {
+        element?.addEventListener('animationend', () => element.classList.remove('slide-from-right'));
+      });
+
       const slides = [
         {
           tag: 'IDENTIDAD & BRANDING',
           title: 'IDENTIDAD VISUAL LUMINÉ',
           desc: 'Branding e identidad conceptual para marca de skincare: logotipo, valores de marca, paleta cromática y aplicaciones.',
-          img: 'assets/projects/Mockup Lumine-768.webp',
+          img: 'assets/mobile/images/lumine-480.webp',
+          srcset: 'assets/mobile/images/lumine-480.webp 480w, assets/projects/Mockup%20Lumine-768.webp 768w',
           pdf: 'https://drive.google.com/file/d/1Ce6AigI92RgNtX0CciKsN6fg8MgT7LwW/preview',
           pdfTitle: 'Identidad Visual Luminé'
         },
@@ -1974,7 +2037,8 @@
           tag: 'ESPACIOS & SEÑALÉTICA · WAYFINDING',
           title: 'CIRCUITO MÁGICO DEL AGUA',
           desc: 'Sistema de señalización, tótems informativos y mapas orientativos para parque temático público en Lima.',
-          img: 'assets/projects/Mockup Circuito Magico Agua-768.webp',
+          img: 'assets/mobile/images/circuito-480.webp',
+          srcset: 'assets/mobile/images/circuito-480.webp 480w, assets/projects/Mockup%20Circuito%20Magico%20Agua-768.webp 768w',
           pdf: 'https://drive.google.com/file/d/1ypdqb-VL-0xai41Iccb40HiyUp73-_cN/preview',
           pdfTitle: 'Circuito Mágico del Agua — Manual de Señalética'
         }
@@ -1982,7 +2046,7 @@
 
       let currentIndex = 0;
       let isMouseOver = false;
-      card.addEventListener('touchstart', () => { isMouseOver = true; });
+      card.addEventListener('touchstart', () => { isMouseOver = true; }, { passive: true });
 
       async function goToSlide(index) {
         const nextIndex = (index + slides.length) % slides.length;
@@ -1997,6 +2061,8 @@
         tag.textContent = slide.tag;
         title.textContent = slide.title;
         desc.textContent = slide.desc;
+        img.srcset = slide.srcset;
+        img.sizes = 'calc(100vw - 2.5rem)';
         img.src = slide.img;
         img.alt = slide.title;
         mCurrentLuminePdf = slide.pdf;
@@ -2009,34 +2075,43 @@
       if (prevBtn) prevBtn.addEventListener('click', (e) => { e.stopPropagation(); goToSlide(currentIndex - 1); });
       if (nextBtn) nextBtn.addEventListener('click', (e) => { e.stopPropagation(); goToSlide(currentIndex + 1); });
 
-      setInterval(() => {
-        if (isMouseOver || !window.portfolioCanAnimate(card)) return;
-        goToSlide(currentIndex + 1);
-      }, 3000);
+      const advanceCard = () => {
+        if (isMouseOver || (window.portfolioCanAnimate && !window.portfolioCanAnimate(card))) return;
+        return goToSlide(currentIndex + 1);
+      };
+      const startCardAutoplay = () => {
+        if (window.mobileCreateAutoplay) window.mobileCreateAutoplay(advanceCard, 3000, card);
+        else window.setInterval(advanceCard, 3000);
+      };
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', startCardAutoplay, { once: true });
+      } else {
+        startCardAutoplay();
+      }
     })();
 
     function openEditorialProgressModal(project = 'arte') {
       const projects = {
         arte: {
-          src: 'assets/editorial-magazine/reader.html?v=2b473c9b6f2f',
+          src: 'assets/editorial-magazine/reader.html?v=20260820-2',
           title: 'ARTE CULINARIO',
           frameTitle: 'Revista interactiva Arte Culinario',
           category: 'Diseño editorial'
         },
         ayacucho: {
-          src: 'assets/ayacucho-magazine/reader.html?v=20260819-6',
+          src: 'assets/ayacucho-magazine/reader.html?v=20260820-2',
           title: 'GUÍA TURÍSTICA DE AYACUCHO',
           frameTitle: 'Guía Turística de Ayacucho interactiva',
           category: 'Diseño editorial'
         },
         circuito: {
-          src: 'assets/circuito-magazine/reader.html?v=20260819-3',
+          src: 'assets/circuito-magazine/reader.html?v=20260820-2',
           title: 'CIRCUITO MÁGICO DEL AGUA',
           frameTitle: 'Manual interactivo del Circuito Mágico del Agua',
           category: 'Señalética & espacios'
         },
         lumine: {
-          src: 'assets/lumine-magazine/reader.html?v=20260819-1',
+          src: 'assets/lumine-magazine/reader.html?v=20260820-2',
           title: 'LUMINÉ - MANUAL DE MARCA',
           frameTitle: 'Manual de marca Luminé interactivo',
           category: 'Identidad & branding'
@@ -2103,10 +2178,18 @@
       const overlay = document.getElementById('m-editorial-progress-modal');
       const frame = document.getElementById('m-editorial-reader-frame');
       if (!overlay) return;
+      const closingProject = frame?.dataset.project;
       frame?.contentWindow?.postMessage({ type: 'resetEditorialReader' }, '*');
       overlay.style.opacity = '0';
       overlay.style.pointerEvents = 'none';
       document.body.style.overflow = '';
+      setTimeout(() => {
+        const remainsClosed = overlay.style.pointerEvents === 'none';
+        if (frame && remainsClosed && frame.dataset.project === closingProject) {
+          frame.src = 'about:blank';
+          delete frame.dataset.project;
+        }
+      }, 320);
     }
 
     document.addEventListener('keydown', event => {
@@ -2150,7 +2233,7 @@
       if (!overlay) return;
       overlay.style.opacity = '0';
       overlay.style.pointerEvents = 'none';
-      setTimeout(() => { if (iframe) iframe.src = ''; }, 300);
+      setTimeout(() => { if (iframe) iframe.src = 'about:blank'; }, 300);
       document.body.style.overflow = '';
     }
 
@@ -2198,7 +2281,8 @@
               <!-- Behance -->
               <a href="https://www.behance.net/linole" target="_blank" rel="noopener" style="display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:10px;background:rgba(237,224,200,0.04);border:1px solid rgba(237,224,200,0.08);text-decoration:none;color:var(--cream);">
                 <div style="width:30px;height:30px;border-radius:8px;background:rgba(237,224,200,0.08);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-                  <img src="Behance.png" alt="Behance" style="width:16px;height:16px;object-fit:contain;" />
+                  <img src="assets/mobile/images/behance.webp" alt="Behance" width="48" height="48"
+                    decoding="async" style="width:16px;height:16px;object-fit:contain;" />
                 </div>
                 <span style="font-size:0.78rem;font-weight:600;">behance.net/linole</span>
               </a>

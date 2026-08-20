@@ -5,6 +5,7 @@
   const pageWidth = Number.parseFloat(readerConfig.pageWidth || '') || 567;
   const pageHeight = Number.parseFloat(readerConfig.pageHeight || '') || 738;
   const pageRatio = pageWidth / pageHeight;
+  const minimumPageHeight = pageRatio > 1.2 ? 240 : 338;
   const pagesVersion = readerConfig.pagesVersion ? `?v=${encodeURIComponent(readerConfig.pagesVersion)}` : '';
   const contentSources = Array.from({ length:total }, (_, index) => `page-${String(index + 1).padStart(2, '0')}.jpg${pagesVersion}`);
   const transparentPage = 'data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=';
@@ -37,6 +38,7 @@
   let soundEnabled = true;
   let audioContext = null;
   let resizeFrame = 0;
+  const pagePreloadCache = new Map();
 
   const clamp = (value, min, max) => Math.min(max, Math.max(min, value));
 
@@ -46,7 +48,7 @@
     const verticalPadding = Number.parseFloat(stageStyle.paddingTop) + Number.parseFloat(stageStyle.paddingBottom);
     const availableWidth = Math.max(1, stage.clientWidth - horizontalPadding);
     const availableHeight = Math.max(1, stage.clientHeight - verticalPadding);
-    const minPageWidth = Math.round(338 * pageRatio);
+    const minPageWidth = Math.round(minimumPageHeight * pageRatio);
     const landscapeWidth = Math.min(availableWidth, availableHeight * pageRatio * 2);
     const useLandscape = landscapeWidth >= minPageWidth * 2;
     const fittedWidth = useLandscape
@@ -65,32 +67,45 @@
     });
   }
 
-  function updateLoader(done) {
-    const percent = Math.round((done / total) * 100);
+  function updateLoader(done, expected = total) {
+    const percent = Math.round((done / expected) * 100);
     loaderBar.style.width = `${percent}%`;
-    loaderCount.textContent = `${done} / ${total}`;
+    loaderCount.textContent = `${done} / ${expected}`;
   }
 
-  function preloadPage(source) {
-    return new Promise(resolve => {
+  function preloadPage(source, priority = 'low') {
+    if (pagePreloadCache.has(source)) return pagePreloadCache.get(source);
+    const promise = new Promise(resolve => {
       const image = new Image();
       image.decoding = 'async';
       image.loading = 'eager';
-      image.onload = () => resolve(true);
+      image.fetchPriority = priority;
+      image.onload = async () => {
+        try { await image.decode(); } catch (_) { /* The page is already ready to paint. */ }
+        resolve(true);
+      };
       image.onerror = () => resolve(false);
       image.src = source;
     });
+    pagePreloadCache.set(source, promise);
+    return promise;
   }
 
-  async function preloadMagazine() {
+  async function preloadInitialPages() {
+    const initialSources = contentSources.slice(0, Math.min(4, total));
     let done = 0;
-    const results = await Promise.all(contentSources.map(async source => {
-      const loaded = await preloadPage(source);
+    const results = await Promise.all(initialSources.map(async source => {
+      const loaded = await preloadPage(source, 'high');
       done += 1;
-      updateLoader(done);
+      updateLoader(done, initialSources.length);
       return loaded;
     }));
-    if (results.some(loaded => !loaded)) throw new Error('No se pudieron cargar todas las páginas de la revista.');
+    if (results.some(loaded => !loaded)) throw new Error('No se pudieron cargar las páginas iniciales de la revista.');
+  }
+
+  function prefetchNearbyPages(pageIndex) {
+    const contentIndex = Math.max(0, pageIndex - 1);
+    contentSources.slice(contentIndex, contentIndex + 5).forEach(source => preloadPage(source));
   }
 
   function softenEdgePages() {
@@ -420,9 +435,9 @@
       width:pageWidth,
       height:pageHeight,
       size:'stretch',
-      minWidth:Math.round(338 * pageRatio),
+      minWidth:Math.round(minimumPageHeight * pageRatio),
       maxWidth:Math.round(990 * pageRatio),
-      minHeight:338,
+      minHeight:minimumPageHeight,
       maxHeight:990,
       drawShadow:true,
       flippingTime:780,
@@ -453,6 +468,7 @@
       loader.classList.add('hidden');
       enableControls();
       updateEdgeView();
+      prefetchNearbyPages(currentPage);
     });
     pageFlip.on('flip', event => {
       currentPage = event.data;
@@ -460,6 +476,7 @@
       updateEdgeView(false);
       if (ready && currentPage !== previousPage) playPaperSound();
       previousPage = currentPage;
+      prefetchNearbyPages(currentPage);
     });
     pageFlip.on('changeOrientation', () => {
       softenEdgePages();
@@ -488,7 +505,7 @@
       if (!window.St?.PageFlip) throw new Error('StPageFlip no está disponible.');
       connectControls();
       connectBoundaryGestures();
-      await preloadMagazine();
+      await preloadInitialPages();
       fitBookToStage();
       createPageFlip();
       new ResizeObserver(scheduleBookFit).observe(stage);

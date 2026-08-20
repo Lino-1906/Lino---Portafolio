@@ -2,6 +2,9 @@
   'use strict';
 
   const imageCache = new Map();
+  const hasIntersectionObserver = 'IntersectionObserver' in window;
+  const observedTargets = new Set();
+  const targetCallbacks = new WeakMap();
 
   window.portfolioPreloadImage = function portfolioPreloadImage(src) {
     if (!src) return Promise.resolve(src);
@@ -12,7 +15,7 @@
       image.decoding = 'async';
       image.fetchPriority = 'low';
       image.onload = async () => {
-        try { await image.decode(); } catch (_) { /* The resource is already usable. */ }
+        try { await image.decode(); } catch (_) { /* The decoded resource is already usable. */ }
         resolve(src);
       };
       image.onerror = () => resolve(src);
@@ -23,23 +26,20 @@
     return promise;
   };
 
-  const observedAnimationTargets = new Set();
-  const animationCallbacks = new WeakMap();
-  const hasIntersectionObserver = 'IntersectionObserver' in window;
   const animationObserver = hasIntersectionObserver
     ? new IntersectionObserver(entries => {
       entries.forEach(entry => {
         entry.target._portfolioInViewport = entry.isIntersecting;
-        animationCallbacks.get(entry.target)?.(entry.isIntersecting);
+        targetCallbacks.get(entry.target)?.(entry.isIntersecting && !document.hidden);
       });
-    }, { rootMargin: '260px 0px', threshold: 0 })
+    }, { rootMargin: '180px 0px', threshold: 0 })
     : null;
 
   window.portfolioObserveAnimationTarget = function portfolioObserveAnimationTarget(target, callback) {
     if (!target) return target;
-    if (callback) animationCallbacks.set(target, callback);
-    if (!observedAnimationTargets.has(target)) {
-      observedAnimationTargets.add(target);
+    if (callback) targetCallbacks.set(target, callback);
+    if (!observedTargets.has(target)) {
+      observedTargets.add(target);
       target._portfolioInViewport = !hasIntersectionObserver;
       animationObserver?.observe(target);
     }
@@ -52,11 +52,40 @@
     return Boolean(target._portfolioInViewport);
   };
 
+  window.mobileCreateAutoplay = function mobileCreateAutoplay(callback, delay, target) {
+    let timer = 0;
+    let active = !hasIntersectionObserver || Boolean(target?._portfolioInViewport);
+    let cancelled = false;
+
+    const clear = () => {
+      if (timer) window.clearTimeout(timer);
+      timer = 0;
+    };
+
+    const arm = () => {
+      clear();
+      if (cancelled || document.hidden || !active) return;
+      timer = window.setTimeout(async () => {
+        timer = 0;
+        if (!cancelled && !document.hidden && active) await callback();
+        arm();
+      }, delay);
+    };
+
+    window.portfolioObserveAnimationTarget(target, isActive => {
+      active = isActive;
+      arm();
+    });
+
+    arm();
+    return () => { cancelled = true; clear(); };
+  };
+
   document.querySelectorAll('.project-card').forEach(card => {
     window.portfolioObserveAnimationTarget(card);
   });
 
-  const projectTapeTracks = [...document.querySelectorAll('.project-category-track')];
+  const tapeTracks = [...document.querySelectorAll('.project-category-track')];
 
   function buildInfiniteTape(track) {
     if (!track._portfolioTapeTemplate) {
@@ -93,46 +122,40 @@
     secondSequence.setAttribute('aria-hidden', 'true');
     track.replaceChildren(firstSequence, secondSequence);
     track.setAttribute('aria-hidden', 'true');
-
-    const pixelsPerSecond = 68;
-    const duration = firstSequence.scrollWidth / pixelsPerSecond;
-    track.style.setProperty('--tape-duration', `${duration}s`);
-    track.style.animationDelay = '0s';
+    track.style.setProperty('--tape-duration', `${firstSequence.scrollWidth / 68}s`);
   }
 
-  projectTapeTracks.forEach(track => {
+  tapeTracks.forEach(track => {
     buildInfiniteTape(track);
     window.portfolioObserveAnimationTarget(track, active => {
-      track.style.animationPlayState = active && !document.hidden ? 'running' : 'paused';
-      track.style.willChange = active && !document.hidden ? 'transform' : 'auto';
+      track.style.animationPlayState = active ? 'running' : 'paused';
+      track.style.willChange = active ? 'transform' : 'auto';
     });
   });
 
-  document.fonts?.ready.then(() => projectTapeTracks.forEach(buildInfiniteTape));
+  document.fonts?.ready.then(() => tapeTracks.forEach(buildInfiniteTape));
 
   document.querySelectorAll('.marquee-track').forEach(track => {
     window.portfolioObserveAnimationTarget(track, active => {
-      track.style.animationPlayState = active && !document.hidden ? 'running' : 'paused';
-      track.style.willChange = active && !document.hidden ? 'transform' : 'auto';
+      track.style.animationPlayState = active ? 'running' : 'paused';
+      track.style.willChange = active ? 'transform' : 'auto';
     });
   });
 
   const hero = document.getElementById('hero');
-  const heroAnimations = hero
-    ? [...hero.querySelectorAll('.hero-glow, .m-glow, .scroll-dot, .scroll-arrow-icon, [style*="animation: floatGlow"]')]
-    : [];
+  const heroAnimations = hero ? [...hero.querySelectorAll('.m-glow')] : [];
   if (heroAnimations.length) {
     window.portfolioObserveAnimationTarget(hero, active => {
       heroAnimations.forEach(element => {
-        element.style.animationPlayState = active && !document.hidden ? 'running' : 'paused';
-        element.style.willChange = active && !document.hidden ? 'transform' : 'auto';
+        element.style.animationPlayState = active ? 'running' : 'paused';
+        element.style.willChange = active ? 'transform' : 'auto';
       });
     });
   }
 
   document.addEventListener('visibilitychange', () => {
-    observedAnimationTargets.forEach(target => {
-      animationCallbacks.get(target)?.(Boolean(target._portfolioInViewport) && !document.hidden);
+    observedTargets.forEach(target => {
+      targetCallbacks.get(target)?.(Boolean(target._portfolioInViewport) && !document.hidden);
     });
   });
 
@@ -144,8 +167,7 @@
       if (!target) return;
 
       event.preventDefault();
-      const offset = window.innerWidth <= 768 ? 88 : 120;
-      const targetTop = target.getBoundingClientRect().top + window.scrollY - offset;
+      const targetTop = target.getBoundingClientRect().top + window.scrollY - 88;
       history.pushState(null, '', selector);
       window.scrollTo({ top: targetTop, behavior: 'smooth' });
     });
@@ -156,7 +178,7 @@
     if (tapeResizeFrame) cancelAnimationFrame(tapeResizeFrame);
     tapeResizeFrame = requestAnimationFrame(() => {
       tapeResizeFrame = 0;
-      projectTapeTracks.forEach(buildInfiniteTape);
+      tapeTracks.forEach(buildInfiniteTape);
     });
   }, { passive: true });
 
@@ -171,7 +193,7 @@
         });
         projectImageObserver.unobserve(entry.target);
       });
-    }, { rootMargin: '900px 0px', threshold: 0 });
+    }, { rootMargin: '420px 0px', threshold: 0 });
 
     document.querySelectorAll('.project-category-group').forEach(group => {
       projectImageObserver.observe(group);

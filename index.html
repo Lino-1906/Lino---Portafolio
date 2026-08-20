@@ -5,7 +5,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <!-- ── Device Detection: redirect to mobile version on small screens ── -->
-  <script src="performance.js?v=20260819-5" defer></script>
+  <script src="performance.js?v=20260820-1" defer></script>
   <script>
     (function () {
       function checkDevice() {
@@ -30,37 +30,11 @@
   <meta property="og:description"
     content="Valentino Levano (Lino): diseño que habla antes de que abras la boca. Callao, Perú." />
 
-  <!-- Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link
-    href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,700;0,900;1,700;1,900&family=Inter:wght@300;400;500&family=Bebas+Neue&family=Antonio:wght@700&display=swap"
-    rel="stylesheet" />
-
-  <!-- Tailwind CSS CDN -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            brand: {
-              dark: '#1A0F0A',
-              darker: '#0D0805',
-              cream: '#EDE0C8',
-              creamlt: '#F5EDD9',
-              brown: '#3D2314',
-            }
-          },
-          fontFamily: {
-            sans: ['Inter', 'sans-serif'],
-            editorial: ['Bebas Neue', 'sans-serif'],
-            body: ['Inter', 'sans-serif'],
-          }
-        }
-      }
-    }
-  </script>
+  <!-- Critical fonts and compiled styles are served locally to avoid render-blocking CDNs. -->
+  <link rel="preload" href="assets/fonts/JTUSjIg69CK48gW7PXoo9Wlhyw.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="assets/fonts/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa1ZL7.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="stylesheet" href="assets/css/fonts.css?v=20260820-1" />
+  <link rel="stylesheet" href="assets/css/tailwind.min.css?v=20260820-1" />
 
   <style>
     :root {
@@ -748,12 +722,16 @@
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: 20px;
+      content-visibility: auto;
+      contain-intrinsic-size: auto 460px;
     }
 
     .uxui-project-grid {
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
       gap: 20px;
+      content-visibility: auto;
+      contain-intrinsic-size: auto 460px;
     }
 
     .project-category-menu {
@@ -831,7 +809,7 @@
       align-items: center;
       width: max-content;
       animation: projectTapeScroll var(--tape-duration, 22s) linear infinite;
-      will-change: transform;
+      will-change: auto;
       backface-visibility: hidden;
     }
 
@@ -862,6 +840,7 @@
       width: 48px;
       height: 48px;
       object-fit: contain;
+      color: rgba(237, 224, 200, 0.78);
       opacity: 0.72;
       flex: 0 0 auto;
     }
@@ -904,9 +883,7 @@
 
     .project-card:hover,
     .project-card:focus-within,
-    .slide-from-right,
-    .glow-1,
-    .glow-2 {
+    .slide-from-right {
       will-change: transform;
     }
 
@@ -1788,7 +1765,7 @@
       <div class="project-category-group md:col-span-12" id="proyectos-identidad">
         <div class="project-category-tape" aria-label="Categoría: Identidad visual y señalética">
           <div class="project-category-track">
-            <span class="project-category-name">Identidad visual & Señalética</span><img class="project-category-mark" src="Isotipo Transparente@4x.png" alt="" />
+            <span class="project-category-name">Identidad visual & Señalética</span><svg class="project-category-mark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l2.1 5.1L19 10l-4.9 1.9L12 17l-2.1-5.1L5 10l4.9-1.9L12 3z"/><path d="M19 16l.9 2.1L22 19l-2.1.9L19 22l-.9-2.1L16 19l2.1-.9L19 16z"/></svg>
           </div>
         </div>
       <div class="identity-project-grid">
@@ -1832,7 +1809,7 @@
       <div class="project-category-group md:col-span-12" id="proyectos-uxui">
         <div class="project-category-tape" aria-label="Categoría: Diseño UX/UI">
           <div class="project-category-track">
-            <span class="project-category-name">Diseño UX/UI</span><img class="project-category-mark" src="Isotipo Transparente@4x.png" alt="" />
+            <span class="project-category-name">Diseño UX/UI</span><svg class="project-category-mark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M3 8h18M8 21h8M12 18v3"/></svg>
           </div>
         </div>
       <div class="uxui-project-grid">
@@ -1895,7 +1872,7 @@
       <div class="project-category-group md:col-span-12" id="proyectos-editorial">
         <div class="project-category-tape" aria-label="Categoría: Diseño editorial">
           <div class="project-category-track">
-            <span class="project-category-name">Diseño editorial</span><img class="project-category-mark" src="Isotipo Transparente@4x.png" alt="" />
+            <span class="project-category-name">Diseño editorial</span><svg class="project-category-mark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5.5A2.5 2.5 0 016.5 3H11v16H6.5A2.5 2.5 0 004 21V5.5zM20 5.5A2.5 2.5 0 0017.5 3H13v16h4.5A2.5 2.5 0 0120 21V5.5z"/></svg>
           </div>
         </div>
       <div class="editorial-project-grid">
@@ -1940,7 +1917,7 @@
       <div class="project-category-group md:col-span-12" id="proyectos-packaging">
         <div class="project-category-tape" aria-label="Categoría: Packaging y retail">
           <div class="project-category-track">
-            <span class="project-category-name">Packaging & Retail</span><img class="project-category-mark" src="Isotipo Transparente@4x.png" alt="" />
+            <span class="project-category-name">Packaging & Retail</span><svg class="project-category-mark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7l8-4 8 4-8 4-8-4zM4 7v10l8 4 8-4V7M12 11v10"/></svg>
           </div>
         </div>
       <div class="packaging-project-grid">
@@ -2299,9 +2276,14 @@
     // ── Hero parallax glows ───────────────────────────────────
     const heroGlow1 = document.querySelector('.glow-1');
     const heroGlow2 = document.querySelector('.glow-2');
+    const heroSection = document.getElementById('hero');
+    window.addEventListener('DOMContentLoaded', () => {
+      window.portfolioObserveAnimationTarget?.(heroSection);
+    }, { once: true });
     let glowPointer;
     let glowFrame = 0;
     document.addEventListener('mousemove', e => {
+      if (window.portfolioCanAnimate && !window.portfolioCanAnimate(heroSection)) return;
       glowPointer = e;
       if (glowFrame) return;
       glowFrame = requestAnimationFrame(() => {
@@ -2344,18 +2326,22 @@
     (function () {
       const tags = document.querySelectorAll('.software-logo-tag');
       if (!tags.length) return;
+      const animationTarget = tags[0].closest('section') || tags[0].parentElement;
+      window.addEventListener('DOMContentLoaded', () => {
+        window.portfolioObserveAnimationTarget?.(animationTarget);
+      }, { once: true });
       let currentIndex = 0;
       let isHovered = false;
 
       function stepLoop() {
-        if (isHovered || document.hidden) return;
+        if (isHovered || document.hidden || (window.portfolioCanAnimate && !window.portfolioCanAnimate(animationTarget))) return;
 
         // 1. Remove active class from all tags (trigger closing animation)
         tags.forEach(tag => tag.classList.remove('active'));
 
         // 2. Wait for closing animation (420ms) then open the next active tag
         setTimeout(() => {
-          if (isHovered || document.hidden) return;
+          if (isHovered || document.hidden || (window.portfolioCanAnimate && !window.portfolioCanAnimate(animationTarget))) return;
           tags[currentIndex].classList.add('active');
           currentIndex = (currentIndex + 1) % tags.length;
         }, 420);
@@ -2454,7 +2440,7 @@
       }
 
       setInterval(() => {
-        if (isMouseOver || !window.portfolioCanAnimate(card)) return;
+        if (isMouseOver || (window.portfolioCanAnimate && !window.portfolioCanAnimate(card))) return;
         goToSlide(currentIndex + 1);
       }, 3000);
     })();
@@ -2567,28 +2553,28 @@
     function openEditorialProgressModal(project = 'arte') {
       const projects = {
         arte: {
-          src: 'assets/editorial-magazine/reader.html?v=2b473c9b6f2f',
+          src: 'assets/editorial-magazine/reader.html?v=20260820-2',
           title: 'ARTE CULINARIO - REVISTA INTERACTIVA',
           frameTitle: 'Revista interactiva Arte Culinario',
           pdf: 'assets/documents/Revista-Gastronomica.pdf',
           category: 'Diseño editorial'
         },
         ayacucho: {
-          src: 'assets/ayacucho-magazine/reader.html?v=20260819-6',
+          src: 'assets/ayacucho-magazine/reader.html?v=20260820-2',
           title: 'GUÍA TURÍSTICA DE AYACUCHO - REVISTA INTERACTIVA',
           frameTitle: 'Guía Turística de Ayacucho interactiva',
           pdf: 'assets/documents/Guia-Turistica-Ayacucho.pdf',
           category: 'Diseño editorial'
         },
         circuito: {
-          src: 'assets/circuito-magazine/reader.html?v=20260819-3',
+          src: 'assets/circuito-magazine/reader.html?v=20260820-2',
           title: 'CIRCUITO MÁGICO DEL AGUA - MANUAL INTERACTIVO',
           frameTitle: 'Manual interactivo del Circuito Mágico del Agua',
           pdf: 'assets/documents/Manual-Senaletica-Circuito-Magico.pdf',
           category: 'Señalética & espacios'
         },
         lumine: {
-          src: 'assets/lumine-magazine/reader.html?v=20260819-1',
+          src: 'assets/lumine-magazine/reader.html?v=20260820-2',
           title: 'LUMINÉ - MANUAL DE MARCA INTERACTIVO',
           frameTitle: 'Manual de marca Luminé interactivo',
           pdf: 'assets/documents/Manual-Marca-Lumine.pdf',
@@ -2645,12 +2631,20 @@
       const overlay = document.getElementById('editorial-progress-modal');
       const frame = document.getElementById('editorial-reader-frame');
       if (!overlay) return;
+      const closingProject = frame?.dataset.project;
       frame?.contentWindow?.postMessage({ type: 'resetEditorialReader' }, '*');
       overlay.classList.remove('opacity-100', 'pointer-events-auto');
       overlay.classList.add('opacity-0', 'pointer-events-none');
       overlay.style.opacity = '0';
       overlay.style.pointerEvents = 'none';
       document.body.style.overflow = '';
+      setTimeout(() => {
+        const remainsClosed = overlay.classList.contains('pointer-events-none');
+        if (frame && remainsClosed && frame.dataset.project === closingProject) {
+          frame.src = 'about:blank';
+          delete frame.dataset.project;
+        }
+      }, 320);
     }
 
     window.addEventListener('message', event => {
