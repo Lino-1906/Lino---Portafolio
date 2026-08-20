@@ -9,7 +9,7 @@
     (function () {
       let deviceCheckFrame = 0;
       function checkDevice() {
-        if (window.innerWidth > 768) { window.location.replace('index.html'); }
+        if (window.innerWidth > 768) { window.location.replace('index.html' + window.location.search + window.location.hash); }
       }
       checkDevice();
       window.addEventListener('resize', function () {
@@ -2397,6 +2397,20 @@
       window.setTimeout(() => {
         openPdfModal('assets/documents/CV_Valentino_Levano_Actualizado_2026.pdf?v=20260820-1458', 'CV - Valentino Levano');
       }, 320);
+    }
+
+    function openCvFromUrl() {
+      const params = new URLSearchParams(window.location.search);
+      if (params.get('abrir') !== 'cv') return;
+      window.setTimeout(() => {
+        openPdfModal('assets/documents/CV_Valentino_Levano_Actualizado_2026.pdf?v=20260820-1458', 'CV - Valentino Levano');
+      }, 450);
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', openCvFromUrl, { once: true });
+    } else {
+      openCvFromUrl();
     }
   </script>
 

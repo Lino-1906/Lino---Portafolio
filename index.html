@@ -10,7 +10,7 @@
     (function () {
       function checkDevice() {
         if (window.innerWidth <= 768) {
-          window.location.replace('mobile.html');
+          window.location.replace('mobile.html' + window.location.search + window.location.hash);
         }
       }
       checkDevice();
@@ -1706,7 +1706,7 @@
             <!-- QR Code (Left Side) -->
             <div class="sm:col-span-4 flex flex-col items-center justify-center p-3 rounded-xl"
               style="background: rgba(237,224,200,0.03); border: 1px solid rgba(237,224,200,0.1);">
-              <img src="cv_qr.png?v=20260820-3" alt="Código QR CV / vCard"
+              <img src="cv_qr.png?v=20260820-4" alt="Código QR CV / vCard"
                 class="w-[105px] h-[105px] object-contain rounded-lg shadow-sm" />
               <span class="text-[0.62rem] uppercase tracking-wider mt-2" style="color: rgba(237,224,200,0.35);">Escanear</span>
               <a href="javascript:void(0)"
@@ -2562,7 +2562,7 @@
         <!-- QR Code (Left Side) -->
         <div
           class="sm:col-span-5 flex flex-col items-center justify-center p-5 rounded-2xl bg-[rgba(237,224,200,0.03)] border border-[rgba(237,224,200,0.1)]">
-          <img src="cv_qr.png?v=20260820-3" alt="Código QR CV / vCard"
+          <img src="cv_qr.png?v=20260820-4" alt="Código QR CV / vCard"
             class="w-[130px] h-[130px] object-contain rounded-xl shadow-md" />
           <span class="text-xs uppercase tracking-wider mt-3 text-[rgba(237,224,200,0.4)]">Escanear</span>
           <a href="javascript:void(0)"
@@ -2826,6 +2826,20 @@
       window.setTimeout(() => {
         openPdfModal('assets/documents/CV_Valentino_Levano_Actualizado_2026.pdf?v=20260820-1458', 'CV - Valentino Levano');
       }, 320);
+    }
+
+    function openCvFromUrl() {
+      const params = new URLSearchParams(window.location.search);
+      if (params.get('abrir') !== 'cv') return;
+      window.setTimeout(() => {
+        openPdfModal('assets/documents/CV_Valentino_Levano_Actualizado_2026.pdf?v=20260820-1458', 'CV - Valentino Levano');
+      }, 450);
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', openCvFromUrl, { once: true });
+    } else {
+      openCvFromUrl();
     }
 
     function closeContactModalOnOuter(e) {
