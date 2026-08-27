@@ -8,7 +8,6 @@
   <meta name="theme-color" content="#8b3028" />
   <title>Herbi — Caso de estudio de packaging | Lino</title>
   <link rel="icon" type="image/png" href="Isotipo@4x.png" />
-  <link rel="preload" href="assets/fonts/nuFiD-vYSZviVYUb_rj3ij__anPXDTzYgA.woff2" as="font" type="font/woff2" crossorigin />
   <link rel="preload" href="assets/fonts/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa1ZL7.woff2" as="font" type="font/woff2" crossorigin />
   <link rel="stylesheet" href="assets/css/fonts.css?v=20260820-1" />
   <style>
@@ -22,7 +21,8 @@
       --tinta: #16140f;
       --papel: #faf6ec;
       --linea: rgba(22, 20, 15, 0.16);
-      --content: min(1180px, calc(100vw - 48px));
+      --content: min(1280px, calc(100vw - 48px));
+      --image-radius: 24px;
       --nav-safe-left: 139px;
       --nav-safe-right: 234px;
     }
@@ -46,6 +46,7 @@
     }
 
     img { display: block; max-width: 100%; }
+    figure { margin: 0; }
     a { color: inherit; }
 
     ::selection {
@@ -185,7 +186,7 @@
     .hero h1 {
       max-width: 800px;
       margin: 0;
-      font-family: 'Playfair Display', Georgia, serif;
+      font-family: 'Inter', Arial, sans-serif;
       font-size: clamp(4.6rem, 11vw, 10rem);
       font-weight: 900;
       line-height: 0.78;
@@ -272,9 +273,9 @@
     .chapter-title {
       max-width: 850px;
       margin: 0;
-      font-family: 'Playfair Display', Georgia, serif;
+      font-family: 'Inter', Arial, sans-serif;
       font-size: clamp(2.5rem, 5.8vw, 5.7rem);
-      font-weight: 700;
+      font-weight: 800;
       line-height: 0.98;
       letter-spacing: -0.045em;
       text-wrap: balance;
@@ -304,9 +305,9 @@
 
     .big-statement {
       margin: 0;
-      font-family: 'Playfair Display', Georgia, serif;
+      font-family: 'Inter', Arial, sans-serif;
       font-size: clamp(2.7rem, 5.5vw, 5.5rem);
-      font-weight: 700;
+      font-weight: 800;
       line-height: 1;
       letter-spacing: -0.04em;
     }
@@ -336,14 +337,15 @@
 
     .project-facts dd { margin: 0; font-size: .9rem; font-weight: 600; }
 
-    .split-copy { grid-column: 1 / span 5; }
-    .split-media { grid-column: 7 / -1; }
+    .split-copy { grid-column: 1 / span 4; }
+    .split-media { grid-column: 5 / -1; }
 
     .media-frame {
       position: relative;
       overflow: hidden;
       background: var(--marfil);
       border: 1px solid var(--linea);
+      border-radius: var(--image-radius);
     }
 
     .media-frame img { width: 100%; height: 100%; object-fit: cover; }
@@ -383,7 +385,7 @@
       padding: 30px;
       color: var(--tinta);
       background: var(--manzanilla-light);
-      font-family: 'Playfair Display', Georgia, serif;
+      font-family: 'Inter', Arial, sans-serif;
       font-size: clamp(1.5rem, 3vw, 3rem);
       font-weight: 700;
       line-height: 1.2;
@@ -395,7 +397,7 @@
       right: -0.08em;
       bottom: -0.25em;
       color: rgba(255,255,255,.045);
-      font-family: 'Playfair Display', Georgia, serif;
+      font-family: 'Inter', Arial, sans-serif;
       font-size: clamp(7rem, 17vw, 17rem);
       font-weight: 900;
       line-height: 1;
@@ -404,8 +406,8 @@
       writing-mode: vertical-rl;
     }
 
-    .diagnosis-copy { grid-column: 1 / span 7; }
-    .diagnosis-media { grid-column: 9 / -1; }
+    .diagnosis-copy { grid-column: 1 / span 6; }
+    .diagnosis-media { grid-column: 8 / -1; }
 
     .issue-list {
       margin: 54px 0 0;
@@ -430,7 +432,7 @@
       letter-spacing: .1em;
     }
 
-    .issue strong { font-family: 'Playfair Display', Georgia, serif; font-size: 1.15rem; }
+    .issue strong { font-family: 'Inter', Arial, sans-serif; font-size: 1.15rem; }
     .issue span { color: rgba(22,20,15,.65); line-height: 1.55; }
 
     .chapter--strategy {
@@ -466,7 +468,7 @@
 
     .strategy-card h3 {
       margin: 0 0 14px;
-      font-family: 'Playfair Display', Georgia, serif;
+      font-family: 'Inter', Arial, sans-serif;
       font-size: 1.7rem;
     }
 
@@ -474,7 +476,7 @@
 
     .system-layout {
       display: grid;
-      grid-template-columns: minmax(0, 1.2fr) minmax(300px, .8fr);
+      grid-template-columns: minmax(0, 1.45fr) minmax(280px, .55fr);
       gap: 54px;
       align-items: center;
       margin-top: 58px;
@@ -499,7 +501,7 @@
     }
 
     .type-sample strong {
-      font-family: 'Playfair Display', Georgia, serif;
+      font-family: 'Inter', Arial, sans-serif;
       font-size: clamp(2.6rem, 5vw, 5rem);
       line-height: .9;
     }
@@ -516,23 +518,24 @@
       padding: 24px;
       background: var(--marfil);
       border: 1px solid var(--linea);
+      border-radius: var(--image-radius);
     }
 
-    .process-card img { width: 100%; object-fit: cover; }
+    .process-card img { width: 100%; height: auto; object-fit: cover; border-radius: 16px; }
     .process-sketches img { aspect-ratio: 4 / 3; }
     .process-digital img { aspect-ratio: 1.78; margin-top: auto; }
 
     .process-card h3 {
       margin: 26px 0 8px;
-      font-family: 'Playfair Display', Georgia, serif;
+      font-family: 'Inter', Arial, sans-serif;
       font-size: clamp(1.55rem, 2.5vw, 2.25rem);
     }
 
     .process-card p { margin: 0 0 24px; color: rgba(22,20,15,.65); line-height: 1.65; }
 
     .chapter--final { padding-bottom: 0; background: #efe4cb; }
-    .final-copy { grid-column: 1 / span 5; }
-    .final-dieline { grid-column: 7 / -1; }
+    .final-copy { grid-column: 1 / span 4; }
+    .final-dieline { grid-column: 6 / -1; }
     .final-dieline img { width: 100%; }
 
     .final-hero {
@@ -577,7 +580,7 @@
 
     .summary-item { padding: 30px; background: var(--herencia); }
     .summary-item b { display: block; margin-bottom: 40px; color: var(--manzanilla-light); font-size: .72rem; }
-    .summary-item h3 { margin: 0 0 12px; font-family: 'Playfair Display', Georgia, serif; font-size: 1.45rem; }
+    .summary-item h3 { margin: 0 0 12px; font-family: 'Inter', Arial, sans-serif; font-size: 1.45rem; }
     .summary-item p { margin: 0; color: rgba(255,247,232,.7); line-height: 1.6; }
 
     .case-footer {
@@ -653,6 +656,7 @@
     @media (max-width: 600px) {
       :root {
         --content: calc(100vw - 28px);
+        --image-radius: 18px;
         --nav-safe-left: 110px;
       }
       .site-header { inset: 6px 0 auto; }
@@ -812,8 +816,8 @@
         <div class="system-layout">
           <figure class="media-frame" data-reveal><img src="assets/herbi-case/visual-system.webp" width="566" height="408" loading="lazy" alt="Moodboard y sistema visual del rediseño Herbi" /></figure>
           <div class="system-notes" data-reveal>
-            <div class="type-sample"><span>Serif editorial</span><strong>Manzanilla</strong></div>
-            <p class="chapter-lead" style="margin:0;">Una serif expresiva aporta carácter a títulos y variedad. La repetición tipográfica convierte el nombre del producto en un recurso gráfico propio.</p>
+            <div class="type-sample"><span>Inter · Black</span><strong>Manzanilla</strong></div>
+            <p class="chapter-lead" style="margin:0;">Inter en alto peso aporta presencia a títulos y variedades. La repetición tipográfica convierte el nombre del producto en un recurso gráfico propio.</p>
             <div class="swatches" aria-label="Paleta cromática del proyecto">
               <span class="swatch" style="background:#e1ad32" title="Manzanilla"></span>
               <span class="swatch" style="background:#969765" title="Botánico"></span>
