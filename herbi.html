@@ -545,6 +545,11 @@
     .swatch { aspect-ratio: 1; border: 1px solid rgba(22,20,15,.12); }
 
     .process-grid { margin-top: 64px; align-items: stretch; }
+    #proceso .chapter-title {
+      max-width: 1180px;
+      font-size: clamp(2.5rem, 5.2vw, 5.2rem);
+      line-height: .96;
+    }
     .process-sketches { grid-column: 1 / span 7; }
     .process-digital { grid-column: 8 / -1; display: flex; flex-direction: column; }
 
@@ -708,6 +713,7 @@
       .brand-lineup { margin-top: 64px; }
       .strategy-grid, .system-layout, .process-grid, .summary-grid { margin-top: 48px; }
       .chapter-title { font-size: clamp(2.35rem, 13vw, 4.1rem); }
+      #proceso .chapter-title { font-size: clamp(2.35rem, 13vw, 4.1rem); }
       .big-statement { font-size: clamp(2.35rem, 12vw, 3.5rem); }
       .issue { grid-template-columns: 38px 1fr; gap: 14px; }
       .issue span { grid-column: 2; }
