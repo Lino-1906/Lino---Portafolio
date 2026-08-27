@@ -255,7 +255,7 @@
 
     .chapter {
       position: relative;
-      padding: 120px 0;
+      padding: 112px 0;
       scroll-margin-top: 58px;
     }
 
@@ -339,6 +339,7 @@
 
     .split-copy { grid-column: 1 / span 4; }
     .split-media { grid-column: 5 / -1; }
+    .brand-lineup { margin-top: 88px; }
 
     .media-frame {
       position: relative;
@@ -408,6 +409,16 @@
 
     .diagnosis-copy { grid-column: 1 / span 6; }
     .diagnosis-media { grid-column: 8 / -1; }
+    .diagnosis-media .media-frame,
+    .final-dieline .media-frame {
+      background: transparent;
+      border: 0;
+    }
+
+    .diagnosis-media .media-frame img,
+    .final-dieline .media-frame img {
+      object-fit: contain;
+    }
 
     .issue-list {
       margin: 54px 0 0;
@@ -446,7 +457,7 @@
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 1px;
-      margin-top: 70px;
+      margin-top: 64px;
       background: rgba(255,255,255,.18);
       border: 1px solid rgba(255,255,255,.18);
     }
@@ -476,10 +487,10 @@
 
     .system-layout {
       display: grid;
-      grid-template-columns: minmax(0, 1.45fr) minmax(280px, .55fr);
+      grid-template-columns: minmax(0, 720px) minmax(280px, 1fr);
       gap: 54px;
       align-items: center;
-      margin-top: 58px;
+      margin-top: 64px;
     }
 
     .system-layout .media-frame { aspect-ratio: 1.38; }
@@ -509,7 +520,7 @@
     .swatches { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; }
     .swatch { aspect-ratio: 1; border: 1px solid rgba(22,20,15,.12); }
 
-    .process-grid { margin-top: 62px; align-items: stretch; }
+    .process-grid { margin-top: 64px; align-items: stretch; }
     .process-sketches { grid-column: 1 / span 7; }
     .process-digital { grid-column: 8 / -1; display: flex; flex-direction: column; }
 
@@ -574,7 +585,7 @@
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 1px;
-      margin-top: 58px;
+      margin-top: 64px;
       background: rgba(255,255,255,.25);
     }
 
@@ -668,6 +679,8 @@
       .hero h1 { font-size: clamp(4.2rem, 26vw, 7rem); }
       .case-nav-inner { gap: 22px; min-height: 52px; }
       .chapter { padding: 72px 0; scroll-margin-top: 52px; }
+      .brand-lineup { margin-top: 64px; }
+      .strategy-grid, .system-layout, .process-grid, .summary-grid { margin-top: 48px; }
       .chapter-title { font-size: clamp(2.35rem, 13vw, 4.1rem); }
       .big-statement { font-size: clamp(2.35rem, 12vw, 3.5rem); }
       .issue { grid-template-columns: 38px 1fr; gap: 14px; }
@@ -750,14 +763,14 @@
         </aside>
       </div>
 
-      <div class="container split" style="margin-top:100px;">
+      <div class="container split brand-lineup">
         <div class="split-copy" data-reveal>
           <p class="chapter-kicker">Portafolio de marca</p>
           <h2 class="chapter-title" style="font-size:clamp(2.3rem,4.5vw,4.4rem);">Una línea conocida por varias generaciones.</h2>
           <p class="chapter-lead">Manzanilla, anís, té y otras variedades forman parte de un repertorio familiar. Esa cercanía era un activo que el rediseño debía preservar.</p>
         </div>
         <figure class="split-media" data-reveal>
-          <div class="media-frame media-frame--wide"><img src="assets/herbi-case/brand-lineup.webp" width="512" height="411" loading="lazy" alt="Línea tradicional de infusiones filtrantes Herbi" /></div>
+          <div class="media-frame media-frame--wide"><img src="assets/herbi-case/brand-lineup-hq.png" width="1400" height="1123" loading="lazy" alt="Línea tradicional de infusiones filtrantes Herbi" /></div>
           <figcaption class="caption">Línea tradicional de infusiones Herbi</figcaption>
         </figure>
       </div>
@@ -787,7 +800,7 @@
           </div>
         </div>
         <figure class="diagnosis-media" data-reveal>
-          <div class="media-frame media-frame--square"><img src="assets/herbi-case/packaging-before.webp" width="499" height="499" loading="lazy" alt="Empaque anterior de Herbi Manzanilla" /></div>
+          <div class="media-frame media-frame--square"><img src="assets/herbi-case/packaging-before-transparent.png" width="1225" height="1284" loading="lazy" alt="Empaque anterior de Herbi Manzanilla" /></div>
           <figcaption class="caption">Antes · Empaque original</figcaption>
         </figure>
       </div>
@@ -845,7 +858,7 @@
           <article class="process-card process-digital" data-reveal>
             <h3>De boceto a sistema</h3>
             <p>Los bloques de color organizan cada cara; la palabra Manzanilla crea repetición y el negro separa la información funcional.</p>
-            <img src="assets/herbi-case/digital-grid.webp" width="556" height="311" loading="lazy" alt="Desarrollo digital de la retícula Herbi" />
+            <img src="assets/herbi-case/digital-grid-transparent.png" width="1672" height="941" loading="lazy" alt="Desarrollo digital de la retícula Herbi" />
           </article>
         </div>
       </div>
@@ -859,7 +872,7 @@
           <p class="chapter-lead">El amarillo manzanilla, la retícula modular, la ilustración botánica y la tipografía repetida construyen un empaque reconocible desde todos sus lados.</p>
         </div>
         <figure class="final-dieline" data-reveal>
-          <div class="media-frame"><img src="assets/herbi-case/dieline.webp" width="892" height="557" loading="lazy" alt="Desarrollo desplegado del empaque final Herbi" /></div>
+          <div class="media-frame"><img src="assets/herbi-case/dieline-transparent.png" width="1587" height="991" loading="lazy" alt="Desarrollo desplegado del empaque final Herbi" /></div>
           <figcaption class="caption">Troquel y desarrollo final</figcaption>
         </figure>
       </div>
