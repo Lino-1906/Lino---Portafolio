@@ -776,15 +776,14 @@
     #proceso .chapter-title { color:#ffffff; }
     .process-card { color:#000000; background:#ffffff; border-color:rgba(255,255,255,.2); box-shadow:none; }
     .process-digital-flat {
-      flex: 1;
-      min-height: 390px;
-      display: grid;
-      place-items: center;
-      overflow: hidden;
-      background: #f2f2f2;
-      border-radius: 16px;
+      flex: none;
+      min-height: 0;
+      display: block;
+      overflow: visible;
+      background: transparent;
+      border-radius: 0;
     }
-    .process-digital-flat img { width: 100%; height: 100%; object-fit: contain; border-radius: 0; }
+    .process-digital-flat img { width: 100%; height: auto; object-fit: contain; border-radius: 16px; }
     .chapter--final { background:#ffffff; }
     .chapter--final .chapter-kicker { color:#ef3b35; background:rgba(239,59,53,.1); }
     .final-showcase { background:#000000; }
@@ -863,7 +862,7 @@
       .strategy-card, .process-card, .summary-item { padding: 24px; }
       .process-digital-visual { min-height: 390px; }
       .process-digital-visual img { width: min(125%, 400px); }
-      .process-digital-flat { min-height: 300px; }
+      .process-digital-flat { min-height: 0; }
       .system-layout { gap: 34px; }
       .swatches { gap: 5px; }
       .final-showcase { margin-top: 72px; padding: 64px 0 78px; }
