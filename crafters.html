@@ -1,0 +1,1133 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Caso de estudio de packaging Crafter's Acrylic: rediseño de etiqueta y empaque secundario por Valentino Levano." />
+  <meta name="theme-color" content="#000000" />
+  <title>Crafter's Acrylic — Caso de estudio de packaging | Lino</title>
+  <link rel="icon" type="image/png" href="Isotipo@4x.png" />
+  <link rel="preload" href="assets/fonts/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa1ZL7.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="stylesheet" href="assets/css/fonts.css?v=20260820-1" />
+  <style>
+    :root {
+      --manzanilla: #e1ad32;
+      --manzanilla-light: #f4c95d;
+      --botanico: #969765;
+      --herencia: #8b3028;
+      --marfil: #f3eddf;
+      --calidez: #d9ccb6;
+      --tinta: #16140f;
+      --papel: #faf6ec;
+      --linea: rgba(22, 20, 15, 0.16);
+      --content: min(1280px, calc(100vw - 48px));
+      --image-radius: 24px;
+      --nav-safe-left: 139px;
+      --nav-safe-right: 234px;
+    }
+
+    * { box-sizing: border-box; }
+
+    html {
+      scroll-behavior: smooth;
+      background: var(--papel);
+    }
+
+    body {
+      margin: 0;
+      color: var(--tinta);
+      background:
+        radial-gradient(circle at 10% 18%, rgba(225, 173, 50, 0.11), transparent 23rem),
+        var(--papel);
+      font-family: 'Inter', Arial, sans-serif;
+      font-weight: 400;
+      overflow-x: hidden;
+    }
+
+    img { display: block; max-width: 100%; }
+    figure { margin: 0; }
+    a { color: inherit; }
+
+    ::selection {
+      color: var(--papel);
+      background: var(--herencia);
+    }
+
+    .progress {
+      position: fixed;
+      inset: 0 auto auto 0;
+      z-index: 100;
+      width: 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--herencia), var(--manzanilla));
+    }
+
+    .site-header {
+      position: fixed;
+      inset: 7px 0 auto;
+      z-index: 90;
+      width: var(--content);
+      margin: auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      pointer-events: none;
+    }
+
+    .back-link,
+    .header-label {
+      pointer-events: auto;
+      border: 1px solid rgba(255, 255, 255, 0.28);
+      color: #fffaf0;
+      background: rgba(22, 20, 15, 0.7);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    }
+
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      min-height: 44px;
+      padding: 0 18px;
+      border-radius: 999px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-decoration: none;
+      text-transform: uppercase;
+      transition: transform 180ms ease, background 180ms ease;
+    }
+
+    .back-link:hover,
+    .back-link:focus-visible {
+      background: var(--herencia);
+      transform: translateX(-3px);
+      outline: none;
+    }
+
+    .back-link svg { width: 16px; height: 16px; }
+
+    .header-label {
+      padding: 11px 16px;
+      border-radius: 999px;
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+    }
+
+    .hero {
+      position: relative;
+      min-height: 100svh;
+      display: grid;
+      align-items: end;
+      overflow: hidden;
+      color: #fffaf0;
+      background: #6a2b20;
+    }
+
+    .hero-picture,
+    .hero-picture img,
+    .hero-shade {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    .hero-picture img {
+      object-fit: cover;
+      object-position: center;
+      animation: hero-in 1.1s cubic-bezier(.2,.8,.2,1) both;
+    }
+
+    .hero-shade {
+      background:
+        linear-gradient(90deg, rgba(23, 14, 8, 0.68) 0%, rgba(23, 14, 8, 0.18) 48%, rgba(23, 14, 8, 0.06) 72%),
+        linear-gradient(0deg, rgba(23, 14, 8, 0.86) 0%, transparent 58%);
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      width: var(--content);
+      margin: 0 auto;
+      padding: 150px 0 72px;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(240px, 0.34fr);
+      align-items: end;
+      gap: 48px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin: 0 0 20px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+    }
+
+    .eyebrow::before {
+      content: '';
+      width: 38px;
+      height: 2px;
+      background: currentColor;
+    }
+
+    .hero .eyebrow { color: var(--manzanilla-light); }
+
+    .hero h1 {
+      max-width: 800px;
+      margin: 0;
+      font-family: 'Inter', Arial, sans-serif;
+      font-size: clamp(4.6rem, 11vw, 10rem);
+      font-weight: 900;
+      line-height: 0.78;
+      letter-spacing: -0.065em;
+      text-wrap: balance;
+    }
+
+    .hero h1 span {
+      display: block;
+      margin-top: 0.26em;
+      font-family: 'Inter', Arial, sans-serif;
+      font-size: clamp(1rem, 1.5vw, 1.35rem);
+      font-weight: 500;
+      line-height: 1.35;
+      letter-spacing: 0;
+    }
+
+    .hero-meta {
+      border-top: 1px solid rgba(255,255,255,.5);
+      padding-top: 18px;
+      font-size: 0.78rem;
+      line-height: 1.8;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .hero-meta strong { display: block; color: var(--manzanilla-light); }
+
+    .case-nav {
+      position: sticky;
+      top: 0;
+      z-index: 80;
+      padding-inline:
+        calc((100vw - var(--content)) / 2 + var(--nav-safe-left))
+        calc((100vw - var(--content)) / 2 + var(--nav-safe-right));
+      background: rgba(250, 246, 236, 0.94);
+      border-bottom: 1px solid var(--linea);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+    }
+
+    .case-nav-inner {
+      width: 100%;
+      margin: 0;
+      display: flex;
+      align-items: center;
+      gap: 28px;
+      min-height: 58px;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+
+    .case-nav-inner::-webkit-scrollbar { display: none; }
+
+    .case-nav a {
+      flex: none;
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-decoration: none;
+      text-transform: uppercase;
+    }
+
+    .case-nav a:hover,
+    .case-nav a:focus-visible { color: var(--herencia); outline: none; }
+
+    .chapter {
+      position: relative;
+      padding: 112px 0;
+      scroll-margin-top: 58px;
+    }
+
+    .container { width: var(--content); margin: auto; }
+
+    .chapter-kicker {
+      margin: 0 0 14px;
+      color: var(--herencia);
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+    }
+
+    .chapter-title {
+      max-width: 1180px;
+      margin: 0;
+      font-family: 'Inter', Arial, sans-serif;
+      font-size: clamp(2.5rem, 5.2vw, 5.2rem);
+      font-weight: 800;
+      line-height: 0.96;
+      letter-spacing: -0.045em;
+      text-wrap: balance;
+    }
+
+    .chapter-lead {
+      max-width: 670px;
+      margin: 28px 0 0;
+      color: rgba(22,20,15,.72);
+      font-size: clamp(1rem, 1.35vw, 1.2rem);
+      line-height: 1.75;
+    }
+
+    .intro-grid,
+    .split,
+    .diagnosis-grid,
+    .process-grid,
+    .final-grid {
+      display: grid;
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+      gap: 28px;
+      align-items: center;
+    }
+
+    .intro-copy { grid-column: 1 / span 7; }
+    .intro-aside { grid-column: 9 / -1; }
+
+    .big-statement {
+      margin: 0;
+      font-family: 'Inter', Arial, sans-serif;
+      font-size: clamp(2.7rem, 5.5vw, 5.5rem);
+      font-weight: 800;
+      line-height: 1;
+      letter-spacing: -0.04em;
+    }
+
+    .big-statement em { color: var(--herencia); }
+
+    .project-facts {
+      margin: 0;
+      border-top: 2px solid var(--tinta);
+    }
+
+    .project-facts div {
+      display: grid;
+      grid-template-columns: 1fr 1.4fr;
+      gap: 12px;
+      padding: 16px 0;
+      border-bottom: 1px solid var(--linea);
+    }
+
+    .project-facts dt {
+      color: rgba(22,20,15,.55);
+      font-size: .67rem;
+      font-weight: 700;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+
+    .project-facts dd { margin: 0; font-size: .9rem; font-weight: 600; }
+
+    .split-copy { grid-column: 1 / span 4; padding-right: 72px; }
+    .split-media { grid-column: 5 / -1; width: 92%; justify-self: end; }
+    .brand-lineup { margin-top: 88px; }
+
+    .split-copy,
+    .diagnosis-copy,
+    .final-copy { container-type: inline-size; }
+
+    .split-copy .chapter-title,
+    .diagnosis-copy .chapter-title,
+    .final-copy .chapter-title {
+      font-size: clamp(2.5rem, 9cqi, 4.25rem);
+    }
+
+    .media-frame {
+      position: relative;
+      overflow: hidden;
+      background: var(--marfil);
+      border: 1px solid var(--linea);
+      border-radius: var(--image-radius);
+    }
+
+    .media-frame img { width: 100%; height: 100%; object-fit: cover; }
+    .media-frame--square { aspect-ratio: 1 / 1; }
+    .media-frame--wide { aspect-ratio: 16 / 10; }
+
+    .caption {
+      margin: 10px 0 0;
+      color: rgba(22,20,15,.5);
+      font-size: .67rem;
+      font-weight: 700;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+    }
+
+    .chapter--audience {
+      overflow: hidden;
+      color: #fff7e8;
+      background: var(--herencia);
+    }
+
+    .chapter--audience .chapter-kicker { color: var(--manzanilla-light); }
+    .chapter--audience .chapter-lead { color: rgba(255,247,232,.76); }
+
+    .audience-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 60px;
+      align-items: end;
+    }
+
+    .formula {
+      display: grid;
+      place-items: center;
+      width: min(390px, 32vw);
+      aspect-ratio: 1.25;
+      padding: 30px;
+      color: var(--tinta);
+      background: var(--manzanilla-light);
+      font-family: 'Inter', Arial, sans-serif;
+      font-size: clamp(1.5rem, 3vw, 3rem);
+      font-weight: 700;
+      line-height: 1.2;
+      text-align: center;
+    }
+
+    .vertical-word {
+      position: absolute;
+      right: -0.08em;
+      bottom: -0.25em;
+      color: rgba(255,255,255,.045);
+      font-family: 'Inter', Arial, sans-serif;
+      font-size: clamp(7rem, 17vw, 17rem);
+      font-weight: 900;
+      line-height: 1;
+      letter-spacing: -.05em;
+      pointer-events: none;
+      writing-mode: vertical-rl;
+    }
+
+    .diagnosis-copy { grid-column: 1 / span 6; }
+    .diagnosis-media { grid-column: 8 / -1; }
+    .diagnosis-media .media-frame,
+    .final-dieline .media-frame {
+      background: transparent;
+      border: 0;
+    }
+
+    .diagnosis-media .media-frame img,
+    .final-dieline .media-frame img {
+      object-fit: contain;
+    }
+
+    .issue-list {
+      margin: 54px 0 0;
+      border-top: 2px solid var(--tinta);
+      counter-reset: issue;
+    }
+
+    .issue {
+      counter-increment: issue;
+      display: grid;
+      grid-template-columns: 64px minmax(120px, .65fr) 1.4fr;
+      gap: 20px;
+      padding: 24px 0;
+      border-bottom: 1px solid var(--linea);
+    }
+
+    .issue::before {
+      content: '0' counter(issue);
+      color: var(--herencia);
+      font-size: .72rem;
+      font-weight: 700;
+      letter-spacing: .1em;
+    }
+
+    .issue strong { font-family: 'Inter', Arial, sans-serif; font-size: 1.15rem; }
+    .issue span { color: rgba(22,20,15,.65); line-height: 1.55; }
+
+    .chapter--strategy {
+      color: #f9f2e5;
+      background: var(--tinta);
+    }
+
+    .chapter--strategy .chapter-kicker { color: var(--manzanilla-light); }
+
+    .strategy-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+      margin-top: 64px;
+      background: transparent;
+    }
+
+    .strategy-card {
+      min-height: 300px;
+      padding: 34px;
+      color: var(--card-ink);
+      background: var(--card-surface);
+      border: 1px solid rgba(255,255,255,.14);
+      border-radius: var(--image-radius);
+      box-shadow: 0 20px 48px rgba(0,0,0,.16);
+    }
+
+    .strategy-card:nth-child(1) {
+      --card-surface: var(--herencia);
+      --card-ink: #fff7e8;
+      --card-muted: rgba(255,247,232,.76);
+      --card-line: var(--manzanilla-light);
+    }
+
+    .strategy-card:nth-child(2) {
+      --card-surface: var(--manzanilla);
+      --card-ink: var(--tinta);
+      --card-muted: rgba(22,20,15,.72);
+      --card-line: var(--herencia);
+    }
+
+    .strategy-card:nth-child(3) {
+      --card-surface: var(--botanico);
+      --card-ink: var(--tinta);
+      --card-muted: rgba(22,20,15,.72);
+      --card-line: #f3eddf;
+    }
+
+    .strategy-card::before {
+      content: '';
+      display: block;
+      width: 100%;
+      height: 4px;
+      margin-bottom: 55px;
+      background: var(--card-line);
+    }
+
+    .strategy-card h3 {
+      margin: 0 0 14px;
+      font-family: 'Inter', Arial, sans-serif;
+      font-size: 1.7rem;
+    }
+
+    .strategy-card p { margin: 0; color: var(--card-muted); line-height: 1.7; }
+
+    .system-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 720px) minmax(280px, 1fr);
+      gap: 54px;
+      align-items: center;
+      margin-top: 64px;
+    }
+
+    .system-layout .media-frame { aspect-ratio: 1.38; }
+    .system-notes { display: grid; gap: 30px; }
+
+    .type-sample {
+      padding-bottom: 26px;
+      border-bottom: 1px solid var(--linea);
+    }
+
+    .type-sample span {
+      display: block;
+      margin-bottom: 8px;
+      color: var(--herencia);
+      font-size: .67rem;
+      font-weight: 700;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+
+    .type-sample strong {
+      font-family: 'Inter', Arial, sans-serif;
+      font-size: clamp(2.6rem, 5vw, 5rem);
+      line-height: .9;
+    }
+
+    .swatches { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; }
+    .swatch { aspect-ratio: 1; border: 1px solid rgba(22,20,15,.12); }
+
+    .process-grid { margin-top: 64px; align-items: stretch; }
+    .process-sketches { grid-column: 1 / span 7; }
+    .process-digital { grid-column: 8 / -1; display: flex; flex-direction: column; }
+
+    .process-card {
+      height: 100%;
+      padding: 24px;
+      background: var(--marfil);
+      border: 1px solid var(--linea);
+      border-radius: var(--image-radius);
+    }
+
+    .process-card img { width: 100%; height: auto; object-fit: cover; border-radius: 16px; }
+    .process-sketches img { aspect-ratio: 4 / 3; }
+    .process-digital-visual {
+      flex: 1;
+      min-height: 420px;
+      display: grid;
+      place-items: center;
+      overflow: hidden;
+    }
+
+    .process-digital-visual img {
+      width: min(105%, 500px);
+      aspect-ratio: 1.78;
+      margin: 0;
+      object-fit: contain;
+      transform: rotate(-90deg);
+      transform-origin: center;
+    }
+
+    .process-card h3 {
+      margin: 26px 0 8px;
+      font-family: 'Inter', Arial, sans-serif;
+      font-size: clamp(1.55rem, 2.5vw, 2.25rem);
+    }
+
+    .process-card p { margin: 0 0 24px; color: rgba(22,20,15,.65); line-height: 1.65; }
+
+    .chapter--final { padding-bottom: 0; background: #efe4cb; }
+    .final-copy { grid-column: 1 / span 4; }
+    .final-dieline { grid-column: 6 / -1; }
+    .final-dieline img { width: 100%; }
+
+    .final-hero {
+      width: var(--content);
+      margin: 0 auto;
+      overflow: hidden;
+      border: 1px solid var(--linea);
+      border-radius: var(--image-radius);
+      box-shadow: 0 28px 70px rgba(76, 49, 16, .15);
+    }
+
+    .final-showcase {
+      margin-top: 100px;
+      padding: 86px 0 112px;
+      background: #f5eddd;
+    }
+
+    .final-hero picture,
+    .final-hero img { display: block; width: 100%; }
+
+    .final-hero img { height: auto; }
+
+    .final-hero-content {
+      width: var(--content);
+      margin: 0 auto;
+      padding: 0 0 54px;
+      color: var(--tinta);
+    }
+
+    .final-hero-content .eyebrow { color: var(--herencia) !important; }
+    .final-hero-content .chapter-title { max-width: 980px; }
+    .final-hero-content p { max-width: 650px; margin: 22px 0 0; color: rgba(22,20,15,.7); line-height: 1.7; }
+
+    .summary {
+      padding: 110px 0;
+      color: #fff7e8;
+      background: var(--herencia);
+    }
+
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      margin-top: 64px;
+      background: rgba(255,255,255,.25);
+    }
+
+    .summary-item { padding: 30px; background: var(--herencia); }
+    .summary-item b { display: block; margin-bottom: 40px; color: var(--manzanilla-light); font-size: .72rem; }
+    .summary-item h3 { margin: 0 0 12px; font-family: 'Inter', Arial, sans-serif; font-size: 1.45rem; }
+    .summary-item p { margin: 0; color: rgba(255,247,232,.7); line-height: 1.6; }
+
+    .case-footer {
+      padding: 42px 0;
+      color: #f9f2e5;
+      background: var(--tinta);
+    }
+
+    .footer-inner {
+      width: var(--content);
+      margin: auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+
+    .footer-inner p { margin: 0; color: rgba(249,242,229,.55); font-size: .82rem; }
+
+    .footer-actions { display: flex; align-items: center; gap: 14px; }
+
+    .footer-button {
+      display: inline-flex;
+      min-height: 44px;
+      align-items: center;
+      justify-content: center;
+      padding: 0 18px;
+      border: 1px solid rgba(255,255,255,.28);
+      border-radius: 999px;
+      font-size: .72rem;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-decoration: none;
+      text-transform: uppercase;
+    }
+
+    .footer-button--accent { color: var(--tinta); background: var(--manzanilla-light); border-color: var(--manzanilla-light); }
+
+    /* Crafter's Acrylic: sistema visual derivado del empaque */
+    :root {
+      --manzanilla: #ef3b35;
+      --manzanilla-light: #55c7d0;
+      --botanico: #7655b8;
+      --herencia: #ef3b35;
+      --marfil: #ffffff;
+      --calidez: #e7e7e7;
+      --tinta: #000000;
+      --papel: #ffffff;
+      --oliva-claro: #f0f0f0;
+      --amarillo-claro: #ffffff;
+      --crema-calida: #e9e9e9;
+      --linea: rgba(0,0,0,.18);
+    }
+
+    html, body { background: #ffffff; }
+    body { background-image: none; }
+    .progress { background: linear-gradient(90deg, #ef3b35 0 34%, #ffffff 34% 66%, #3157d8 66%); }
+    .back-link, .header-label { background: rgba(0,0,0,.9); border-color: rgba(255,255,255,.38); }
+    .back-link:hover, .back-link:focus-visible { background: #3157d8; }
+    .hero { background: #000000; }
+    .hero-shade {
+      background:
+        linear-gradient(90deg, rgba(0,0,0,.82) 0%, rgba(0,0,0,.26) 50%, rgba(0,0,0,.06) 75%),
+        linear-gradient(0deg, rgba(0,0,0,.82) 0%, transparent 58%);
+    }
+    .hero .eyebrow, .hero-meta strong { color: #55c7d0; }
+    .hero h1 { max-width: 960px; font-size: clamp(3.8rem, 8.4vw, 8.4rem); line-height: .84; }
+    .case-nav { background: rgba(0,0,0,.96); border-bottom-color: rgba(255,255,255,.2); }
+    .case-nav a { color: #ffffff; }
+    .case-nav a:hover, .case-nav a:focus-visible { color: #55c7d0; }
+    .chapter-kicker { color: #3157d8; background: rgba(49,87,216,.1); }
+    #contexto { background: linear-gradient(180deg, #ffffff 0 48%, #efefef 48% 100%); }
+    .big-statement em { color: #ef3b35; }
+    .chapter--audience { color: #ffffff; background: #000000; }
+    .chapter--audience .chapter-kicker { color: #55c7d0; background: rgba(85,199,208,.12); }
+    .formula { color: #000000; background: #55c7d0; border-radius: var(--image-radius); }
+    #diagnostico { background: #f0f0f0; }
+    .issue::before, .type-sample span { color: #ef3b35; }
+    .media-frame--portrait {
+      width: min(100%, 520px);
+      aspect-ratio: 3 / 4;
+      margin-left: auto;
+      background: #ffffff;
+    }
+    .media-frame--portrait img { object-fit: contain; }
+    .scamper-card {
+      grid-column: 7 / -1;
+      min-height: 520px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: clamp(28px, 4vw, 58px);
+      color: #ffffff;
+      background:
+        linear-gradient(135deg, transparent 0 73%, #3157d8 73% 84%, #ef3b35 84%),
+        #000000;
+      border-radius: var(--image-radius);
+      overflow: hidden;
+    }
+    .scamper-card span {
+      margin-bottom: auto;
+      color: #55c7d0;
+      font-size: .72rem;
+      font-weight: 800;
+      letter-spacing: .18em;
+    }
+    .scamper-card strong {
+      max-width: 480px;
+      font-size: clamp(2.6rem, 5vw, 5.4rem);
+      line-height: .88;
+      letter-spacing: -.06em;
+    }
+    .scamper-card p { max-width: 520px; margin: 28px 0 0; color: rgba(255,255,255,.72); line-height: 1.65; }
+    .scamper-card i { margin-top: 32px; color: #ef3b35; font-size: 2rem; font-style: normal; }
+    .chapter--strategy { background: #000000; }
+    .strategy-card:nth-child(1) { --card-surface:#ef3b35; --card-ink:#000; --card-muted:rgba(0,0,0,.7); --card-line:#000; }
+    .strategy-card:nth-child(2) { --card-surface:#ffffff; --card-ink:#000; --card-muted:rgba(0,0,0,.66); --card-line:#3157d8; }
+    .strategy-card:nth-child(3) { --card-surface:#3157d8; --card-ink:#fff; --card-muted:rgba(255,255,255,.76); --card-line:#55c7d0; }
+    #sistema { background: #ffffff; }
+    #sistema .chapter-kicker { background: rgba(118,85,184,.12); color:#7655b8; }
+    .swatches--six { grid-template-columns: repeat(6, 1fr); }
+    .swatch--border { border-color: rgba(0,0,0,.32); }
+    #proceso { color:#ffffff; background:#000000; }
+    #proceso .chapter-kicker { color:#55c7d0; background:rgba(85,199,208,.12); }
+    #proceso .chapter-title { color:#ffffff; }
+    .process-card { color:#000000; background:#ffffff; border-color:rgba(255,255,255,.2); box-shadow:none; }
+    .process-digital-flat {
+      flex: 1;
+      min-height: 390px;
+      display: grid;
+      place-items: center;
+      overflow: hidden;
+      background: #f2f2f2;
+      border-radius: 16px;
+    }
+    .process-digital-flat img { width: 100%; height: 100%; object-fit: contain; border-radius: 0; }
+    .chapter--final { background:#ffffff; }
+    .chapter--final .chapter-kicker { color:#ef3b35; background:rgba(239,59,53,.1); }
+    .final-showcase { background:#000000; }
+    .final-hero-content { color:#ffffff; }
+    .final-hero-content .eyebrow { color:#55c7d0 !important; }
+    .final-hero-content p { color:rgba(255,255,255,.72); }
+    .summary { background:#3157d8; }
+    .summary-item { background:#000000; border-color:rgba(255,255,255,.22); }
+    .summary-item:nth-child(2) { color:#000000; background:#ffffff; }
+    .summary-item:nth-child(2) p { color:rgba(0,0,0,.66); }
+    .summary-item:nth-child(2) b { color:#ef3b35; }
+    .case-footer { background:#000000; }
+    .footer-button--accent { color:#000000; background:#55c7d0; border-color:#55c7d0; }
+
+    [data-reveal] {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 700ms ease, transform 700ms cubic-bezier(.2,.8,.2,1);
+    }
+
+    [data-reveal].is-visible { opacity: 1; transform: none; }
+
+    @keyframes hero-in {
+      from { opacity: .55; transform: scale(1.045); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    @media (max-width: 900px) {
+      :root { --content: min(100% - 32px, 720px); }
+      .hero-content { grid-template-columns: 1fr; gap: 28px; padding-bottom: 42px; }
+      .hero-meta { max-width: 360px; }
+      .chapter { padding: 88px 0; }
+      .intro-copy, .intro-aside, .split-copy, .split-media, .diagnosis-copy, .diagnosis-media,
+      .process-sketches, .process-digital, .final-copy, .final-dieline, .scamper-card { grid-column: 1 / -1; }
+      .split-copy { padding-right: 0; }
+      .split-media { width: 100%; }
+      .intro-aside, .split-media, .diagnosis-media, .final-dieline { margin-top: 28px; }
+      .audience-grid, .system-layout { grid-template-columns: 1fr; }
+      .formula { width: min(100%, 390px); }
+      .strategy-grid, .summary-grid { grid-template-columns: 1fr; }
+      .strategy-card { min-height: auto; }
+      .strategy-card::before { margin-bottom: 34px; }
+      .vertical-word { display: none; }
+    }
+
+    @media (max-width: 1100px) {
+      :root { --nav-safe-right: 0px; }
+      .header-label { display: none; }
+    }
+
+    @media (max-width: 600px) {
+      :root {
+        --content: calc(100vw - 28px);
+        --image-radius: 18px;
+        --nav-safe-left: 110px;
+      }
+      .site-header { inset: 6px 0 auto; }
+      .back-link { min-height: 40px; padding: 0 14px; font-size: .68rem; }
+      .hero { min-height: 88svh; }
+      .hero-picture img { object-position: 48% center; }
+      .hero-shade { background: linear-gradient(0deg, rgba(23,14,8,.88), rgba(23,14,8,.08) 76%); }
+      .hero-content { padding: 110px 0 34px; }
+      .hero h1 { font-size: clamp(3.35rem, 17vw, 5.4rem); line-height: .86; }
+      .case-nav-inner { gap: 22px; min-height: 52px; }
+      .chapter { padding: 72px 0; scroll-margin-top: 52px; }
+      .brand-lineup { margin-top: 64px; }
+      .strategy-grid, .system-layout, .process-grid, .summary-grid { margin-top: 48px; }
+      .chapter-title { font-size: clamp(2.35rem, 13vw, 4.1rem); }
+      .split-copy .chapter-title,
+      .diagnosis-copy .chapter-title,
+      .final-copy .chapter-title { font-size: clamp(2.35rem, 13vw, 4.1rem); }
+      .big-statement { font-size: clamp(2.35rem, 12vw, 3.5rem); }
+      .issue { grid-template-columns: 38px 1fr; gap: 14px; }
+      .issue span { grid-column: 2; }
+      .strategy-card, .process-card, .summary-item { padding: 24px; }
+      .process-digital-visual { min-height: 390px; }
+      .process-digital-visual img { width: min(125%, 400px); }
+      .process-digital-flat { min-height: 300px; }
+      .system-layout { gap: 34px; }
+      .swatches { gap: 5px; }
+      .final-showcase { margin-top: 72px; padding: 64px 0 78px; }
+      .final-hero-content { padding: 0 0 38px; }
+      .final-hero { aspect-ratio: 4 / 3; }
+      .final-hero picture,
+      .final-hero img { height: 100%; }
+      .final-hero img { object-fit: cover; object-position: center; }
+      .summary { padding: 78px 0; }
+      .footer-inner { align-items: flex-start; flex-direction: column; }
+      .footer-actions { width: 100%; flex-direction: column; align-items: stretch; }
+      .footer-button { width: 100%; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
+      [data-reveal] { opacity: 1; transform: none; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="progress" id="progress" aria-hidden="true"></div>
+
+  <header class="site-header">
+    <a class="back-link" id="back-link" href="index.html#proyectos-packaging" aria-label="Volver al portafolio">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+      Volver
+    </a>
+    <span class="header-label">Case study · Packaging</span>
+  </header>
+
+  <main>
+    <section class="hero" aria-labelledby="hero-title">
+      <picture class="hero-picture">
+        <source media="(max-width: 700px)" srcset="assets/mobile/images/decoart-envases-t2-768.webp" />
+        <img src="assets/crafters-case/hero.png" width="1536" height="1024" alt="Caja y botella rediseñadas de Crafter's Acrylic en una mesa de trabajo" />
+      </picture>
+      <div class="hero-shade" aria-hidden="true"></div>
+      <div class="hero-content">
+        <div>
+          <p class="eyebrow">Rediseño de etiqueta y empaque</p>
+          <h1 id="hero-title">Crafter's Acrylic<span>Claridad, contraste y función para una pintura pensada para crear.</span></h1>
+        </div>
+        <div class="hero-meta">
+          <strong>DecoArt · 118 ml</strong>
+          Etiqueta bilingüe<br />Packaging secundario<br />Sistema gráfico
+        </div>
+      </div>
+    </section>
+
+    <nav class="case-nav" aria-label="Capítulos del proyecto">
+      <div class="case-nav-inner">
+        <a href="#contexto">Contexto</a>
+        <a href="#publico">Público</a>
+        <a href="#diagnostico">Diagnóstico</a>
+        <a href="#estrategia">Dirección</a>
+        <a href="#sistema">Sistema visual</a>
+        <a href="#proceso">Proceso</a>
+        <a href="#resultado">Resultado</a>
+      </div>
+    </nav>
+
+    <section class="chapter" id="contexto">
+      <div class="container intro-grid">
+        <div class="intro-copy" data-reveal>
+          <p class="chapter-kicker">01 · Contexto y reto</p>
+          <p class="big-statement">Una marca accesible con una identidad <em>saturada.</em></p>
+          <p class="chapter-lead">Crafter's Acrylic es una pintura acrílica al agua de DecoArt dirigida a estudiantes y personas que empiezan a crear. El rediseño reorganiza una etiqueta cargada de mensajes para convertirla en una experiencia directa, bilingüe y fácil de reconocer.</p>
+        </div>
+        <aside class="intro-aside" data-reveal>
+          <dl class="project-facts">
+            <div><dt>Proyecto</dt><dd>Etiqueta y empaque secundario</dd></div>
+            <div><dt>Producto</dt><dd>Pintura acrílica al agua</dd></div>
+            <div><dt>Formato</dt><dd>118 ml · 2 piezas</dd></div>
+            <div><dt>Autor</dt><dd>Valentino Levano</dd></div>
+          </dl>
+        </aside>
+      </div>
+
+      <div class="container split brand-lineup">
+        <div class="split-copy" data-reveal>
+          <p class="chapter-kicker">El punto de partida</p>
+          <h2 class="chapter-title">Menos ruido, más claridad y una experiencia funcional.</h2>
+          <p class="chapter-lead">La propuesta debía simplificar la información, reforzar la jerarquía y diferenciar el producto en anaquel. El empaque secundario sumó una apertura visible y un segundo uso para acompañar el proceso creativo.</p>
+        </div>
+        <figure class="split-media" data-reveal>
+          <div class="media-frame media-frame--portrait"><img src="assets/crafters-case/original-label.png" width="570" height="760" loading="lazy" alt="Etiqueta original de Crafter's Acrylic antes del rediseño" /></div>
+          <figcaption class="caption">Antes · Etiqueta original</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="chapter chapter--audience" id="publico">
+      <span class="vertical-word" aria-hidden="true">Crear</span>
+      <div class="container audience-grid">
+        <div data-reveal>
+          <p class="chapter-kicker">02 · Público objetivo</p>
+          <h2 class="chapter-title">Diseñado para empezar, experimentar y crear.</h2>
+          <p class="chapter-lead">La línea acompaña a estudiantes, principiantes y niños desde los cinco años. Su facilidad de uso, secado rápido y desempeño sobre distintas superficies convierten al producto en una puerta de entrada al mundo de la pintura.</p>
+        </div>
+        <div class="formula" data-reveal>Fácil de usar<br />+<br />Secado rápido</div>
+      </div>
+    </section>
+
+    <section class="chapter" id="diagnostico">
+      <div class="container diagnosis-grid">
+        <div class="diagnosis-copy" data-reveal>
+          <p class="chapter-kicker">03 · Diagnóstico</p>
+          <h2 class="chapter-title">El análisis reveló cuatro oportunidades de diseño.</h2>
+          <div class="issue-list">
+            <div class="issue"><strong>Jerarquía</strong><span>Reducir texto y destacar la información que realmente define la compra.</span></div>
+            <div class="issue"><strong>Diferenciación</strong><span>Construir una lectura horizontal con el negro como elemento dominante.</span></div>
+            <div class="issue"><strong>Claridad</strong><span>Simplificar idiomas e incorporar señales visuales fáciles de reconocer.</span></div>
+            <div class="issue"><strong>Función</strong><span>Hacer visible la apertura y convertir la caja en un objeto reutilizable.</span></div>
+          </div>
+        </div>
+        <aside class="scamper-card" data-reveal aria-label="Síntesis del análisis SCAMPER">
+          <span>SCAMPER</span>
+          <strong>Ordenar lo esencial.</strong>
+          <p>Sustituir exceso por jerarquía, combinar contraste con color y adaptar el empaque para que siga siendo útil después de la compra.</p>
+          <i aria-hidden="true">→</i>
+        </aside>
+      </div>
+    </section>
+
+    <section class="chapter chapter--strategy" id="estrategia">
+      <div class="container">
+        <div data-reveal>
+          <p class="chapter-kicker">04 · Dirección visual</p>
+          <h2 class="chapter-title">Contraste que ordena. Color que invita a crear.</h2>
+        </div>
+        <div class="strategy-grid" data-reveal>
+          <article class="strategy-card"><h3>Contraste</h3><p>Negro puro y blanco construyen una base contundente para ordenar toda la información.</p></article>
+          <article class="strategy-card"><h3>Orden</h3><p>Bloques, líneas y lectura horizontal permiten identificar cada dato con rapidez.</p></article>
+          <article class="strategy-card"><h3>Expresión</h3><p>Rojo, azul, cian y violeta aportan energía sin competir con la estructura principal.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="chapter" id="sistema">
+      <div class="container">
+        <div data-reveal>
+          <p class="chapter-kicker">05 · Sistema visual</p>
+          <h2 class="chapter-title">Una identidad modular construida con negro, blanco y color.</h2>
+        </div>
+        <div class="system-layout">
+          <figure class="media-frame" data-reveal><img src="assets/crafters-case/moodboard.png" width="1300" height="732" loading="lazy" alt="Moodboard, referencias y paleta visual de Crafter's Acrylic" /></figure>
+          <div class="system-notes" data-reveal>
+            <div class="type-sample"><span>Tipografía condensada + gesto manual</span><strong>PINTURA ACRÍLICA</strong></div>
+            <p class="chapter-lead" style="margin:0;">La tipografía condensada aporta estructura y máxima legibilidad. El trazo manual introduce la energía espontánea del proceso creativo sin alterar la jerarquía.</p>
+            <div class="swatches swatches--six" aria-label="Paleta cromática del proyecto">
+              <span class="swatch swatch--border" style="background:#000000" title="Negro puro"></span>
+              <span class="swatch swatch--border" style="background:#ffffff" title="Blanco"></span>
+              <span class="swatch" style="background:#3157d8" title="Azul"></span>
+              <span class="swatch" style="background:#ef3b35" title="Rojo"></span>
+              <span class="swatch" style="background:#55c7d0" title="Cian"></span>
+              <span class="swatch" style="background:#7655b8" title="Violeta"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="chapter" id="proceso">
+      <div class="container">
+        <div data-reveal>
+          <p class="chapter-kicker">06 · Proceso</p>
+          <h2 class="chapter-title">La estructura nació en papel y se convirtió en un sistema claro.</h2>
+        </div>
+        <div class="process-grid">
+          <article class="process-card process-sketches" data-reveal>
+            <img src="assets/crafters-case/sketches.png" width="1300" height="732" loading="lazy" alt="Bocetos y exploraciones iniciales del packaging Crafter's Acrylic" />
+            <h3>Bocetos y jerarquía</h3>
+            <p>Las primeras pruebas definieron una lectura horizontal, una composición de alto contraste y una apertura superior que pudiera entenderse de inmediato.</p>
+          </article>
+          <article class="process-card process-digital" data-reveal>
+            <h3>De boceto a sistema</h3>
+            <p>La información se separó en bloques reconocibles. Las líneas blancas ordenan el recorrido y el color identifica las variantes sin perder la unidad.</p>
+            <div class="process-digital-flat">
+              <img src="assets/crafters-case/label-system.png" width="1300" height="732" loading="lazy" alt="Sistema digital de etiqueta para Crafter's Acrylic" />
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="chapter chapter--final" id="resultado">
+      <div class="container final-grid">
+        <div class="final-copy" data-reveal>
+          <p class="chapter-kicker">07 · Propuesta final</p>
+          <h2 class="chapter-title">La información se convierte en una composición reconocible.</h2>
+          <p class="chapter-lead">El negro puro domina el sistema. La lectura horizontal, los bloques informativos y los acentos cromáticos permiten identificar el producto con rapidez en la botella y en la caja.</p>
+        </div>
+        <figure class="final-dieline" data-reveal>
+          <div class="media-frame"><img src="assets/crafters-case/dieline.png" width="1300" height="732" loading="lazy" alt="Troquel y desarrollo final del empaque Crafter's Acrylic" /></div>
+          <figcaption class="caption">Troquel y desarrollo final</figcaption>
+        </figure>
+      </div>
+      <div class="final-showcase">
+        <div class="final-hero-content" data-reveal>
+          <p class="eyebrow">Resultado en contexto</p>
+          <h2 class="chapter-title">El empaque continúa la experiencia después de abrirlo.</h2>
+          <p>La apertura tipo maletín facilita el acceso, protege el producto y transforma la caja rígida en un estuche reutilizable y personalizable.</p>
+        </div>
+        <figure class="final-hero" data-reveal>
+          <img src="assets/projects/Mockup Caja y botella Deco Art.webp" width="1400" height="1050" loading="lazy" alt="Caja y botella Crafter's Acrylic con el rediseño aplicado" />
+        </figure>
+      </div>
+    </section>
+
+    <section class="summary">
+      <div class="container">
+        <div data-reveal>
+          <p class="chapter-kicker">Síntesis</p>
+          <h2 class="chapter-title">El rediseño conecta claridad, carácter y función.</h2>
+        </div>
+        <div class="summary-grid" data-reveal>
+          <article class="summary-item"><b>01</b><h3>Jerarquía más clara</h3><p>La información esencial se reconoce primero y reduce el esfuerzo de lectura.</p></article>
+          <article class="summary-item"><b>02</b><h3>Apertura funcional</h3><p>El formato tipo maletín hace visible el acceso y mejora la experiencia de uso.</p></article>
+          <article class="summary-item"><b>03</b><h3>Segundo uso</h3><p>La caja rígida se conserva como un estuche que puede reutilizarse y personalizarse.</p></article>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="case-footer">
+    <div class="footer-inner">
+      <p>Crafter's Acrylic · Case study de packaging · Valentino Levano</p>
+      <div class="footer-actions">
+        <a class="footer-button" id="footer-back" href="index.html#proyectos-packaging">← Volver al portafolio</a>
+        <a class="footer-button footer-button--accent" href="assets/documents/Crafters-Acrylic_Portafolio.pdf" target="_blank" rel="noopener">Ver presentación PDF ↗</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    (function () {
+      const params = new URLSearchParams(window.location.search);
+      const fromMobile = params.get('from') === 'mobile' || document.referrer.includes('mobile.html');
+      const target = fromMobile ? 'mobile.html#proyectos-packaging' : 'index.html#proyectos-packaging';
+      document.getElementById('back-link').href = target;
+      document.getElementById('footer-back').href = target;
+
+      const progress = document.getElementById('progress');
+      const updateProgress = () => {
+        const max = document.documentElement.scrollHeight - window.innerHeight;
+        const ratio = max > 0 ? window.scrollY / max : 0;
+        progress.style.width = Math.min(1, Math.max(0, ratio)) * 100 + '%';
+      };
+      updateProgress();
+      window.addEventListener('scroll', updateProgress, { passive: true });
+
+      if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach((entry) => {
+            if (!entry.isIntersecting) return;
+            entry.target.classList.add('is-visible');
+            observer.unobserve(entry.target);
+          });
+        }, { threshold: 0.12, rootMargin: '0px 0px -5% 0px' });
+        document.querySelectorAll('[data-reveal]').forEach((element) => observer.observe(element));
+      } else {
+        document.querySelectorAll('[data-reveal]').forEach((element) => element.classList.add('is-visible'));
+      }
+    })();
+  </script>
+</body>
+
+</html>
