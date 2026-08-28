@@ -19,7 +19,10 @@
       --marfil: #f3eddf;
       --calidez: #d9ccb6;
       --tinta: #16140f;
-      --papel: #faf6ec;
+      --papel: #f8f1df;
+      --oliva-claro: #d8d5aa;
+      --amarillo-claro: #efd47f;
+      --crema-calida: #efe3bd;
       --linea: rgba(22, 20, 15, 0.16);
       --content: min(1280px, calc(100vw - 48px));
       --image-radius: 24px;
@@ -38,7 +41,7 @@
       margin: 0;
       color: var(--tinta);
       background:
-        radial-gradient(circle at 10% 18%, rgba(225, 173, 50, 0.11), transparent 23rem),
+        radial-gradient(circle at 10% 18%, rgba(225, 173, 50, 0.18), transparent 23rem),
         var(--papel);
       font-family: 'Inter', Arial, sans-serif;
       font-weight: 400;
@@ -81,7 +84,7 @@
       pointer-events: auto;
       border: 1px solid rgba(255, 255, 255, 0.28);
       color: #fffaf0;
-      background: rgba(22, 20, 15, 0.7);
+      background: rgba(139, 48, 40, 0.88);
       backdrop-filter: blur(14px);
       -webkit-backdrop-filter: blur(14px);
       box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
@@ -222,8 +225,8 @@
       padding-inline:
         calc((100vw - var(--content)) / 2 + var(--nav-safe-left))
         calc((100vw - var(--content)) / 2 + var(--nav-safe-right));
-      background: rgba(250, 246, 236, 0.94);
-      border-bottom: 1px solid var(--linea);
+      background: linear-gradient(90deg, rgba(243,237,223,.96), rgba(239,212,127,.96), rgba(216,213,170,.96));
+      border-bottom: 1px solid rgba(139,48,40,.25);
       backdrop-filter: blur(14px);
       -webkit-backdrop-filter: blur(14px);
     }
@@ -262,8 +265,13 @@
     .container { width: var(--content); margin: auto; }
 
     .chapter-kicker {
-      margin: 0 0 14px;
+      display: inline-flex;
+      align-items: center;
+      margin: 0 0 18px;
+      padding: 7px 11px;
       color: var(--herencia);
+      background: rgba(139,48,40,.09);
+      border-radius: 999px;
       font-size: 0.68rem;
       font-weight: 700;
       letter-spacing: 0.16em;
@@ -313,6 +321,10 @@
     }
 
     .big-statement em { color: var(--herencia); }
+
+    #contexto {
+      background: linear-gradient(180deg, var(--papel) 0 48%, var(--crema-calida) 48% 100%);
+    }
 
     .project-facts {
       margin: 0;
@@ -378,7 +390,7 @@
       background: var(--herencia);
     }
 
-    .chapter--audience .chapter-kicker { color: var(--manzanilla-light); }
+    .chapter--audience .chapter-kicker { color: var(--manzanilla-light); background: rgba(244,201,93,.12); }
     .chapter--audience .chapter-lead { color: rgba(255,247,232,.76); }
 
     .audience-grid {
@@ -419,6 +431,7 @@
 
     .diagnosis-copy { grid-column: 1 / span 6; }
     .diagnosis-media { grid-column: 8 / -1; }
+    #diagnostico { background: var(--oliva-claro); }
     .diagnosis-media .media-frame,
     .final-dieline .media-frame {
       background: transparent;
@@ -461,7 +474,7 @@
       background: var(--tinta);
     }
 
-    .chapter--strategy .chapter-kicker { color: var(--manzanilla-light); }
+    .chapter--strategy .chapter-kicker { color: var(--manzanilla-light); background: rgba(244,201,93,.1); }
 
     .strategy-grid {
       display: grid;
@@ -527,6 +540,11 @@
       margin-top: 64px;
     }
 
+    #sistema { background: var(--amarillo-claro); }
+    #sistema .chapter-kicker { background: rgba(139,48,40,.13); }
+    #sistema .media-frame { border-color: rgba(139,48,40,.3); }
+    #sistema .type-sample { border-color: rgba(139,48,40,.28); }
+
     .system-layout .media-frame { aspect-ratio: 1.38; }
     .system-notes { display: grid; gap: 30px; }
 
@@ -552,9 +570,10 @@
     }
 
     .swatches { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; }
-    .swatch { aspect-ratio: 1; border: 1px solid rgba(22,20,15,.12); }
+    .swatch { aspect-ratio: 1; border: 1px solid rgba(22,20,15,.12); border-radius: 14px; }
 
     .process-grid { margin-top: 64px; align-items: stretch; }
+    #proceso { background: var(--oliva-claro); }
     .process-sketches { grid-column: 1 / span 7; }
     .process-digital { grid-column: 8 / -1; display: flex; flex-direction: column; }
 
@@ -562,8 +581,9 @@
       height: 100%;
       padding: 24px;
       background: var(--marfil);
-      border: 1px solid var(--linea);
+      border: 1px solid rgba(139,48,40,.2);
       border-radius: var(--image-radius);
+      box-shadow: 0 20px 50px rgba(82,74,35,.1);
     }
 
     .process-card img { width: 100%; height: auto; object-fit: cover; border-radius: 16px; }
@@ -593,7 +613,8 @@
 
     .process-card p { margin: 0 0 24px; color: rgba(22,20,15,.65); line-height: 1.65; }
 
-    .chapter--final { padding-bottom: 0; background: #efe4cb; }
+    .chapter--final { padding-bottom: 0; background: var(--amarillo-claro); }
+    .chapter--final .chapter-kicker { background: rgba(139,48,40,.13); }
     .final-copy { grid-column: 1 / span 4; }
     .final-dieline { grid-column: 6 / -1; }
     .final-dieline img { width: 100%; }
@@ -610,7 +631,7 @@
     .final-showcase {
       margin-top: 100px;
       padding: 86px 0 112px;
-      background: #f5eddd;
+      background: var(--crema-calida);
     }
 
     .final-hero picture,
@@ -638,12 +659,12 @@
     .summary-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 1px;
+      gap: 12px;
       margin-top: 64px;
-      background: rgba(255,255,255,.25);
+      background: transparent;
     }
 
-    .summary-item { padding: 30px; background: var(--herencia); }
+    .summary-item { padding: 30px; background: rgba(22,20,15,.18); border: 1px solid rgba(244,201,93,.26); border-radius: var(--image-radius); }
     .summary-item b { display: block; margin-bottom: 40px; color: var(--manzanilla-light); font-size: .72rem; }
     .summary-item h3 { margin: 0 0 12px; font-family: 'Inter', Arial, sans-serif; font-size: 1.45rem; }
     .summary-item p { margin: 0; color: rgba(255,247,232,.7); line-height: 1.6; }
@@ -907,7 +928,7 @@
       </div>
     </section>
 
-    <section class="chapter" id="proceso" style="background:#f0e7d4;">
+    <section class="chapter" id="proceso">
       <div class="container">
         <div data-reveal>
           <p class="chapter-kicker">06 · Proceso</p>
