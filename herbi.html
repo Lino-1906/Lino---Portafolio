@@ -568,7 +568,22 @@
 
     .process-card img { width: 100%; height: auto; object-fit: cover; border-radius: 16px; }
     .process-sketches img { aspect-ratio: 4 / 3; }
-    .process-digital img { aspect-ratio: 1.78; margin-top: auto; }
+    .process-digital-visual {
+      flex: 1;
+      min-height: 420px;
+      display: grid;
+      place-items: center;
+      overflow: hidden;
+    }
+
+    .process-digital-visual img {
+      width: min(105%, 500px);
+      aspect-ratio: 1.78;
+      margin: 0;
+      object-fit: contain;
+      transform: rotate(-90deg);
+      transform-origin: center;
+    }
 
     .process-card h3 {
       margin: 26px 0 8px;
@@ -725,6 +740,8 @@
       .issue { grid-template-columns: 38px 1fr; gap: 14px; }
       .issue span { grid-column: 2; }
       .strategy-card, .process-card, .summary-item { padding: 24px; }
+      .process-digital-visual { min-height: 390px; }
+      .process-digital-visual img { width: min(125%, 400px); }
       .system-layout { gap: 34px; }
       .swatches { gap: 5px; }
       .final-hero { min-height: 62svh; }
@@ -897,7 +914,9 @@
           <article class="process-card process-digital" data-reveal>
             <h3>De boceto a sistema</h3>
             <p>Los bloques de color organizan cada cara; la palabra Manzanilla crea repetición y el negro separa la información funcional.</p>
-            <img src="assets/herbi-case/digital-grid-transparent.png" width="1672" height="941" loading="lazy" alt="Desarrollo digital de la retícula Herbi" />
+            <div class="process-digital-visual">
+              <img src="assets/herbi-case/digital-grid-transparent.png" width="1672" height="941" loading="lazy" alt="Desarrollo digital de la retícula Herbi" />
+            </div>
           </article>
         </div>
       </div>
