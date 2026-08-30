@@ -1,0 +1,18 @@
+.model-loading{position:absolute;bottom:22px;left:50%;transform:translateX(-50%);z-index:2;display:flex;align-items:center;justify-content:center;gap:12px;max-width:calc(100% - 32px);padding:13px 18px;border-radius:999px;background:var(--model-loading-bg,#f1f1f4);color:var(--model-loading-color,#202127);box-shadow:0 4px 24px #0002;font:600 13px Inter,Arial,sans-serif;white-space:nowrap;letter-spacing:.02em;opacity:0;animation:model-loading-reveal .15s .35s forwards;pointer-events:none}
+.model-loading.is-leaving{animation:model-loading-dismiss .3s ease forwards}
+.acrylic-stage .acrylic-fallback,.viewer-stage .viewer-fallback{position:absolute;inset:0;z-index:1;opacity:1;visibility:visible;pointer-events:none;transition:opacity .7s cubic-bezier(.22,1,.36,1),visibility 0s .7s}
+.acrylic-stage canvas,.viewer-stage canvas{opacity:1}
+.acrylic-stage.is-ready canvas,.viewer-stage.viewer-ready canvas{opacity:1}
+.acrylic-stage.is-ready .acrylic-fallback,.viewer-stage.viewer-ready .viewer-fallback{opacity:0;visibility:hidden}
+.acrylic-controls,.viewer-controls{opacity:1;transition:opacity .4s ease}
+.acrylic-controls[hidden],.viewer-controls[hidden]{display:flex;visibility:hidden;opacity:0;pointer-events:none}
+.acrylic-status{min-height:2.8em;line-height:1.4}
+.viewer-caption{min-height:56px;box-sizing:border-box;align-items:center}
+.viewer-caption span{flex:1;min-width:0}
+.viewer-caption span:last-child{text-align:right}
+.viewer-stage{--model-loading-bg:var(--amarillo-fondo);--model-loading-color:#8b3028}
+.model-loading-icon{width:34px;height:34px;border:3px solid currentColor;border-right-color:transparent;border-radius:50%;animation:model-loading-spin .8s linear infinite}
+@keyframes model-loading-spin{to{transform:rotate(360deg)}}
+@keyframes model-loading-reveal{to{opacity:1}}
+@keyframes model-loading-dismiss{from{opacity:var(--loading-opacity,1)}to{opacity:0}}
+@media(prefers-reduced-motion:reduce){.model-loading{animation:none;opacity:1}.model-loading-icon{animation:none}.model-loading.is-leaving{animation:none;opacity:0}.acrylic-stage .acrylic-fallback,.viewer-stage .viewer-fallback,.acrylic-stage canvas,.viewer-stage canvas{transition:none}}

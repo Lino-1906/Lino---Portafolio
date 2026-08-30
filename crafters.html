@@ -885,6 +885,9 @@
       [data-reveal] { opacity: 1; transform: none; }
     }
   </style>
+  <link rel="stylesheet" href="assets/css/crafters-3d.css?v=2" />
+  <link rel="stylesheet" href="assets/css/viewer-loading.css?v=4" />
+  <script type="importmap">{"imports":{"three":"./assets/vendor/three/three.module.js"}}</script>
 </head>
 
 <body>
@@ -899,12 +902,7 @@
   </header>
 
   <main>
-    <section class="hero" aria-labelledby="hero-title">
-      <picture class="hero-picture">
-        <source media="(max-width: 700px)" srcset="assets/mobile/images/decoart-envases-t2-768.webp" />
-        <img src="assets/crafters-case/hero.png" width="1536" height="1024" alt="Caja y botella rediseñadas de Crafter's Acrylic en una mesa de trabajo" />
-      </picture>
-      <div class="hero-shade" aria-hidden="true"></div>
+    <section class="hero hero--interactive" id="version-interactiva" aria-labelledby="hero-title">
       <div class="hero-content">
         <div>
           <p class="eyebrow">Rediseño de etiqueta y empaque</p>
@@ -913,6 +911,23 @@
         <div class="hero-meta">
           <strong>DecoArt · 118 ml</strong>
           Etiqueta bilingüe<br />Packaging secundario<br />Sistema gráfico
+        </div>
+      </div>
+      <div class="acrylic-viewer">
+        <div class="acrylic-stage" id="acrylic-stage">
+          <img class="acrylic-fallback" src="assets/crafters-case/hero.png" alt="Caja y botella de Crafter's Acrylic" width="1536" height="1024" />
+        </div>
+        <p class="acrylic-status" id="acrylic-status" aria-live="polite">Caja + botella · Vista del producto</p>
+        <div class="acrylic-controls" hidden>
+          <div class="acrylic-modes" role="group" aria-label="Producto a explorar">
+            <button type="button" data-product="both" aria-pressed="true">Conjunto</button>
+            <button type="button" data-product="box" aria-pressed="false">Caja</button>
+            <button type="button" data-product="bottle" aria-pressed="false">Botella</button>
+          </div>
+          <div class="acrylic-actions">
+            <button type="button" id="acrylic-spin" aria-pressed="true">Pausar giro</button>
+            <button type="button" id="acrylic-reset">Restablecer</button>
+          </div>
         </div>
       </div>
     </section>
@@ -1053,7 +1068,7 @@
       </div>
     </section>
 
-    <section class="chapter chapter--final" id="resultado">
+    <section class="chapter chapter--final">
       <div class="container final-grid">
         <div class="final-copy" data-reveal>
           <p class="chapter-kicker">07 · Propuesta final</p>
@@ -1065,7 +1080,7 @@
           <figcaption class="caption">Troquel y desarrollo final</figcaption>
         </figure>
       </div>
-      <div class="final-showcase">
+      <div class="final-showcase" id="resultado" style="scroll-margin-top:58px;">
         <div class="final-hero-content" data-reveal>
           <p class="eyebrow">Resultado en contexto</p>
           <h2 class="chapter-title">El empaque continúa la experiencia después de abrirlo.</h2>
@@ -1097,7 +1112,7 @@
       <p>Crafter's Acrylic · Case study de packaging · Valentino Levano</p>
       <div class="footer-actions">
         <a class="footer-button" id="footer-back" href="index.html#proyectos-packaging">← Volver al portafolio</a>
-        <a class="footer-button footer-button--accent" href="assets/documents/Crafters-Acrylic_Portafolio.pdf" target="_blank" rel="noopener">Ver presentación PDF ↗</a>
+        <a class="footer-button footer-button--accent" href="#version-interactiva">Volver a versión interactiva ↑</a>
       </div>
     </div>
   </footer>
@@ -1133,6 +1148,7 @@
       }
     })();
   </script>
+  <script src="assets/js/viewer-loading.js?v=4" data-stage="acrylic-stage" data-status="acrylic-status" data-module="./crafters-3d.js?v=4"></script>
 </body>
 
 </html>

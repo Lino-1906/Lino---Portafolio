@@ -12,14 +12,17 @@
   <link rel="stylesheet" href="assets/css/fonts.css?v=20260820-1" />
   <style>
     :root {
-      --manzanilla: #e1ad32;
-      --manzanilla-light: #f4c95d;
+      --manzanilla: #f5b51b;
+      --manzanilla-light: #ffd052;
       --botanico: #969765;
       --herencia: #8b3028;
-      --marfil: #f3eddf;
-      --calidez: #d9ccb6;
+      --amarillo-fondo: #fff2d1;
+      --marfil: var(--amarillo-fondo);
+      --calidez: #eac468;
       --tinta: #16140f;
-      --papel: #faf6ec;
+      --papel: var(--amarillo-fondo);
+      --amarillo-proceso: var(--amarillo-fondo);
+      --amarillo-final: var(--amarillo-fondo);
       --linea: rgba(22, 20, 15, 0.16);
       --content: min(1280px, calc(100vw - 48px));
       --image-radius: 24px;
@@ -37,9 +40,7 @@
     body {
       margin: 0;
       color: var(--tinta);
-      background:
-        radial-gradient(circle at 10% 18%, rgba(225, 173, 50, 0.11), transparent 23rem),
-        var(--papel);
+      background: var(--amarillo-fondo);
       font-family: 'Inter', Arial, sans-serif;
       font-weight: 400;
       overflow-x: hidden;
@@ -222,7 +223,7 @@
       padding-inline:
         calc((100vw - var(--content)) / 2 + var(--nav-safe-left))
         calc((100vw - var(--content)) / 2 + var(--nav-safe-right));
-      background: rgba(250, 246, 236, 0.94);
+      background: #ffffff;
       border-bottom: 1px solid var(--linea);
       backdrop-filter: blur(14px);
       -webkit-backdrop-filter: blur(14px);
@@ -395,7 +396,7 @@
       aspect-ratio: 1.25;
       padding: 30px;
       color: var(--tinta);
-      background: var(--manzanilla-light);
+      background: var(--amarillo-fondo);
       font-family: 'Inter', Arial, sans-serif;
       font-size: clamp(1.5rem, 3vw, 3rem);
       font-weight: 700;
@@ -489,7 +490,7 @@
     }
 
     .strategy-card:nth-child(2) {
-      --card-surface: var(--manzanilla);
+      --card-surface: var(--amarillo-fondo);
       --card-ink: var(--tinta);
       --card-muted: rgba(22,20,15,.72);
       --card-line: var(--herencia);
@@ -593,7 +594,7 @@
 
     .process-card p { margin: 0 0 24px; color: rgba(22,20,15,.65); line-height: 1.65; }
 
-    .chapter--final { padding-bottom: 0; background: #efe4cb; }
+    .chapter--final { padding-bottom: 0; background: var(--amarillo-final); }
     .final-copy { grid-column: 1 / span 4; }
     .final-dieline { grid-column: 6 / -1; }
     .final-dieline img { width: 100%; }
@@ -610,7 +611,7 @@
     .final-showcase {
       margin-top: 100px;
       padding: 86px 0 112px;
-      background: #f5eddd;
+      background: var(--marfil);
     }
 
     .final-hero picture,
@@ -682,7 +683,7 @@
       text-transform: uppercase;
     }
 
-    .footer-button--accent { color: var(--tinta); background: var(--manzanilla-light); border-color: var(--manzanilla-light); }
+    .footer-button--accent { color: var(--tinta); background: var(--amarillo-fondo); border-color: var(--amarillo-fondo); }
 
     [data-reveal] {
       opacity: 0;
@@ -767,6 +768,9 @@
       [data-reveal] { opacity: 1; transform: none; }
     }
   </style>
+  <link rel="stylesheet" href="assets/css/herbi-3d.css?v=5" />
+  <link rel="stylesheet" href="assets/css/viewer-loading.css?v=4" />
+  <script type="importmap">{"imports":{"three":"./assets/vendor/three/three.module.js"}}</script>
 </head>
 
 <body>
@@ -781,12 +785,7 @@
   </header>
 
   <main>
-    <section class="hero" aria-labelledby="hero-title">
-      <picture class="hero-picture">
-        <source media="(max-width: 700px)" srcset="assets/herbi-case/hero-768.webp" />
-        <img src="assets/herbi-case/hero.webp" width="1440" height="960" alt="Empaque rediseñado de Herbi Manzanilla junto a una taza de infusión" />
-      </picture>
-      <div class="hero-shade" aria-hidden="true"></div>
+    <section class="hero hero--3d" id="version-interactiva" aria-labelledby="hero-title">
       <div class="hero-content">
         <div>
           <p class="eyebrow">Rediseño de packaging</p>
@@ -796,6 +795,17 @@
           <strong>Manzanilla · 25 sobres</strong>
           Identidad visual<br />Packaging<br />Sistema gráfico
         </div>
+      </div>
+      <div class="packaging-viewer" id="packaging-viewer">
+        <div class="viewer-stage" id="viewer-stage" role="img" aria-label="Modelo 3D del empaque Herbi Manzanilla">
+          <img class="viewer-fallback" src="assets/herbi-case/hero.webp" width="1440" height="960" alt="Empaque Herbi Manzanilla, vista de respaldo" />
+        </div>
+        <div class="viewer-caption"><span id="viewer-status" aria-live="polite">Preparando vista 3D…</span></div>
+        <div class="viewer-controls" hidden>
+          <button type="button" id="box-spin" aria-pressed="true">Pausar giro</button>
+          <button type="button" id="box-reset">Restablecer</button>
+        </div>
+        <noscript>Activa JavaScript para explorar el empaque en 3D.</noscript>
       </div>
     </section>
 
@@ -896,10 +906,10 @@
             <div class="type-sample"><span>Inter · Black</span><strong>Manzanilla</strong></div>
             <p class="chapter-lead" style="margin:0;">Inter en alto peso aporta presencia a títulos y variedades. La repetición tipográfica convierte el nombre del producto en un recurso gráfico propio.</p>
             <div class="swatches" aria-label="Paleta cromática del proyecto">
-              <span class="swatch" style="background:#e1ad32" title="Manzanilla"></span>
+              <span class="swatch" style="background:var(--manzanilla)" title="Manzanilla"></span>
               <span class="swatch" style="background:#969765" title="Botánico"></span>
               <span class="swatch" style="background:#8b3028" title="Herencia"></span>
-              <span class="swatch" style="background:#f3eddf" title="Calidez"></span>
+              <span class="swatch" style="background:var(--marfil)" title="Calidez"></span>
               <span class="swatch" style="background:#16140f" title="Contraste"></span>
             </div>
           </div>
@@ -907,7 +917,7 @@
       </div>
     </section>
 
-    <section class="chapter" id="proceso" style="background:#f0e7d4;">
+    <section class="chapter" id="proceso" style="background:var(--amarillo-proceso);">
       <div class="container">
         <div data-reveal>
           <p class="chapter-kicker">06 · Proceso</p>
@@ -930,7 +940,7 @@
       </div>
     </section>
 
-    <section class="chapter chapter--final" id="resultado">
+    <section class="chapter chapter--final">
       <div class="container final-grid">
         <div class="final-copy" data-reveal>
           <p class="chapter-kicker">07 · Propuesta final</p>
@@ -942,9 +952,9 @@
           <figcaption class="caption">Troquel y desarrollo final</figcaption>
         </figure>
       </div>
-      <div class="final-showcase">
+      <div class="final-showcase" id="resultado" style="scroll-margin-top:58px;">
         <div class="final-hero-content" data-reveal>
-          <p class="eyebrow" style="color:#f4c95d;">Resultado en contexto</p>
+          <p class="eyebrow" style="color:var(--manzanilla-light);">Resultado en contexto</p>
           <h2 class="chapter-title">Manzanilla vuelve a ser el centro.</h2>
           <p>El rediseño transforma la variedad en el eje visual y conserva los códigos que conectan el producto con su historia.</p>
         </div>
@@ -959,7 +969,7 @@
     <section class="summary">
       <div class="container">
         <div data-reveal>
-          <p class="chapter-kicker" style="color:#f4c95d;">Síntesis</p>
+          <p class="chapter-kicker" style="color:var(--manzanilla-light);">Síntesis</p>
           <h2 class="chapter-title">El rediseño actualiza la tradición de la marca.</h2>
         </div>
         <div class="summary-grid" data-reveal>
@@ -976,7 +986,7 @@
       <p>Herbi · Case study de packaging · Valentino Levano</p>
       <div class="footer-actions">
         <a class="footer-button" id="footer-back" href="index.html#proyectos-packaging">← Volver al portafolio</a>
-        <a class="footer-button footer-button--accent" href="assets/documents/Herbi_Portafolio.pdf" target="_blank" rel="noopener">Ver presentación PDF ↗</a>
+        <a class="footer-button footer-button--accent" href="#version-interactiva">Volver a versión interactiva ↑</a>
       </div>
     </div>
   </footer>
@@ -1012,6 +1022,7 @@
       }
     })();
   </script>
+  <script src="assets/js/viewer-loading.js?v=4" data-stage="viewer-stage" data-status="viewer-status" data-module="./herbi-3d.js?v=4"></script>
 </body>
 
 </html>
