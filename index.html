@@ -1925,7 +1925,7 @@
               style="font-size: clamp(1.4rem, 2vw, 1.8rem);">IDENTIDAD VISUAL LUMINÉ</h3>
             <p class="text-sm mt-1" style="color: rgba(237,224,200,0.62);">Branding e identidad conceptual para
               marca de skincare: logotipo, valores de marca, paleta cromática y aplicaciones.</p>
-            <a href="javascript:void(0)" onclick="openEditorialProgressModal('lumine')"
+            <a href="lumine.html"
               class="card-hover-cta">Ver más →</a>
           </div>
         </article>
@@ -1942,7 +1942,7 @@
               style="font-size: clamp(1.4rem, 2vw, 1.8rem);">CIRCUITO MÁGICO DEL AGUA</h3>
             <p class="text-sm mt-1" style="color: rgba(237,224,200,0.62);">Sistema de señalización, tótems
               informativos y mapas orientativos para parque temático público en Lima.</p>
-            <a href="javascript:void(0)" onclick="openEditorialProgressModal('circuito')"
+            <a href="circuito.html"
               class="card-hover-cta">Ver más →</a>
           </div>
         </article>
@@ -2716,28 +2716,28 @@
     function openEditorialProgressModal(project = 'arte') {
       const projects = {
         arte: {
-          src: 'assets/editorial-magazine/reader.html?v=20260820-2',
+          src: 'assets/editorial-magazine/reader.html?v=20260830-demand1',
           title: 'ARTE CULINARIO - REVISTA INTERACTIVA',
           frameTitle: 'Revista interactiva Arte Culinario',
           pdf: 'assets/documents/Revista-Gastronomica.pdf',
           category: 'Diseño editorial'
         },
         ayacucho: {
-          src: 'assets/ayacucho-magazine/reader.html?v=20260820-2',
+          src: 'assets/ayacucho-magazine/reader.html?v=20260830-demand1',
           title: 'GUÍA TURÍSTICA DE AYACUCHO - REVISTA INTERACTIVA',
           frameTitle: 'Guía Turística de Ayacucho interactiva',
           pdf: 'assets/documents/Guia-Turistica-Ayacucho.pdf',
           category: 'Diseño editorial'
         },
         circuito: {
-          src: 'assets/circuito-magazine/reader.html?v=20260820-2',
+          src: 'assets/circuito-magazine/reader.html?v=20260830-demand1',
           title: 'CIRCUITO MÁGICO DEL AGUA - MANUAL INTERACTIVO',
           frameTitle: 'Manual interactivo del Circuito Mágico del Agua',
           pdf: 'assets/documents/Manual-Senaletica-Circuito-Magico.pdf',
           category: 'Señalética & espacios'
         },
         lumine: {
-          src: 'assets/lumine-magazine/reader.html?v=20260830-restored',
+          src: 'assets/lumine-magazine/reader.html?v=20260830-demand1',
           title: 'LUMINÉ - MANUAL DE MARCA INTERACTIVO',
           frameTitle: 'Manual de marca Luminé interactivo',
           pdf: 'assets/documents/Manual-Marca-Lumine.pdf',
@@ -2786,6 +2786,7 @@
       overlay.classList.add('opacity-100', 'pointer-events-auto');
       overlay.style.opacity = '1';
       overlay.style.pointerEvents = 'auto';
+      frame?.contentWindow?.postMessage({ type: 'resumeEditorialReader' }, location.origin);
       document.body.style.overflow = 'hidden';
       overlay.querySelector('button')?.focus({ preventScroll: true });
     }
@@ -2796,6 +2797,7 @@
       if (!overlay) return;
       const closingProject = frame?.dataset.project;
       frame?.contentWindow?.postMessage({ type: 'resetEditorialReader' }, '*');
+      frame?.contentWindow?.postMessage({ type: 'suspendEditorialReader' }, location.origin);
       overlay.classList.remove('opacity-100', 'pointer-events-auto');
       overlay.classList.add('opacity-0', 'pointer-events-none');
       overlay.style.opacity = '0';

@@ -518,6 +518,8 @@
   }
 
   window.addEventListener('message', event => {
+    if (event.source !== window.parent || event.origin !== location.origin) return;
+    if (event.data?.type === 'suspendEditorialReader') stopAutoplay();
     if (event.data?.type === 'resetEditorialReader') resetToCover();
   });
   window.addEventListener('fullscreenchange', scheduleBookFit);

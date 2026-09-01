@@ -1742,7 +1742,7 @@
             <div class="card-title">IDENTIDAD VISUAL LUMINÉ</div>
             <div class="card-desc">Branding e identidad conceptual para marca de skincare: logotipo, valores de
               marca, paleta cromática y aplicaciones.</div>
-            <a href="javascript:void(0)" onclick="openEditorialProgressModal('lumine')"
+            <a href="lumine.html?from=mobile"
               class="card-link">Ver más &rarr;</a>
           </div>
         </article>
@@ -1760,7 +1760,7 @@
             <div class="card-title">CIRCUITO MÁGICO DEL AGUA</div>
             <div class="card-desc">Sistema de señalización, tótems informativos y mapas orientativos para parque
               temático público en Lima.</div>
-            <a href="javascript:void(0)" onclick="openEditorialProgressModal('circuito')"
+            <a href="circuito.html?from=mobile"
               class="card-link">Ver más &rarr;</a>
           </div>
         </article>
@@ -2226,25 +2226,25 @@
     function openEditorialProgressModal(project = 'arte') {
       const projects = {
         arte: {
-          src: 'assets/editorial-magazine/reader.html?v=20260820-2',
+          src: 'assets/editorial-magazine/reader.html?v=20260830-demand1',
           title: 'ARTE CULINARIO',
           frameTitle: 'Revista interactiva Arte Culinario',
           category: 'Diseño editorial'
         },
         ayacucho: {
-          src: 'assets/ayacucho-magazine/reader.html?v=20260820-2',
+          src: 'assets/ayacucho-magazine/reader.html?v=20260830-demand1',
           title: 'GUÍA TURÍSTICA DE AYACUCHO',
           frameTitle: 'Guía Turística de Ayacucho interactiva',
           category: 'Diseño editorial'
         },
         circuito: {
-          src: 'assets/circuito-magazine/reader.html?v=20260820-2',
+          src: 'assets/circuito-magazine/reader.html?v=20260830-demand1',
           title: 'CIRCUITO MÁGICO DEL AGUA',
           frameTitle: 'Manual interactivo del Circuito Mágico del Agua',
           category: 'Señalética & espacios'
         },
         lumine: {
-          src: 'assets/lumine-magazine/reader.html?v=20260830-restored',
+          src: 'assets/lumine-magazine/reader.html?v=20260830-demand1',
           title: 'LUMINÉ - MANUAL DE MARCA',
           frameTitle: 'Manual de marca Luminé interactivo',
           category: 'Identidad & branding'
@@ -2303,6 +2303,7 @@
       if (category) category.textContent = selected.category;
       overlay.style.opacity = '1';
       overlay.style.pointerEvents = 'auto';
+      frame?.contentWindow?.postMessage({ type: 'resumeEditorialReader' }, location.origin);
       document.body.style.overflow = 'hidden';
       overlay.querySelector('button')?.focus({ preventScroll: true });
     }
@@ -2313,6 +2314,7 @@
       if (!overlay) return;
       const closingProject = frame?.dataset.project;
       frame?.contentWindow?.postMessage({ type: 'resetEditorialReader' }, '*');
+      frame?.contentWindow?.postMessage({ type: 'suspendEditorialReader' }, location.origin);
       overlay.style.opacity = '0';
       overlay.style.pointerEvents = 'none';
       document.body.style.overflow = '';
