@@ -25,6 +25,10 @@
       --image-radius: 24px;
       --nav-safe-left: 139px;
       --nav-safe-right: 234px;
+      --header-height: 86px;
+      --mobile-nav-bg: #000000;
+      --mobile-nav-text: #ffffff;
+      --mobile-nav-accent: #55c7d0;
     }
 
     * { box-sizing: border-box; }
@@ -252,6 +256,7 @@
 
     .case-nav a:hover,
     .case-nav a:focus-visible { color: var(--herencia); outline: none; }
+    .case-nav a[aria-current="location"] { color: var(--herencia); }
 
     .chapter {
       position: relative;
@@ -718,6 +723,7 @@
     .case-nav { background: rgba(0,0,0,.96); border-bottom-color: rgba(255,255,255,.2); }
     .case-nav a { color: #ffffff; }
     .case-nav a:hover, .case-nav a:focus-visible { color: #55c7d0; }
+    .case-nav a[aria-current="location"] { color: #55c7d0; }
     .chapter-kicker { color: #3157d8; background: rgba(49,87,216,.1); }
     #contexto { background: linear-gradient(180deg, #ffffff 0 48%, #efefef 48% 100%); }
     .big-statement em { color: #ef3b35; }
@@ -841,16 +847,53 @@
       :root {
         --content: calc(100vw - 28px);
         --image-radius: 18px;
-        --nav-safe-left: 110px;
+        --nav-safe-left: 0px;
       }
-      .site-header { inset: 6px 0 auto; }
-      .back-link { min-height: 40px; padding: 0 14px; font-size: .68rem; }
+      .site-header {
+        inset: 0 0 auto;
+        width: 100%;
+        min-height: 86px;
+        padding: 0 20px;
+        background: #000000;
+        pointer-events: auto;
+      }
+      .back-link {
+        min-height: 44px;
+        padding: 0 18px;
+        border-color: rgba(255,255,255,.55);
+        background: transparent;
+        box-shadow: none;
+        backdrop-filter: none;
+        -webkit-backdrop-filter: none;
+        font-size: .68rem;
+      }
+      .header-label {
+        display: block;
+        max-width: 150px;
+        padding: 0;
+        border: 0;
+        border-radius: 0;
+        background: transparent;
+        box-shadow: none;
+        backdrop-filter: none;
+        -webkit-backdrop-filter: none;
+        font-size: .61rem;
+        line-height: 1.4;
+        text-align: right;
+      }
+      .case-nav { top: 86px; padding-inline: 14px; }
       .hero { min-height: 88svh; }
       .hero-picture img { object-position: 48% center; }
       .hero-shade { background: linear-gradient(0deg, rgba(23,14,8,.88), rgba(23,14,8,.08) 76%); }
       .hero-content { padding: 110px 0 34px; }
       .hero h1 { font-size: clamp(3.35rem, 17vw, 5.4rem); line-height: .86; }
       .case-nav-inner { gap: 22px; min-height: 52px; }
+      .case-nav a { position: relative; min-height: 52px; display: flex; align-items: center; padding-top: 3px; }
+      .case-nav a::after { content: ''; position: absolute; inset: auto 0 0; height: 3px; background: transparent; }
+      .case-nav a:hover { color: #ffffff; }
+      .case-nav a:hover::after { background: transparent; }
+      .case-nav a[aria-current="location"] { color: #55c7d0; }
+      .case-nav a[aria-current="location"]::after { background: #55c7d0; }
       .chapter { padding: 72px 0; scroll-margin-top: 52px; }
       .brand-lineup { margin-top: 64px; }
       .strategy-grid, .system-layout, .process-grid, .summary-grid { margin-top: 48px; }
@@ -887,7 +930,9 @@
   </style>
   <link rel="stylesheet" href="assets/css/crafters-3d.css?v=2" />
   <link rel="stylesheet" href="assets/css/viewer-loading.css?v=4" />
+  <link rel="stylesheet" href="assets/css/mobile-chapter-nav.css?v=20260902-1" />
   <script type="importmap">{"imports":{"three":"./assets/vendor/three/three.module.js"}}</script>
+  <script src="assets/js/mobile-chapter-nav.js?v=20260902-8" defer></script>
 </head>
 
 <body>

@@ -9,6 +9,9 @@
   --line: #cdb999;
   --wrap: min(1280px, calc(100% - 64px));
   --header-height: 84px;
+  --mobile-nav-bg: #3b1212;
+  --mobile-nav-text: #f4ead5;
+  --mobile-nav-accent: #f28a00;
 }
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; scroll-padding-top: calc(var(--header-height) + 72px); background: var(--wine); }
@@ -102,14 +105,18 @@ body::after { content: ''; position: fixed; z-index: -2; inset: 0; background: v
   :root { --wrap: calc(100% - 40px); --header-height: 74px; }
   .site-header { padding-inline: 20px; }
   .header-label { max-width: 150px; font-size: 9px; text-align: right; }
-  .intro { grid-template-columns: 1fr; min-height: auto; gap: 38px; padding-block: 44px 58px; }
+  .intro { grid-template-columns: 1fr; min-height: auto; gap: 0; padding-block: 44px 48px; }
   h1 { font-size: clamp(56px, 20vw, 92px); }
   .intro-lead { margin-top: 22px; font-size: 17px; }
-  .cover-card, .identity-slide { transform: none; }
+  .cover-card { display: none; }
+  .identity-slide { transform: none; }
   .reader-shell { height: clamp(360px, 55svh, 500px); border-radius: 16px; }
   .section-topline { flex-wrap: wrap; gap: 6px; }
   .reader-caption { flex-direction: column; gap: 8px; }
-  .chapter-links { gap: 24px; }
+  .chapter-links { gap: 24px; scrollbar-width: none; -ms-overflow-style: none; }
+  .chapter-links::-webkit-scrollbar { display: none; width: 0; height: 0; }
+  .chapter-links a:hover { border-color: transparent; }
+  .chapter-links a[aria-current="location"] { border-color: var(--orange); }
   .chapter-links a { min-height: 54px; }
   .split, .split.reverse { grid-template-columns: 1fr; gap: 34px; }
   .split.reverse figure { order: 2; }
@@ -119,6 +126,25 @@ body::after { content: ''; position: fixed; z-index: -2; inset: 0; background: v
   .editorial-grid { grid-template-columns: 1fr; }
   .editorial-grid figure:nth-child(2n) { transform: none; }
   .editorial-grid .wide-item { grid-column: auto; }
-  .footer { font-size: 11px; }
+  .footer {
+    width: 100%;
+    max-width: none;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+    padding: 24px 20px max(24px, env(safe-area-inset-bottom));
+    font-size: 11px;
+  }
+  .footer a {
+    display: flex;
+    min-height: 46px;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #fff0cc55;
+    border-radius: 999px;
+    text-align: center;
+    text-decoration: none;
+    white-space: nowrap;
+  }
 }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } .cover-card, .identity-slide, .editorial-grid figure { transform: none; } }
