@@ -159,20 +159,6 @@
     });
   });
 
-  document.querySelectorAll('.project-category-menu-link').forEach(link => {
-    link.addEventListener('click', event => {
-      const selector = link.getAttribute('href');
-      if (!selector?.startsWith('#')) return;
-      const target = document.querySelector(selector);
-      if (!target) return;
-
-      event.preventDefault();
-      const targetTop = target.getBoundingClientRect().top + window.scrollY - 88;
-      history.pushState(null, '', selector);
-      window.scrollTo({ top: targetTop, behavior: 'smooth' });
-    });
-  });
-
   let tapeResizeFrame = 0;
   window.addEventListener('resize', () => {
     if (tapeResizeFrame) cancelAnimationFrame(tapeResizeFrame);

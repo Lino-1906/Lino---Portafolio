@@ -30,7 +30,7 @@ p { max-width: 66ch; }
 .back-link:hover { background: var(--paper); color: var(--blue); }
 .eyebrow, .header-label, .small-label { text-transform: uppercase; font-size: 11px; letter-spacing: .12em; font-weight: 700; }
 .header-label, .intro .eyebrow { color: var(--mist); }
-.intro { padding-block: clamp(28px, 4vw, 56px) 42px; }
+.intro { padding-top: clamp(30px, 5vw, 70px); padding-bottom: 42px; }
 .intro-heading { display: flex; align-items: center; justify-content: space-between; gap: 35px; margin-top: 20px; }
 h1 { font-size: clamp(48px, 7.5vw, 110px); }
 h1 span { color: var(--sky); }
@@ -126,7 +126,7 @@ figcaption { font-size: 11px; line-height: 1.55; margin-top: 15px; }
   :root { --wrap: calc(100% - 40px); --header-height: 74px; }
   .site-header { padding-inline: 20px; }
   .header-label { font-size: 9px; text-align: right; max-width: 140px; }
-  .intro { padding-top: 24px; padding-bottom: 28px; }
+  .intro { padding-top: 24px; padding-bottom: 30px; }
   .intro .eyebrow { font-size: 9px; max-width: 36ch; }
   .intro-heading { flex-direction: column; align-items: start; gap: 18px; }
   h1 { font-size: clamp(40px, 8.5vw, 64px); }

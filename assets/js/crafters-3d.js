@@ -62,7 +62,7 @@ async function start() {
   for(let i=0;i<48;i++){const a=i*Math.PI*2/48;const ridge=new THREE.Mesh(ridgeGeometry,plastic);ridge.position.set(Math.sin(a)*.34,1.48,Math.cos(a)*.34);bottle.add(ridge);}
   const lid=new THREE.Mesh(new THREE.CylinderGeometry(.35,.35,.07,64),plastic);lid.position.y=1.755;bottle.add(lid);
   const floor=new THREE.Mesh(new THREE.PlaneGeometry(100,100),new THREE.ShadowMaterial({opacity:.12}));floor.rotation.x=-Math.PI/2;floor.position.y=-1.78;floor.receiveShadow=true;scene.add(floor);
-  let mode='both',visible=true,previous=0;
+  let mode='both',visible=true,previous=0,loopRunning=false;
   function spin(value){orbit.autoRotate=value;spinButton.textContent=value?'Pausar giro':'Activar giro';spinButton.setAttribute('aria-pressed',String(value));}
   function frame(){
     const aspect=stage.clientWidth/stage.clientHeight;
@@ -99,9 +99,12 @@ async function start() {
   // Paint the initial photo/canvas state before starting the crossfade.
   await new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve)));
   stage.classList.add('is-ready');controlsUI.hidden=false;
-  new IntersectionObserver(entries=>{visible=entries[0].isIntersecting;}).observe(stage);
   reduceMotion.addEventListener('change',()=>spin(!reduceMotion.matches));
-  renderer.setAnimationLoop(time=>{const dt=Math.min((time-previous)/1000,.05);previous=time;if(!visible||document.hidden)return;orbit.update(dt);renderer.render(scene,camera);});
-  renderer.domElement.addEventListener('webglcontextlost',event=>{event.preventDefault();renderer.setAnimationLoop(null);stage.classList.remove('is-ready');renderer.domElement.hidden=true;controlsUI.hidden=true;status.textContent='Vista fotográfica de respaldo';});
+  const animate=time=>{const dt=Math.min((time-previous)/1000,.05);previous=time;orbit.update(dt);renderer.render(scene,camera);};
+  const syncAnimationLoop=()=>{const shouldRun=visible&&!document.hidden;if(shouldRun===loopRunning)return;loopRunning=shouldRun;previous=0;renderer.setAnimationLoop(shouldRun?animate:null);};
+  new IntersectionObserver(entries=>{visible=entries[0].isIntersecting;syncAnimationLoop();}).observe(stage);
+  document.addEventListener('visibilitychange',syncAnimationLoop);
+  syncAnimationLoop();
+  renderer.domElement.addEventListener('webglcontextlost',event=>{event.preventDefault();visible=false;syncAnimationLoop();stage.classList.remove('is-ready');renderer.domElement.hidden=true;controlsUI.hidden=true;status.textContent='Vista fotográfica de respaldo';});
 }
 export default start().catch(error=>{status.textContent='Vista fotográfica de respaldo';console.warn('Visor Crafter’s Acrylic no disponible:',error);});

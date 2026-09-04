@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <script src="assets/mobile/mobile-performance.js?v=20260820-1" defer></script>
+  <script src="assets/mobile/mobile-performance.js?v=20260903-2" defer></script>
   <script>
     (function () {
       let deviceCheckFrame = 0;
@@ -133,7 +133,11 @@
       align-items: center;
       justify-content: space-between;
       padding: 0 1.25rem;
-      transition: background 0.3s ease;
+      transition: background 0.3s ease, border-color 180ms ease;
+    }
+
+    #mobile-nav.category-menu-attached {
+      border-bottom-color: transparent;
     }
 
     #mobile-nav.scrolled {
@@ -849,7 +853,7 @@
     .project-category-group {
       min-width: 0;
       margin-bottom: 5.5rem;
-      scroll-margin-top: 88px;
+      scroll-margin-top: 160px;
     }
 
     #proyectos-packaging,
@@ -1010,15 +1014,46 @@
     }
 
     .project-category-menu {
+      position: sticky;
+      top: var(--nav-h);
+      z-index: 400;
       display: flex;
-      flex-wrap: wrap;
+      flex-wrap: nowrap;
       align-items: center;
       gap: 7px;
-      margin: 1.5rem 0 2.75rem;
+      width: calc(100% + 2.5rem);
+      margin: 1.5rem -1.25rem 2rem;
+      padding: 9px 1.25rem;
+      overflow-x: auto;
+      overscroll-behavior-inline: contain;
+      scrollbar-width: none;
+      isolation: isolate;
+    }
+
+    .project-category-menu::-webkit-scrollbar {
+      display: none;
+    }
+
+    .project-category-menu::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+      border-bottom: 1px solid transparent;
+      background: transparent;
+      transition: background-color 180ms ease, border-color 180ms ease;
+    }
+
+    .project-category-menu.is-stuck::before {
+      border-bottom-color: rgba(237, 224, 200, 0.07);
+      background: rgba(13, 8, 5, 0.97);
+      backdrop-filter: blur(20px) saturate(160%);
+      -webkit-backdrop-filter: blur(20px) saturate(160%);
     }
 
     .project-category-menu-link {
       display: inline-flex;
+      flex: 0 0 auto;
       align-items: center;
       justify-content: center;
       gap: 8px;
@@ -2026,9 +2061,11 @@
   <footer>
     <div class="divider" style="margin-bottom:2rem;"></div>
     <div class="footer-brand">
-      <img src="assets/mobile/images/lino-logo.webp" alt="Lino Logo" width="320" height="208"
-        loading="lazy" decoding="async" fetchpriority="low"
-        style="height: 56px; width: auto; object-fit: contain;" />
+      <a href="#hero" aria-label="Volver al inicio">
+        <img src="assets/mobile/images/lino-logo.webp" alt="Lino Logo" width="320" height="208"
+          loading="lazy" decoding="async" fetchpriority="low"
+          style="height: 56px; width: auto; object-fit: contain;" />
+      </a>
     </div>
     <p class="footer-tagline">Valentino Levano (Lino).<br />UX/UI · Gráfico · Callao, Perú.<br />Disponible para
       freelance.</p>
@@ -2262,25 +2299,25 @@
     function openEditorialProgressModal(project = 'arte') {
       const projects = {
         arte: {
-          src: 'assets/editorial-magazine/reader.html?v=20260830-demand1',
+          src: 'assets/editorial-magazine/reader.html?v=20260904-mobile-controls1',
           title: 'ARTE CULINARIO',
           frameTitle: 'Revista interactiva Arte Culinario',
           category: 'Diseño editorial'
         },
         ayacucho: {
-          src: 'assets/ayacucho-magazine/reader.html?v=20260830-demand1',
+          src: 'assets/ayacucho-magazine/reader.html?v=20260904-mobile-controls1',
           title: 'GUÍA TURÍSTICA DE AYACUCHO',
           frameTitle: 'Guía Turística de Ayacucho interactiva',
           category: 'Diseño editorial'
         },
         circuito: {
-          src: 'assets/circuito-magazine/reader.html?v=20260830-demand1',
+          src: 'assets/circuito-magazine/reader.html?v=20260904-mobile-controls1',
           title: 'CIRCUITO MÁGICO DEL AGUA',
           frameTitle: 'Manual interactivo del Circuito Mágico del Agua',
           category: 'Señalética & espacios'
         },
         lumine: {
-          src: 'assets/lumine-magazine/reader.html?v=20260830-demand1',
+          src: 'assets/lumine-magazine/reader.html?v=20260904-mobile-controls1',
           title: 'LUMINÉ - MANUAL DE MARCA',
           frameTitle: 'Manual de marca Luminé interactivo',
           category: 'Identidad & branding'
@@ -2537,6 +2574,7 @@
       openCvFromUrl();
     }
   </script>
+  <script src="assets/js/project-category-menu.js?v=20260903-6"></script>
 
 </body>
 

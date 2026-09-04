@@ -5,7 +5,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <!-- ── Device Detection: redirect to mobile version on small screens ── -->
-  <script src="performance.js?v=20260820-1" defer></script>
+  <script src="performance.js?v=20260903-2" defer></script>
   <script>
     (function () {
       function checkDevice() {
@@ -33,6 +33,8 @@
   <!-- Critical fonts and compiled styles are served locally to avoid render-blocking CDNs. -->
   <link rel="preload" href="assets/fonts/JTUSjIg69CK48gW7PXoo9Wlhyw.woff2" as="font" type="font/woff2" crossorigin />
   <link rel="preload" href="assets/fonts/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa1ZL7.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="Crema Horizontal transparente@4x.png" as="image" fetchpriority="high" />
+  <link rel="preload" href="Isotipo Transparente@4x.png" as="image" fetchpriority="high" />
   <link rel="stylesheet" href="assets/css/fonts.css?v=20260820-1" />
   <link rel="stylesheet" href="assets/css/tailwind.min.css?v=20260820-1" />
 
@@ -113,7 +115,11 @@
       align-items: center;
       justify-content: space-between;
       padding: 0;
-      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), border-color 180ms ease;
+    }
+
+    #sidebar-nav.category-menu-attached {
+      border-bottom-color: transparent;
     }
 
     .sidebar-links {
@@ -709,7 +715,7 @@
 
     .project-category-group {
       min-width: 0;
-      scroll-margin-top: 120px;
+      scroll-margin-top: 204px;
     }
 
     #proyectos-packaging,
@@ -846,11 +852,36 @@
     }
 
     .project-category-menu {
+      position: sticky;
+      top: 90px;
+      z-index: 40;
       display: flex;
       flex-wrap: wrap;
       align-items: center;
       gap: 8px;
-      margin: -24px 0 56px;
+      margin: -36px 0 32px;
+      padding: 12px 0;
+      isolation: isolate;
+    }
+
+    .project-category-menu::before {
+      content: '';
+      position: absolute;
+      inset-block: 0;
+      left: 50%;
+      z-index: -1;
+      width: 100vw;
+      transform: translateX(-50%);
+      border-bottom: 1px solid transparent;
+      background: transparent;
+      transition: background-color 180ms ease, border-color 180ms ease;
+    }
+
+    .project-category-menu.is-stuck::before {
+      border-bottom-color: rgba(237, 224, 200, 0.08);
+      background: rgba(13, 8, 5, 0.82);
+      backdrop-filter: blur(25px) saturate(180%);
+      -webkit-backdrop-filter: blur(25px) saturate(180%);
     }
 
     .project-category-menu-link {
@@ -962,6 +993,26 @@
     }
 
     @media (min-width: 769px) {
+      #sidebar-nav > div {
+        height: 90px;
+        flex: 0 0 auto;
+      }
+
+      #sidebar-nav.category-menu-attached {
+        height: calc(90px + var(--attached-menu-height, 66px));
+        align-items: flex-start;
+      }
+
+      .project-category-menu.is-stuck {
+        z-index: 51;
+      }
+
+      .project-category-menu.is-stuck::before {
+        background: transparent;
+        backdrop-filter: none;
+        -webkit-backdrop-filter: none;
+      }
+
       .project-category-group .project-card {
         height: clamp(450px, 42vw, 520px) !important;
       }
@@ -982,6 +1033,14 @@
     }
 
     @media (max-width: 768px) {
+      .project-category-menu {
+        top: 75px;
+      }
+
+      .project-category-group {
+        scroll-margin-top: 163px;
+      }
+
       .identity-project-grid,
       .editorial-project-grid,
       .packaging-project-grid,
@@ -1415,7 +1474,7 @@
     <div class="max-w-7xl mx-auto px-6 md:px-12 w-full flex items-center justify-between">
       <!-- Top Logo -->
       <a href="#hero" class="flex items-center">
-        <img src="Crema Horizontal transparente@4x.png" alt="Lino Logo"
+        <img src="Crema Horizontal transparente@4x.png" alt="Lino Logo" decoding="async" fetchpriority="high"
           style="height: 72px; width: auto; max-width: 100%; object-fit: contain;" />
       </a>
 
@@ -1501,7 +1560,7 @@
             <div class="absolute inset-0 rounded-3xl flex items-center justify-center"
               style="background: linear-gradient(135deg, rgba(237,224,200,0.06) 0%, rgba(237,224,200,0.02) 100%); border: 1px solid rgba(237,224,200,0.1); backdrop-filter: blur(20px);">
               <div class="text-center p-6">
-                <img src="Isotipo Transparente@4x.png" alt="Lino Logo" class="w-48 h-48 object-contain mx-auto" />
+                <img src="Isotipo Transparente@4x.png" alt="Lino Logo" class="w-48 h-48 object-contain mx-auto" decoding="async" fetchpriority="high" />
                 <p class="text-xs tracking-widest uppercase mt-4" style="color: rgba(237,224,200,0.4);">Portafolio 2026
                 </p>
               </div>
@@ -1624,7 +1683,7 @@
 
             <!-- Canva -->
             <div class="software-logo-tag" title="Canva">
-              <img src="Canva.png" alt="Canva" />
+              <img src="Canva.png" alt="Canva" loading="lazy" decoding="async" />
               <div class="software-info">
                 <span class="software-name">CANVA</span>
                 <div class="software-dots">
@@ -1639,7 +1698,7 @@
 
             <!-- Figma -->
             <div class="software-logo-tag" title="Figma">
-              <img src="Figma.png" alt="Figma" />
+              <img src="Figma.png" alt="Figma" loading="lazy" decoding="async" />
               <div class="software-info">
                 <span class="software-name">FIGMA</span>
                 <div class="software-dots">
@@ -1654,7 +1713,7 @@
 
             <!-- Illustrator -->
             <div class="software-logo-tag" title="Adobe Illustrator">
-              <img src="Ilustrator.png" alt="Illustrator" />
+              <img src="Ilustrator.png" alt="Illustrator" loading="lazy" decoding="async" />
               <div class="software-info">
                 <span class="software-name">ILLUSTRATOR</span>
                 <div class="software-dots">
@@ -1669,7 +1728,7 @@
 
             <!-- InDesign -->
             <div class="software-logo-tag" title="Adobe InDesign">
-              <img src="Indesign.png" alt="InDesign" />
+              <img src="Indesign.png" alt="InDesign" loading="lazy" decoding="async" />
               <div class="software-info">
                 <span class="software-name">INDESIGN</span>
                 <div class="software-dots">
@@ -1684,7 +1743,7 @@
 
             <!-- Photoshop -->
             <div class="software-logo-tag" title="Adobe Photoshop">
-              <img src="Photoshop.png" alt="Photoshop" />
+              <img src="Photoshop.png" alt="Photoshop" loading="lazy" decoding="async" />
               <div class="software-info">
                 <span class="software-name">PHOTOSHOP</span>
                 <div class="software-dots">
@@ -2302,8 +2361,10 @@
         <!-- Brand -->
         <div>
           <div class="flex items-center mb-5">
-            <img src="Crema Horizontal transparente@4x.png" alt="Lino Logo"
-              style="height: 76px; width: auto; object-fit: contain;" />
+            <a href="#hero" aria-label="Volver al inicio">
+              <img src="Crema Horizontal transparente@4x.png" alt="Lino Logo"
+                style="height: 76px; width: auto; object-fit: contain;" />
+            </a>
           </div>
           <p class="text-sm leading-relaxed" style="color: rgba(237,224,200,0.38); max-width: 220px;">
             Valentino Levano (Lino). UX/UI · Gráfico · Callao, Perú. Disponible para freelance.
@@ -2511,7 +2572,15 @@
       }
 
       stepLoop();
-      setInterval(stepLoop, 3000);
+      const startSoftwareAutoplay = () => {
+        if (window.portfolioCreateAutoplay) window.portfolioCreateAutoplay(stepLoop, 3000, animationTarget);
+        else window.setInterval(stepLoop, 3000);
+      };
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', startSoftwareAutoplay, { once: true });
+      } else {
+        startSoftwareAutoplay();
+      }
 
       tags.forEach(tag => {
         tag.addEventListener('mouseenter', () => {
@@ -2602,10 +2671,19 @@
         });
       }
 
-      setInterval(() => {
+      const advanceCard = () => {
         if (isMouseOver || (window.portfolioCanAnimate && !window.portfolioCanAnimate(card))) return;
-        goToSlide(currentIndex + 1);
-      }, 3000);
+        return goToSlide(currentIndex + 1);
+      };
+      const startCardAutoplay = () => {
+        if (window.portfolioCreateAutoplay) window.portfolioCreateAutoplay(advanceCard, 3000, card);
+        else window.setInterval(advanceCard, 3000);
+      };
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', startCardAutoplay, { once: true });
+      } else {
+        startCardAutoplay();
+      }
     })();
 
   </script>
@@ -2932,6 +3010,7 @@
       }
     });
   </script>
+  <script src="assets/js/project-category-menu.js?v=20260903-6"></script>
 </body>
 
 </html>

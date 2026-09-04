@@ -146,11 +146,12 @@
     @media (max-width:700px) {
       .stage { padding:10px 10px 7px; }
       .hint { display:none; }
-      .controls { min-height:58px; padding:7px 7px max(8px, env(safe-area-inset-bottom)); }
-      .toolbar { max-width:calc(100vw - 10px); gap:1px; padding:5px 6px; overflow:hidden; }
-      .control-btn { width:25px; height:30px; flex-basis:25px; }
-      .control-btn svg { width:13px; height:13px; }
-      .status { min-width:74px; padding:0 2px; font-size:.5rem; }
+      .controls { min-height:52px; padding:6px 7px max(7px, env(safe-area-inset-bottom)); }
+      .toolbar { width:auto; max-width:calc(100vw - 24px); gap:4px; padding:5px 8px; overflow:hidden; }
+      .control-btn { width:32px; height:32px; flex-basis:32px; }
+      .control-btn svg { width:14px; height:14px; }
+      .status { min-width:108px; padding:0 8px; font-size:.56rem; }
+      #zoomInBtn, #zoomOutBtn, #autoplayBtn, #soundBtn, #firstBtn, #lastBtn, #shareBtn { display:none; }
     }
     @media (prefers-reduced-motion:reduce) {
       *, *::before, *::after { animation-duration:.01ms!important; transition-duration:.01ms!important; }

@@ -17,16 +17,32 @@
   stage.setAttribute('aria-busy', 'true');
   status.textContent = 'Cargando modelo 3D…';
   stage.append(overlay);
-  import(moduleUrl)
-    .then(module => module.default)
-    .catch(error => {
-      status.textContent = 'Vista fotográfica de respaldo';
-      console.warn('No se pudo cargar el visor 3D:', error);
-    })
-    .finally(() => {
-      stage.setAttribute('aria-busy', 'false');
-      overlay.style.setProperty('--loading-opacity', getComputedStyle(overlay).opacity);
-      overlay.classList.add('is-leaving');
-      setTimeout(() => overlay.remove(), 300);
-    });
+  let started = false;
+  const loadViewer = () => {
+    if (started) return;
+    started = true;
+    import(moduleUrl)
+      .then(module => module.default)
+      .catch(error => {
+        status.textContent = 'Vista fotográfica de respaldo';
+        console.warn('No se pudo cargar el visor 3D:', error);
+      })
+      .finally(() => {
+        stage.setAttribute('aria-busy', 'false');
+        overlay.style.setProperty('--loading-opacity', getComputedStyle(overlay).opacity);
+        overlay.classList.add('is-leaving');
+        setTimeout(() => overlay.remove(), 300);
+      });
+  };
+
+  if ('IntersectionObserver' in window) {
+    const observer = new IntersectionObserver(entries => {
+      if (!entries.some(entry => entry.isIntersecting)) return;
+      observer.disconnect();
+      loadViewer();
+    }, { rootMargin: '700px 0px', threshold: 0 });
+    observer.observe(stage);
+  } else {
+    loadViewer();
+  }
 })();

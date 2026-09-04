@@ -52,6 +52,35 @@
     return Boolean(target._portfolioInViewport);
   };
 
+  window.portfolioCreateAutoplay = function portfolioCreateAutoplay(callback, delay, target) {
+    let timer = 0;
+    let active = !hasIntersectionObserver || Boolean(target?._portfolioInViewport);
+    let cancelled = false;
+
+    const clear = () => {
+      if (timer) window.clearTimeout(timer);
+      timer = 0;
+    };
+
+    const arm = () => {
+      clear();
+      if (cancelled || document.hidden || !active) return;
+      timer = window.setTimeout(async () => {
+        timer = 0;
+        if (!cancelled && !document.hidden && active) await callback();
+        arm();
+      }, delay);
+    };
+
+    window.portfolioObserveAnimationTarget(target, isActive => {
+      active = isActive;
+      arm();
+    });
+
+    arm();
+    return () => { cancelled = true; clear(); };
+  };
+
   document.querySelectorAll('.project-card').forEach(card => {
     window.portfolioObserveAnimationTarget(card);
   });
@@ -133,21 +162,6 @@
   document.addEventListener('visibilitychange', () => {
     observedAnimationTargets.forEach(target => {
       animationCallbacks.get(target)?.(Boolean(target._portfolioInViewport) && !document.hidden);
-    });
-  });
-
-  document.querySelectorAll('.project-category-menu-link').forEach(link => {
-    link.addEventListener('click', event => {
-      const selector = link.getAttribute('href');
-      if (!selector?.startsWith('#')) return;
-      const target = document.querySelector(selector);
-      if (!target) return;
-
-      event.preventDefault();
-      const offset = window.innerWidth <= 768 ? 88 : 120;
-      const targetTop = target.getBoundingClientRect().top + window.scrollY - offset;
-      history.pushState(null, '', selector);
-      window.scrollTo({ top: targetTop, behavior: 'smooth' });
     });
   });
 

@@ -143,6 +143,8 @@ async function init() {
   const ground = new THREE.Mesh(new THREE.PlaneGeometry(200,200),new THREE.ShadowMaterial({opacity:.17}));
   ground.rotation.x = -Math.PI/2; ground.position.y = -h/2-.05; ground.receiveShadow = true; scene.add(ground);
   let visible = true;
+  let loopRunning = false;
+  let previous = 0;
   function reset() {
     const aspect = stage.clientWidth / stage.clientHeight;
     const distance = Math.max(10.5, 8.1 / aspect);
@@ -177,16 +179,26 @@ async function init() {
   await new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve)));
   stage.classList.add('viewer-ready');
   document.querySelector('.viewer-controls').hidden = false;
-  new IntersectionObserver(entries => {visible=entries[0].isIntersecting;}).observe(stage);
   reduced.addEventListener('change',()=>setSpin(!reduced.matches));
-  let previous = 0;
-  renderer.setAnimationLoop(time => {
+  const animate = time => {
     const dt = Math.min((time-previous)/1000,.05); previous=time;
-    if (!visible || document.hidden) return;
     controls.update(dt); renderer.render(scene,camera);
-  });
+  };
+  const syncAnimationLoop = () => {
+    const shouldRun = visible && !document.hidden;
+    if (shouldRun === loopRunning) return;
+    loopRunning = shouldRun;
+    previous = 0;
+    renderer.setAnimationLoop(shouldRun ? animate : null);
+  };
+  new IntersectionObserver(entries => {
+    visible = entries[0].isIntersecting;
+    syncAnimationLoop();
+  }).observe(stage);
+  document.addEventListener('visibilitychange', syncAnimationLoop);
+  syncAnimationLoop();
   renderer.domElement.addEventListener('webglcontextlost', e => {
-    e.preventDefault(); stage.classList.remove('viewer-ready'); renderer.domElement.hidden=true;
+    e.preventDefault(); visible=false; syncAnimationLoop(); stage.classList.remove('viewer-ready'); renderer.domElement.hidden=true;
     document.querySelector('.viewer-controls').hidden=true;status.textContent='Vista fotográfica de respaldo';
   });
 }

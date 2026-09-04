@@ -9,6 +9,7 @@
   <title>Herbi — Caso de estudio de packaging | Lino</title>
   <link rel="icon" type="image/png" href="Isotipo@4x.png" />
   <link rel="preload" href="assets/fonts/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa1ZL7.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="assets/herbi-case/hero.webp" as="image" type="image/webp" fetchpriority="high" />
   <link rel="stylesheet" href="assets/css/fonts.css?v=20260820-1" />
   <style>
     :root {
@@ -842,7 +843,7 @@
       </div>
       <div class="packaging-viewer" id="packaging-viewer">
         <div class="viewer-stage" id="viewer-stage" role="img" aria-label="Modelo 3D del empaque Herbi Manzanilla">
-          <img class="viewer-fallback" src="assets/herbi-case/hero.webp" width="1440" height="960" alt="Empaque Herbi Manzanilla, vista de respaldo" />
+          <img class="viewer-fallback" src="assets/herbi-case/hero.webp" width="1440" height="960" alt="Empaque Herbi Manzanilla, vista de respaldo" loading="eager" decoding="async" fetchpriority="high" />
         </div>
         <div class="viewer-caption"><span id="viewer-status" aria-live="polite">Preparando vista 3D…</span></div>
         <div class="viewer-controls" hidden>
@@ -1044,13 +1045,19 @@
       document.getElementById('footer-back').href = target;
 
       const progress = document.getElementById('progress');
+      let progressFrame = 0;
       const updateProgress = () => {
+        progressFrame = 0;
         const max = document.documentElement.scrollHeight - window.innerHeight;
         const ratio = max > 0 ? window.scrollY / max : 0;
         progress.style.width = Math.min(1, Math.max(0, ratio)) * 100 + '%';
       };
+      const scheduleProgress = () => {
+        if (!progressFrame) progressFrame = requestAnimationFrame(updateProgress);
+      };
       updateProgress();
-      window.addEventListener('scroll', updateProgress, { passive: true });
+      window.addEventListener('scroll', scheduleProgress, { passive: true });
+      window.addEventListener('resize', scheduleProgress, { passive: true });
 
       if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
         const observer = new IntersectionObserver((entries) => {
@@ -1066,7 +1073,7 @@
       }
     })();
   </script>
-  <script src="assets/js/viewer-loading.js?v=4" data-stage="viewer-stage" data-status="viewer-status" data-module="./herbi-3d.js?v=4"></script>
+  <script src="assets/js/viewer-loading.js?v=5" data-stage="viewer-stage" data-status="viewer-status" data-module="./herbi-3d.js?v=5"></script>
 </body>
 
 </html>
