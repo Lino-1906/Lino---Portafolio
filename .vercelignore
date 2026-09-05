@@ -1,0 +1,10 @@
+.git
+node_modules
+tmp
+backups
+output
+docs
+tests
+scripts
+**/SOURCES.md
+**/README.md

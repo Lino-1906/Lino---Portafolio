@@ -2,6 +2,11 @@
   "name": "lino-portafolio",
   "private": true,
   "scripts": {
+    "start": "node scripts/serve.cjs",
+    "test": "node --test tests/static.test.cjs",
+    "test:browser": "node tests/browser.cjs",
+    "test:deep": "node tests/deep-browser.cjs",
+    "test:interactions": "node tests/interactions.cjs",
     "build:css": "tailwindcss -c tailwind.config.js -i styles/tailwind-input.css -o assets/css/tailwind.min.css --minify"
   },
   "devDependencies": {

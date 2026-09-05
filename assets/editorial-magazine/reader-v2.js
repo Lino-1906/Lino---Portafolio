@@ -7,9 +7,13 @@
   const pageRatio = pageWidth / pageHeight;
   const minimumPageHeight = pageRatio > 1.2 ? 240 : 338;
   const pagesVersion = readerConfig.pagesVersion ? `?v=${encodeURIComponent(readerConfig.pagesVersion)}` : '';
-  const contentSources = Array.from({ length:total }, (_, index) => `page-${String(index + 1).padStart(2, '0')}.jpg${pagesVersion}`);
+  const pageBase = readerConfig.pageBase || '';
+  const contentSources = Array.from({ length:total }, (_, index) => `${pageBase}page-${String(index + 1).padStart(2, '0')}.jpg${pagesVersion}`);
   const transparentPage = 'data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=';
-  const pageSources = [transparentPage, ...contentSources];
+  // StPageFlip creates an Image for every entry. Placeholders prevent eager
+  // downloads of the entire magazine; nearby pages are hydrated below.
+  const pageSources = [transparentPage, ...contentSources.map((source, index) => index < 4 ? source : transparentPage)];
+  const hydratedPages = new Set([0, 1, 2, 3, 4]);
   const stage = document.getElementById('stage');
   const bookElement = document.getElementById('book');
   const loader = document.getElementById('readerLoader');
@@ -35,7 +39,15 @@
   let autoplayTimer = 0;
   let jumping = false;
   let resetWhenReady = false;
-  let soundEnabled = true;
+  const compactReader = matchMedia('(max-width: 700px), (pointer: coarse) and (max-width: 1100px)');
+  let soundEnabled = !compactReader.matches;
+  soundBtn.classList.toggle('active', soundEnabled);
+  soundBtn.setAttribute('aria-pressed', String(soundEnabled));
+  compactReader.addEventListener('change', () => {
+    if (compactReader.matches) soundEnabled = false;
+    soundBtn.classList.toggle('active', soundEnabled);
+    soundBtn.setAttribute('aria-pressed', String(soundEnabled));
+  });
   let audioContext = null;
   let resizeFrame = 0;
   const pagePreloadCache = new Map();
@@ -105,7 +117,22 @@
 
   function prefetchNearbyPages(pageIndex) {
     const contentIndex = Math.max(0, pageIndex - 1);
-    contentSources.slice(contentIndex, contentIndex + 5).forEach(source => preloadPage(source));
+    const start = Math.max(0, contentIndex - 2);
+    const end = Math.min(total, contentIndex + 5);
+    for (let index = start; index < end; index++) {
+      const pageNumber = index + 1;
+      const page = pageFlip?.getPage(pageNumber);
+      if (!page?.image || hydratedPages.has(pageNumber)) continue;
+      hydratedPages.add(pageNumber);
+      page.isLoad = false;
+      page.image.onload = () => { page.isLoad = true; };
+      page.image.onerror = () => {
+        hydratedPages.delete(pageNumber);
+        status.textContent = 'No se pudo cargar una página. Vuelve a intentarlo.';
+      };
+      page.image.decoding = 'async';
+      page.image.src = contentSources[index];
+    }
   }
 
   function softenEdgePages() {
@@ -132,6 +159,7 @@
     const firstPageIndex = portrait ? 1 : 0;
     prevBtn.disabled = firstBtn.disabled = pageIndex <= firstPageIndex;
     nextBtn.disabled = lastBtn.disabled = pageIndex >= total;
+    status.setAttribute('aria-label', status.textContent + (compactReader.matches ? (zoom > 1 ? '. Restablecer tamaño' : '. Ampliar página') : ''));
   }
 
   function updateEdgeView(allowSingleView = true) {
@@ -191,6 +219,7 @@
 
   function flipNext() {
     if (!ready || jumping || currentPage >= total) return;
+    prefetchNearbyPages(currentPage + 2);
     if (pageFlip.getOrientation() === 'landscape') {
       if (currentPage === 0) {
         jumpToPage(2, 1);
@@ -207,6 +236,7 @@
   function flipPrev() {
     const firstPageIndex = pageFlip?.getOrientation?.() === 'portrait' ? 1 : 0;
     if (!ready || jumping || currentPage <= firstPageIndex) return;
+    prefetchNearbyPages(Math.max(0, currentPage - 2));
     if (pageFlip.getOrientation() === 'landscape' && currentPage === 2) {
       jumpToPage(0, -1);
       return;
@@ -321,6 +351,7 @@
 
   async function jumpToPage(target, direction) {
     if (!ready || jumping || target === currentPage || pageFlip.getState() !== 'read') return;
+    prefetchNearbyPages(target);
     jumping = true;
     stage.classList.add('jumping');
     stopAutoplay();
@@ -400,6 +431,25 @@
   }
 
   function connectControls() {
+    const syncZoomControl = () => {
+      status.tabIndex = compactReader.matches ? 0 : -1;
+      if (compactReader.matches) {
+        status.setAttribute('role', 'button');
+        status.title = 'Toca para ampliar o restablecer la página';
+      } else {
+        status.removeAttribute('role');
+        status.removeAttribute('title');
+      }
+    };
+    const toggleCompactZoom = () => {
+      if (compactReader.matches) { stopAutoplay(); setZoom(zoom > 1 ? 1 : 1.6); }
+    };
+    status.addEventListener('click', toggleCompactZoom);
+    status.addEventListener('keydown', event => {
+      if (compactReader.matches && ['Enter', ' '].includes(event.key)) { event.preventDefault(); event.stopPropagation(); toggleCompactZoom(); }
+    });
+    compactReader.addEventListener('change', syncZoomControl);
+    syncZoomControl();
     prevBtn.addEventListener('click', () => { stopAutoplay(); flipPrev(); });
     nextBtn.addEventListener('click', () => { stopAutoplay(); flipNext(); });
     firstBtn.addEventListener('click', () => jumpToPage(pageFlip.getOrientation() === 'portrait' ? 1 : 0, -1));
@@ -414,9 +464,15 @@
       if (soundEnabled) playPaperSound();
     });
     shareBtn.addEventListener('click', shareMagazine);
-    fullscreenBtn.addEventListener('click', () => {
-      if (!document.fullscreenElement) document.documentElement.requestFullscreen?.();
-      else document.exitFullscreen?.();
+    fullscreenBtn.addEventListener('click', async () => {
+      try {
+        if (document.fullscreenElement) await document.exitFullscreen();
+        else if (document.fullscreenEnabled && document.documentElement.requestFullscreen) await document.documentElement.requestFullscreen();
+        else window.open(location.href, '_blank', 'noopener');
+      } catch (_) {
+        // A normal reader tab is also usable on browsers without iframe fullscreen.
+        window.open(location.href, '_blank', 'noopener');
+      }
     });
     document.addEventListener('keydown', event => {
       if (event.key === 'ArrowRight' || event.key === 'PageDown') { stopAutoplay(); flipNext(); }

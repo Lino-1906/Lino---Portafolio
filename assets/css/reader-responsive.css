@@ -1,0 +1,15 @@
+/* Shared reader refinements. Desktop toolbar dimensions remain unchanged. */
+.control-btn:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
+@media (max-width: 700px), (pointer: coarse) and (max-width: 1100px) {
+  .controls { min-height: 60px; padding: 5px 6px max(6px, env(safe-area-inset-bottom)); }
+  .toolbar { width: auto; max-width: calc(100vw - 12px); gap: 2px; padding: 3px 5px; }
+  .control-btn { width: 44px; height: 44px; flex-basis: 44px; }
+  .control-btn svg { width: 16px; height: 16px; }
+  .status { min-width: 0; padding: 0 6px; font-size: .6875rem; letter-spacing: .025em; }
+  .status[role="button"] { cursor: zoom-in; min-height:44px; display:flex; align-items:center; gap:5px; }
+  .status[role="button"]::after { content:'⊕'; font-size:15px; }
+  .stage.zoomed { touch-action:pan-x pan-y pinch-zoom; }
+  .stage.zoomed .book { pointer-events:none; }
+  #zoomInBtn, #zoomOutBtn, #autoplayBtn, #soundBtn, #firstBtn, #lastBtn, #shareBtn { display: none; }
+  .hint { display: none; }
+}

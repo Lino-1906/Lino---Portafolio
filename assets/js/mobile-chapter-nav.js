@@ -1,90 +1,113 @@
+// One owner for section selection on desktop and mobile.
 (() => {
-  const mobileView = window.matchMedia('(max-width: 760px)');
   const nav = document.querySelector('.chapter-links, .case-nav-inner');
   if (!nav) return;
-
-  const links = [...nav.querySelectorAll('a[href^="#"]')];
-  const chapters = links
-    .map(link => ({ link, section: document.querySelector(link.hash) }))
-    .filter(item => item.section);
+  const mobile = matchMedia('(max-width: 760px)');
+  const reduced = matchMedia('(prefers-reduced-motion: reduce)');
+  const header = document.querySelector('.site-header');
+  const bar = nav.closest('nav') || nav;
+  const chapters = [...nav.querySelectorAll('a[href^="#"]')].map(link => {
+    const section = document.getElementById(decodeURIComponent(link.hash.slice(1)));
+    return { link, section, label: section?.querySelector('.chapter-kicker, .eyebrow, h2, h1') || section };
+  }).filter(item => item.section);
   if (!chapters.length) return;
-
-  let directNavigation = false;
-  let directNavigationTimer = 0;
-
-  const keepVisible = (link, behavior = 'smooth') => {
-    if (!mobileView.matches || !link) return;
-    const navRect = nav.getBoundingClientRect();
-    const linkRect = link.getBoundingClientRect();
-    const targetLeft = nav.scrollLeft + linkRect.left - navRect.left - (nav.clientWidth - linkRect.width) / 2;
-    nav.scrollTo({ left: Math.max(0, targetLeft), behavior });
-  };
-
-  const select = (link, behavior = 'smooth') => {
-    if (!mobileView.matches || !link) return;
-    links.forEach(item => item.toggleAttribute('aria-current', item === link));
-    keepVisible(link, behavior);
-  };
-
-  let scheduled = false;
-  const updateFromScroll = () => {
-    if (!mobileView.matches || directNavigation || scheduled) return;
-    scheduled = true;
-    requestAnimationFrame(() => {
-      scheduled = false;
-      const marker = window.scrollY + Math.min(window.innerHeight * 0.3, 240);
-      let current = chapters[0];
-      for (const item of chapters) {
-        if (item.section.offsetTop <= marker) current = item;
-        else break;
-      }
-      if (current.link.getAttribute('aria-current') !== 'location') {
-        select(current.link);
-        current.link.setAttribute('aria-current', 'location');
-      }
-    });
-  };
-
-  links.forEach(link => link.addEventListener('click', event => {
-    if (!mobileView.matches) return;
-    event.preventDefault();
-    directNavigation = true;
-    nav.classList.add('is-direct-navigation');
-    window.clearTimeout(directNavigationTimer);
-    select(link, 'auto');
-    link.setAttribute('aria-current', 'location');
-    const chapter = chapters.find(item => item.link === link)?.section;
-    const chapterLabel = chapter?.querySelector('.chapter-kicker, .eyebrow') || chapter?.querySelector('h2, h1') || chapter;
-    if (chapterLabel) {
-      const headerHeight = document.querySelector('.site-header')?.getBoundingClientRect().height || 0;
-      const menuHeight = nav.closest('nav')?.getBoundingClientRect().height || nav.getBoundingClientRect().height;
-      const destination = window.scrollY + chapterLabel.getBoundingClientRect().top - headerHeight - menuHeight - 14;
-      const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      window.scrollTo({ top: Math.max(0, destination), behavior: reducedMotion ? 'auto' : 'smooth' });
-      history.replaceState(null, '', link.hash);
+  let current, destination = null, frame = 0, settleFrame = 0;
+  let offset = 0, positions = [];
+  const behavior = () => reduced.matches ? 'instant' : 'smooth';
+  function measure() {
+    const barTop = parseFloat(getComputedStyle(bar).top) || 0;
+    offset = Math.max(header?.getBoundingClientRect().height || 0, barTop + bar.getBoundingClientRect().height) + 14;
+    positions = chapters.map(item => item.label.getBoundingClientRect().top + scrollY);
+  }
+  function reveal(link, motion) {
+    if (!mobile.matches) return;
+    const rect = nav.getBoundingClientRect(), item = link.getBoundingClientRect();
+    if (item.left >= rect.left + 16 && item.right <= rect.right - 16) return;
+    nav.scrollTo({ left: Math.max(0, nav.scrollLeft + item.left - rect.left - (nav.clientWidth - item.width) / 2), behavior: motion });
+  }
+  function select(item, motion = behavior()) {
+    if (current !== item) {
+      chapters.forEach(({ link }) => {
+        if (link === item.link) link.setAttribute('aria-current', 'location');
+        else link.removeAttribute('aria-current');
+      });
+      current = item;
     }
-    directNavigationTimer = window.setTimeout(() => {
-      directNavigation = false;
-      nav.classList.remove('is-direct-navigation');
-      updateFromScroll();
-    }, 1000);
-  }));
-  const activeObserver = new MutationObserver(records => {
-    if (directNavigation) return;
-    const activeChange = records.find(record =>
-      record.attributeName === 'aria-current' && record.target.getAttribute('aria-current') === 'location'
-    );
-    if (activeChange) keepVisible(activeChange.target);
-  });
-  links.forEach(link => activeObserver.observe(link, { attributes: true, attributeFilter: ['aria-current'] }));
-  window.addEventListener('scroll', updateFromScroll, { passive: true });
-  window.addEventListener('resize', updateFromScroll, { passive: true });
-  mobileView.addEventListener('change', () => {
-    directNavigation = false;
+    reveal(item.link, motion);
+  }
+  function update() {
+    frame = 0;
+    if (destination) return;
+    const marker = scrollY + offset + 2;
+    let index = 0;
+    positions.forEach((top, i) => { if (top <= marker) index = i; });
+    if (scrollY > 0 && Math.ceil(scrollY + innerHeight) >= document.documentElement.scrollHeight - 2) index = chapters.length - 1;
+    select(chapters[index]);
+  }
+  const schedule = () => { if (!frame) frame = requestAnimationFrame(update); };
+  function release() {
+    cancelAnimationFrame(settleFrame);
+    destination = null;
     nav.classList.remove('is-direct-navigation');
-    window.clearTimeout(directNavigationTimer);
-    if (mobileView.matches) updateFromScroll();
-    else nav.scrollTo({ left: 0, behavior: 'auto' });
+    measure();
+    schedule();
+  }
+  function go(item, motion = behavior()) {
+    cancelAnimationFrame(settleFrame);
+    measure();
+    destination = item;
+    nav.classList.add('is-direct-navigation');
+    select(item, 'instant');
+    let target = Math.max(0, Math.min(positions[chapters.indexOf(item)] - offset, document.documentElement.scrollHeight - innerHeight));
+    window.scrollTo({ top: target, behavior: motion });
+    // Settle on actual scroll completion, not on a fixed one-second lock.
+    let last = scrollY, stable = 0, start = performance.now();
+    function settle(now) {
+      stable = Math.abs(scrollY - last) < .5 ? stable + 1 : 0;
+      last = scrollY;
+      if (stable >= 4 && now - start < 3500) {
+        measure();
+        const actual = Math.max(0, Math.min(positions[chapters.indexOf(item)] - offset, document.documentElement.scrollHeight - innerHeight));
+        if (Math.abs(actual - scrollY) > 2) {
+          target = actual; stable = 0;
+          window.scrollTo({ top: target, behavior: motion });
+        }
+      }
+      if ((stable >= 4 && (Math.abs(scrollY - target) < 2 || now - start > 400)) || now - start > 4000) {
+        release();
+        return;
+      }
+      settleFrame = requestAnimationFrame(settle);
+    }
+    settleFrame = requestAnimationFrame(settle);
+  }
+  chapters.forEach(item => item.link.addEventListener('click', event => {
+    if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+    event.preventDefault();
+    history.pushState(null, '', item.link.hash);
+    go(item);
+  }));
+  window.addEventListener('scroll', schedule, { passive: true });
+  ['wheel', 'touchstart'].forEach(type => window.addEventListener(type, () => {
+    if (destination) release();
+  }, { passive: true }));
+  window.addEventListener('keydown', event => {
+    if (destination && ['ArrowUp', 'ArrowDown', 'PageUp', 'PageDown', 'Home', 'End', ' '].includes(event.key)) release();
   });
-  updateFromScroll();
+  const refresh = () => { measure(); schedule(); };
+  const resize = new ResizeObserver(refresh);
+  resize.observe(document.body);
+  if (header) resize.observe(header);
+  resize.observe(bar);
+  function fromHash() {
+    const item = chapters.find(item => item.link.hash === location.hash);
+    if (item) go(item, 'instant');
+  }
+  window.addEventListener('hashchange', fromHash);
+  // Wait for fonts once; never reposition after a visitor starts interacting.
+  let interacted = false;
+  ['pointerdown', 'wheel', 'keydown'].forEach(type => window.addEventListener(type, () => { interacted = true; }, { once: true, passive: true }));
+  document.fonts?.ready.then(() => { refresh(); if (!interacted) fromHash(); });
+  mobile.addEventListener('change', refresh);
+  measure(); update(); fromHash();
 })();

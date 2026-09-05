@@ -1461,9 +1461,26 @@
       }
     }
   </style>
+  <link rel="stylesheet" href="assets/css/portfolio-refinements.css?v=20260904-1">
+  <script src="assets/js/portfolio-accessibility.js?v=20260904-1" defer></script>
+  <link rel="canonical" href="https://lino-portafolio.vercel.app/">
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"Person","name":"Valentino Levano","alternateName":"Lino","url":"https://lino-portafolio.vercel.app/","jobTitle":"Diseñador UX/UI y gráfico","sameAs":["https://www.linkedin.com/in/valentino-levano"]}
+  </script>
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="es_PE">
+  <meta property="og:site_name" content="Lino · Portafolio">
+  <meta property="og:url" content="https://lino-portafolio.vercel.app/">
+  <meta property="og:image" content="https://lino-portafolio.vercel.app/assets/social-preview.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Lino — Valentino Levano. Diseño UX/UI y gráfico.">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Lino — Diseñador UX/UI · Gráfico Freelance">
 </head>
 
 <body>
+  <a class="portfolio-skip" href="#sobre-mi">Saltar al contenido</a>
 
 
 
@@ -1502,6 +1519,7 @@
   <!-- ═══════════════════════════════════════════════════════════ -->
   <!-- HERO                                                        -->
   <!-- ═══════════════════════════════════════════════════════════ -->
+  <main>
   <section id="hero" class="relative flex items-center justify-center overflow-hidden pb-0 min-h-fit">
     <!-- Glows -->
     <div class="hero-glow glow-1"></div>
@@ -1527,12 +1545,12 @@
               </div>
 
               <!-- Big Grid Title: PORTA / FOLIO -->
-              <div class="poster-main-grid">
-                <div class="poster-block">PORTA</div>
-                <div class="poster-block"></div>
-                <div class="poster-block">FOLIO</div>
-                <div class="poster-block"></div>
-              </div>
+              <h1 class="poster-main-grid" style="margin:0;font-weight:inherit" aria-label="Portafolio de Valentino Levano — Diseño UX/UI y gráfico">
+                <span class="poster-block">PORTA</span>
+                <span class="poster-block" aria-hidden="true"></span>
+                <span class="poster-block">FOLIO</span>
+                <span class="poster-block" aria-hidden="true"></span>
+              </h1>
             </div>
           </div>
 
@@ -2028,8 +2046,7 @@
               style="font-size: clamp(1.3rem, 1.7vw, 1.65rem);">PLATAFORMA CIERUM</h3>
             <p class="text-sm mt-1" style="color:#fff;text-shadow:0 1px 4px rgba(0,0,0,.85);font-weight:500;">Landing
               page y plataforma web para inversión inmobiliaria. Proyecto real en producción activa.</p>
-            <a href="javascript:void(0)"
-              onclick="openPdfModal('https://cieruminmobiliaria.com/', 'Plataforma CIERUM — Inmobiliaria')"
+            <a href="cierum.html"
               class="card-hover-cta">Ver más →</a>
           </div>
         </article>
@@ -2046,8 +2063,7 @@
               style="font-size: clamp(1.3rem, 1.7vw, 1.65rem);">PLATAFORMA GIANTUCCHI</h3>
             <p class="text-sm mt-1" style="color:#fff;text-shadow:0 1px 4px rgba(0,0,0,.85);font-weight:500;">Interfaz,
               flujos de usuario y experiencia digital para automatización e inteligencia artificial.</p>
-            <a href="javascript:void(0)"
-              onclick="openPdfModal('https://giantucchi.com/', 'Plataforma Giantucchi — Inteligencia Artificial')"
+            <a href="giantucchi.html"
               class="card-hover-cta">Ver más →</a>
           </div>
         </article>
@@ -2064,7 +2080,7 @@
               style="font-size: clamp(1.3rem, 1.7vw, 1.65rem);">PCI EXPRESS</h3>
             <p class="text-sm mt-1" style="color:#fff;text-shadow:0 1px 4px rgba(0,0,0,.85);font-weight:500;">Diseño
               de experiencia y arquitectura de interfaz para una tienda especializada en hardware.</p>
-            <a href="javascript:void(0)" onclick="openEditorialProgressModal('pci')"
+            <a href="pci-express.html"
               class="card-hover-cta">Ver más →</a>
           </div>
         </article>
@@ -2292,6 +2308,7 @@
 
 
   <!-- Editorial: En proceso -->
+  </main>
   <div id="editorial-progress-modal" role="dialog" aria-modal="true" aria-labelledby="editorial-progress-title"
     class="fixed inset-0 z-[60] flex flex-col bg-[rgba(5,3,2,0.96)] backdrop-blur-md opacity-0 pointer-events-none transition-opacity duration-300"
     style="opacity:0;pointer-events:none;">
@@ -2366,7 +2383,7 @@
                 style="height: 76px; width: auto; object-fit: contain;" />
             </a>
           </div>
-          <p class="text-sm leading-relaxed" style="color: rgba(237,224,200,0.38); max-width: 220px;">
+          <p class="text-sm leading-relaxed" style="color: #b9ac99; max-width: 220px;">
             Valentino Levano (Lino). UX/UI · Gráfico · Callao, Perú. Disponible para freelance.
           </p>
         </div>
@@ -2402,7 +2419,7 @@
               </svg>
             </a>
             <!-- LinkedIn -->
-            <a href="#" id="social-linkedin" class="social-link" aria-label="LinkedIn">
+            <a href="https://www.linkedin.com/in/valentino-levano" target="_blank" rel="noopener" id="social-linkedin" class="social-link" aria-label="LinkedIn">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
                 <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
                 <rect x="2" y="9" width="4" height="12" />
@@ -2874,7 +2891,7 @@
       const frame = document.getElementById('editorial-reader-frame');
       if (!overlay) return;
       const closingProject = frame?.dataset.project;
-      frame?.contentWindow?.postMessage({ type: 'resetEditorialReader' }, '*');
+      frame?.contentWindow?.postMessage({ type: 'resetEditorialReader' }, location.origin);
       frame?.contentWindow?.postMessage({ type: 'suspendEditorialReader' }, location.origin);
       overlay.classList.remove('opacity-100', 'pointer-events-auto');
       overlay.classList.add('opacity-0', 'pointer-events-none');
@@ -2891,7 +2908,7 @@
     }
 
     window.addEventListener('message', event => {
-      if (event.data?.type === 'closeEditorialReader') closeEditorialProgressModal();
+      if (event.origin === location.origin && event.source === document.getElementById('editorial-reader-frame')?.contentWindow && event.data?.type === 'closeEditorialReader') closeEditorialProgressModal();
     });
 
     // ── Modal Viewer Logic (PDFs & Web Links) ──

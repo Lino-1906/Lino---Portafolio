@@ -1,0 +1,10 @@
+User-agent: *
+Allow: /
+Disallow: /tmp/
+Disallow: /backups/
+Disallow: /node_modules/
+Disallow: /docs/
+Disallow: /tests/
+Disallow: /scripts/
+Disallow: /assets/social-card.html
+Sitemap: https://lino-portafolio.vercel.app/sitemap.xml

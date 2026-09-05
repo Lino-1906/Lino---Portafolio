@@ -1,5 +1,6 @@
 import * as THREE from 'three';
 import { OrbitControls } from '../vendor/three/OrbitControls.js';
+import { demand3D } from './demand-3d.js';
 
 const stage = document.getElementById('viewer-stage');
 const status = document.getElementById('viewer-status');
@@ -142,21 +143,28 @@ async function init() {
   panel([w,t,d],[0,0,d/2],[card,card,top,card,card,card],hinge);
   const ground = new THREE.Mesh(new THREE.PlaneGeometry(200,200),new THREE.ShadowMaterial({opacity:.17}));
   ground.rotation.x = -Math.PI/2; ground.position.y = -h/2-.05; ground.receiveShadow = true; scene.add(ground);
-  let visible = true;
-  let loopRunning = false;
-  let previous = 0;
+  let invalidate = () => {};
+  let fittedDistance = 0;
   function reset() {
     const aspect = stage.clientWidth / stage.clientHeight;
     const distance = Math.max(10.5, 8.1 / aspect);
+    fittedDistance = distance;
     camera.position.set(-distance*.46,distance*.27,distance*.86);
     controls.target.set(0,.15,0); controls.update();
   }
   function resize() {
     renderer.setSize(stage.clientWidth,stage.clientHeight);
     camera.aspect = stage.clientWidth / stage.clientHeight;
-    camera.updateProjectionMatrix(); reset(); renderer.render(scene,camera);
+    camera.updateProjectionMatrix();
+    const distance = Math.max(10.5, 8.1 / camera.aspect);
+    if (fittedDistance) {
+      camera.position.sub(controls.target).multiplyScalar(distance / fittedDistance).add(controls.target);
+      fittedDistance = distance;
+    } else reset();
+    renderer.render(scene,camera);
+    invalidate();
   }
-  function setSpin(value) { controls.autoRotate = value; spin.textContent = value ? 'Pausar giro' : 'Activar giro'; spin.setAttribute('aria-pressed', String(value)); }
+  function setSpin(value) { controls.autoRotate = value; spin.textContent = value ? 'Pausar giro' : 'Activar giro'; spin.setAttribute('aria-pressed', String(value)); invalidate(); }
   spin.onclick = () => setSpin(!controls.autoRotate);
   document.getElementById('box-reset').onclick = () => { reset();setSpin(!reduced.matches); };
   controls.addEventListener('start', () => setSpin(false));
@@ -180,26 +188,15 @@ async function init() {
   stage.classList.add('viewer-ready');
   document.querySelector('.viewer-controls').hidden = false;
   reduced.addEventListener('change',()=>setSpin(!reduced.matches));
-  const animate = time => {
-    const dt = Math.min((time-previous)/1000,.05); previous=time;
-    controls.update(dt); renderer.render(scene,camera);
-  };
-  const syncAnimationLoop = () => {
-    const shouldRun = visible && !document.hidden;
-    if (shouldRun === loopRunning) return;
-    loopRunning = shouldRun;
-    previous = 0;
-    renderer.setAnimationLoop(shouldRun ? animate : null);
-  };
-  new IntersectionObserver(entries => {
-    visible = entries[0].isIntersecting;
-    syncAnimationLoop();
-  }).observe(stage);
-  document.addEventListener('visibilitychange', syncAnimationLoop);
-  syncAnimationLoop();
-  renderer.domElement.addEventListener('webglcontextlost', e => {
-    e.preventDefault(); visible=false; syncAnimationLoop(); stage.classList.remove('viewer-ready'); renderer.domElement.hidden=true;
-    document.querySelector('.viewer-controls').hidden=true;status.textContent='Vista fotográfica de respaldo';
+  invalidate = demand3D({ renderer, scene, camera, controls, stage,
+    onLost() {
+      stage.classList.remove('viewer-ready'); renderer.domElement.hidden=true;
+      document.querySelector('.viewer-controls').hidden=true;status.textContent='Vista fotográfica de respaldo';
+    },
+    onRestored() {
+      renderer.domElement.hidden=false; stage.classList.add('viewer-ready');
+      document.querySelector('.viewer-controls').hidden=false;status.textContent='Arrastra para explorar · vista 3D';
+    }
   });
 }
 export default init().catch(error => { status.textContent='Vista fotográfica de respaldo'; console.warn('Herbi 3D no disponible:', error); });

@@ -1,5 +1,6 @@
 import * as THREE from 'three';
 import { OrbitControls } from '../vendor/three/OrbitControls.js';
+import { demand3D } from './demand-3d.js';
 
 const stage = document.getElementById('acrylic-stage');
 const status = document.getElementById('acrylic-status');
@@ -62,11 +63,12 @@ async function start() {
   for(let i=0;i<48;i++){const a=i*Math.PI*2/48;const ridge=new THREE.Mesh(ridgeGeometry,plastic);ridge.position.set(Math.sin(a)*.34,1.48,Math.cos(a)*.34);bottle.add(ridge);}
   const lid=new THREE.Mesh(new THREE.CylinderGeometry(.35,.35,.07,64),plastic);lid.position.y=1.755;bottle.add(lid);
   const floor=new THREE.Mesh(new THREE.PlaneGeometry(100,100),new THREE.ShadowMaterial({opacity:.12}));floor.rotation.x=-Math.PI/2;floor.position.y=-1.78;floor.receiveShadow=true;scene.add(floor);
-  let mode='both',visible=true,previous=0,loopRunning=false;
-  function spin(value){orbit.autoRotate=value;spinButton.textContent=value?'Pausar giro':'Activar giro';spinButton.setAttribute('aria-pressed',String(value));}
+  let mode='both', fittedDistance=0, invalidate=()=>{};
+  function spin(value){orbit.autoRotate=value;spinButton.textContent=value?'Pausar giro':'Activar giro';spinButton.setAttribute('aria-pressed',String(value));invalidate();}
   function frame(){
     const aspect=stage.clientWidth/stage.clientHeight;
     const distance=mode==='both'?Math.max(10.2,8.8/aspect):Math.max(8.3,5.7/aspect);
+    fittedDistance=distance;
     camera.position.set(distance*.28,distance*.18,distance*.94);orbit.target.set(0,.05,0);orbit.update();
   }
   function select(value){
@@ -76,7 +78,7 @@ async function start() {
     box.rotation.y=-.1;bottle.rotation.y=0;
     document.querySelectorAll('[data-product]').forEach(button=>button.setAttribute('aria-pressed',String(button.dataset.product===value)));
     status.textContent=`${value==='both'?'Caja + botella':value==='box'?'Caja':'Botella'} · Arrastra para girar · Flechas del teclado`;
-    frame();
+    frame();invalidate();
   }
   document.querySelectorAll('[data-product]').forEach(button=>button.onclick=()=>select(button.dataset.product));
   spinButton.onclick=()=>spin(!orbit.autoRotate);
@@ -93,18 +95,23 @@ async function start() {
     camera.position.copy(orbit.target).add(new THREE.Vector3().setFromSpherical(spherical));orbit.update();
   });
   stage.append(renderer.domElement);
-  const resize=()=>{renderer.setSize(stage.clientWidth,stage.clientHeight);camera.aspect=stage.clientWidth/stage.clientHeight;camera.updateProjectionMatrix();frame();renderer.render(scene,camera);};
+  const resize=()=>{
+    renderer.setSize(stage.clientWidth,stage.clientHeight);
+    camera.aspect=stage.clientWidth/stage.clientHeight;camera.updateProjectionMatrix();
+    const distance=mode==='both'?Math.max(10.2,8.8/camera.aspect):Math.max(8.3,5.7/camera.aspect);
+    if(fittedDistance){camera.position.sub(orbit.target).multiplyScalar(distance/fittedDistance).add(orbit.target);fittedDistance=distance;}
+    else frame();
+    renderer.render(scene,camera);invalidate();
+  };
   new ResizeObserver(resize).observe(stage);resize();select('both');spin(!reduceMotion.matches);
   renderer.render(scene,camera);
   // Paint the initial photo/canvas state before starting the crossfade.
   await new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve)));
   stage.classList.add('is-ready');controlsUI.hidden=false;
   reduceMotion.addEventListener('change',()=>spin(!reduceMotion.matches));
-  const animate=time=>{const dt=Math.min((time-previous)/1000,.05);previous=time;orbit.update(dt);renderer.render(scene,camera);};
-  const syncAnimationLoop=()=>{const shouldRun=visible&&!document.hidden;if(shouldRun===loopRunning)return;loopRunning=shouldRun;previous=0;renderer.setAnimationLoop(shouldRun?animate:null);};
-  new IntersectionObserver(entries=>{visible=entries[0].isIntersecting;syncAnimationLoop();}).observe(stage);
-  document.addEventListener('visibilitychange',syncAnimationLoop);
-  syncAnimationLoop();
-  renderer.domElement.addEventListener('webglcontextlost',event=>{event.preventDefault();visible=false;syncAnimationLoop();stage.classList.remove('is-ready');renderer.domElement.hidden=true;controlsUI.hidden=true;status.textContent='Vista fotográfica de respaldo';});
+  invalidate=demand3D({renderer,scene,camera,controls:orbit,stage,
+    onLost(){stage.classList.remove('is-ready');renderer.domElement.hidden=true;controlsUI.hidden=true;status.textContent='Vista fotográfica de respaldo';},
+    onRestored(){renderer.domElement.hidden=false;stage.classList.add('is-ready');controlsUI.hidden=false;status.textContent='Arrastra para girar · Flechas del teclado';}
+  });
 }
 export default start().catch(error=>{status.textContent='Vista fotográfica de respaldo';console.warn('Visor Crafter’s Acrylic no disponible:',error);});

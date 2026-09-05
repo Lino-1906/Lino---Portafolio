@@ -20,18 +20,5 @@
   document.addEventListener('visibilitychange', syncReader);
   window.addEventListener('pageshow', syncReader);
 
-  const links = Array.from(document.querySelectorAll('.chapter-links a'));
-  const sectionObserver = new IntersectionObserver(entries => {
-    for (const entry of entries) {
-      if (!entry.isIntersecting) continue;
-      links.forEach(link => {
-        if (link.hash === `#${entry.target.id}`) link.setAttribute('aria-current', 'location');
-        else link.removeAttribute('aria-current');
-      });
-    }
-  }, { rootMargin: '-15% 0px -65% 0px', threshold: 0 });
-  links.forEach(link => {
-    const section = document.querySelector(link.hash);
-    if (section) sectionObserver.observe(section);
-  });
+  // Section selection is owned exclusively by mobile-chapter-nav.js on all viewports.
 })();

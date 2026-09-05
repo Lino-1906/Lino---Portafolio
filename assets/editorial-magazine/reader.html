@@ -18,7 +18,7 @@
       user-select:none;
     }
     button { font:inherit; }
-    .reader { height:100%; display:grid; grid-template-rows:minmax(0,1fr) auto; }
+    .reader { height:100%; display:grid; grid-template-rows:minmax(0,1fr) auto auto; }
     .stage {
       min-height:0;
       position:relative;
@@ -86,15 +86,16 @@
     .loader-track { height:2px; overflow:hidden; border-radius:99px; background:rgba(237,224,200,.12); }
     .loader-bar { width:0; height:100%; border-radius:inherit; background:var(--orange); transition:width .14s linear; }
     .hint {
-      position:fixed;
+      position:relative;
       z-index:7;
-      left:50%; bottom:69px;
-      transform:translateX(-50%);
+      padding:8px 18px 2px;
+      text-align:center;
+      line-height:1.5;
       font-size:.56rem;
       letter-spacing:.12em;
       text-transform:uppercase;
-      color:rgba(237,224,200,.31);
-      white-space:nowrap;
+      color:rgba(237,224,200,.72);
+      white-space:normal;
       pointer-events:none;
     }
     .controls {
@@ -157,6 +158,7 @@
       *, *::before, *::after { animation-duration:.01ms!important; transition-duration:.01ms!important; }
     }
   </style>
+  <link rel="stylesheet" href="../css/reader-responsive.css?v=20260904-1">
 </head>
 <body>
   <main class="reader" aria-label="Revista Arte Culinario">
@@ -166,8 +168,8 @@
         <div class="loader-track"><div class="loader-bar" id="loaderBar"></div></div>
       </div>
       <div class="book" id="book" aria-label="Páginas de la revista Arte Culinario"></div>
-      <div class="hint">Arrastra una esquina o usa las flechas para pasar página</div>
     </section>
+    <div class="hint">Arrastra una esquina o usa las flechas para pasar página</div>
     <footer class="controls">
       <div class="toolbar" role="toolbar" aria-label="Controles de la revista">
         <button class="control-btn" id="zoomInBtn" aria-label="Acercar" title="Acercar" disabled><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5L21 21M10.5 7.5v6M7.5 10.5h6"/></svg></button>
